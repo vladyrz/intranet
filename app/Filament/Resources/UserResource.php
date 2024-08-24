@@ -25,7 +25,7 @@ class UserResource extends Resource
     protected static ?string $model = User::class;
     protected static ?string $navigationLabel = 'Employees';
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
-    protected static ?string $navigationGroup = 'Employee Management';
+    protected static ?string $navigationGroup = 'Employees Management';
     protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
@@ -46,7 +46,7 @@ class UserResource extends Resource
                     Forms\Components\DateTimePicker::make('email_verified_at'),
                     Forms\Components\TextInput::make('password')
                         ->password()
-                        ->hidden('edit')
+                        ->hiddenOn('edit')
                         ->required()
                         ->maxLength(255),
                 ]),
