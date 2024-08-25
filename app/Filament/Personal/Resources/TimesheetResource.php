@@ -23,7 +23,7 @@ class TimesheetResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->where('user_id', Auth::user()->id);
+        return parent::getEloquentQuery()->where('user_id', Auth::user()->id)->orderBy('day_in', 'desc');
     }
 
     public static function form(Form $form): Form
