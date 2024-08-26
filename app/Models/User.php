@@ -20,6 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'state',
         'password',
         'country_id',
         'state_id',
@@ -66,5 +67,9 @@ class User extends Authenticatable
 
     public function timesheets(){
         return $this->hasMany(Timesheet::class);
+    }
+
+    public function customers(){
+        return $this->hasMany(Customer::class);
     }
 }

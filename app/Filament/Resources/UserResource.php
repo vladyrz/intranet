@@ -43,6 +43,8 @@ class UserResource extends Resource
                         ->email()
                         ->required()
                         ->maxLength(255),
+                    Forms\Components\Toggle::make('state')
+                        ->required(),
                     Forms\Components\DateTimePicker::make('email_verified_at'),
                     Forms\Components\TextInput::make('password')
                         ->password()
@@ -107,6 +109,8 @@ class UserResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
+                Tables\Columns\IconColumn::make('state')
+                    ->boolean(),
                 Tables\Columns\TextColumn::make('address')
                     ->searchable()
                     ->sortable()
