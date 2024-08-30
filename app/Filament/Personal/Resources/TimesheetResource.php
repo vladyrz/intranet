@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,6 +21,8 @@ class TimesheetResource extends Resource
     protected static ?string $model = Timesheet::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-table-cells';
+
+    protected static bool $shouldRegisterNavigation = false;
 
     public static function getEloquentQuery(): Builder
     {
