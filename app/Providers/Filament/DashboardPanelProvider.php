@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -71,5 +72,14 @@ class DashboardPanelProvider extends PanelProvider
                     ])),
                 // ...
             ]);
+    }
+    public function boot()
+    {
+ 
+        LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
+            $switch
+                ->locales(['es','en']); // also accepts a closure
+        });
+ 
     }
 }
