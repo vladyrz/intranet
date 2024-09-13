@@ -27,6 +27,8 @@ class UserResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $navigationGroup = 'Employees Management';
     protected static ?int $navigationSort = 4;
+    protected static ?string $modelLabel = 'usuario';
+    protected static ?string $pluralModelLabel = 'Usuarios';
 
     public static function form(Form $form): Form
     {
@@ -37,6 +39,7 @@ class UserResource extends Resource
                 ->schema([
                     // ...
                     Forms\Components\TextInput::make('name')
+                    ->label(__('translate.name'))
                     ->required()
                     ->maxLength(255),
                     Forms\Components\TextInput::make('email')
