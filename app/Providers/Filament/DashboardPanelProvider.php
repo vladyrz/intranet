@@ -11,6 +11,7 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\Support\Enums\MaxWidth;
 use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -30,6 +31,7 @@ class DashboardPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->maxContentWidth(MaxWidth::Full)
             ->colors([
                 'primary' => Color::Amber,
             ])

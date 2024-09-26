@@ -8,6 +8,9 @@ class UserChart extends ChartWidget
 {
     protected static ?string $heading = 'Chart';
 
+    protected int|string|array $columnSpan = 'full';
+    protected static ?string $maxHeight = '450px';
+
     protected function getData(): array
     {
         return [
