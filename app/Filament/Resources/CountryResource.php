@@ -26,15 +26,10 @@ class CountryResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required(),
-                Forms\Components\TextInput::make('iso2')
-                    ->required(),
                 Forms\Components\TextInput::make('numeric_code'),
                 Forms\Components\TextInput::make('phonecode')
                     ->tel(),
                 Forms\Components\TextInput::make('capital'),
-                Forms\Components\TextInput::make('currency_symbol'),
-                Forms\Components\TextInput::make('region'),
-                Forms\Components\TextInput::make('subregion'),
                 Forms\Components\Toggle::make('is_active')
                     ->required(),
             ]);
@@ -46,8 +41,6 @@ class CountryResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('iso2')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('numeric_code')
                     ->alignCenter()
                     ->searchable(),
@@ -55,13 +48,6 @@ class CountryResource extends Resource
                     ->alignCenter()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('capital')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('currency_symbol')
-                    ->alignCenter()
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('region')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('subregion')
                     ->searchable(),
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean(),

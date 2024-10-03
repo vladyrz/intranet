@@ -31,7 +31,18 @@ class User extends Authenticatable
         'state_id',
         'city_id',
         'address',
-        'postal_code'
+        'postal_code',
+        'state',
+        'progress_status',
+        'job_position',
+        'national_id',
+        'marital_status',
+        'profession',
+        'phone_number',
+        'personal_email',
+        'license_plate',
+        'contract_status',
+        'birthday'
     ];
 
     /**
@@ -56,6 +67,14 @@ class User extends Authenticatable
 
     public function country(){
         return $this->belongsTo(Country::class);
+    }
+
+    public function locationState(){
+        return $this->belongsTo(State::class, 'state_id');
+    }
+
+    public function locationCity(){
+        return $this->belongsTo(City::class, 'city_id');
     }
 
     public function calendars(){

@@ -17,9 +17,31 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class TimesheetResource extends Resource
 {
     protected static ?string $model = Timesheet::class;
-    protected static ?string $navigationLabel = 'Timesheets';
     protected static ?string $navigationIcon = 'heroicon-o-table-cells';
-    protected static ?string $navigationGroup = 'Employees Management';
+
+    protected static ?string $navigationLabel = null;
+    protected static ?string $navigationGroup = null;
+
+    public static function getLabel(): ?string
+    {
+        return __('resources.timesheet.label');
+    }
+
+    public static function getPluralLabel(): ?string
+    {
+        return __('resources.timesheet.plural');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('resources.timesheet.navigation');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('resources.user.navigation_group');
+    }
+
     protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form

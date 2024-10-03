@@ -17,8 +17,31 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class HolidayResource extends Resource
 {
     protected static ?string $model = Holiday::class;
-    protected static ?string $navigationGroup = 'Employees Management';
     protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
+
+    protected static ?string $navigationLabel = null;
+    protected static ?string $navigationGroup = null;
+
+    public static function getLabel(): ?string
+    {
+        return __('resources.holiday.label');
+    }
+
+    public static function getPluralLabel(): ?string
+    {
+        return __('resources.holiday.plural');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('resources.holiday.navigation');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('resources.user.navigation_group');
+    }
+
     protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
