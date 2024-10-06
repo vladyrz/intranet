@@ -6,6 +6,7 @@ return [
         'plural' => 'Usuarios',
         'navigation' => 'Usuarios',
         'navigation_group' => 'Gestión de Usuarios',
+        'userSection' => 'Información de Usuario'
     ],
 
     'employee' => [

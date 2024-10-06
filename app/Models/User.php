@@ -27,22 +27,6 @@ class User extends Authenticatable
         'email',
         'state',
         'password',
-        'country_id',
-        'state_id',
-        'city_id',
-        'address',
-        'postal_code',
-        'state',
-        'progress_status',
-        'job_position',
-        'national_id',
-        'marital_status',
-        'profession',
-        'phone_number',
-        'personal_email',
-        'license_plate',
-        'contract_status',
-        'birthday'
     ];
 
     /**
@@ -64,18 +48,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-
-    public function country(){
-        return $this->belongsTo(Country::class);
-    }
-
-    public function locationState(){
-        return $this->belongsTo(State::class, 'state_id');
-    }
-
-    public function locationCity(){
-        return $this->belongsTo(City::class, 'city_id');
-    }
 
     public function calendars(){
         return $this->belongsToMany(Calendar::class);

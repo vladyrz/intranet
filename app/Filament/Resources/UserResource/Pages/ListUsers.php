@@ -23,18 +23,27 @@ class ListUsers extends ListRecords
     public function getTabs(): array
     {
         return [
-            null => Tab::make('All')->badge($this->orderByStatus() ?? 0)->badgeColor(Color::Orange)->label('Total de usuarios'),
-            'Pendiente' => Tab::make()->query(fn ($query) => $query->where('progress_status', 'Pendiente'))->badge($this->orderByStatus('Pendiente') ?? 0)->badgeColor(Color::Amber),
-            'En Formación' => Tab::make()->query(fn ($query) => $query->where('progress_status', 'En Formación'))->badge($this->orderByStatus('En Formación') ?? 0)->badgeColor(Color::Indigo),
-            'Certificado' => Tab::make()->query(fn ($query) => $query->where('progress_status', 'Certificado'))->badge($this->orderByStatus('Certificado') ?? 0)->badgeColor(Color::Green),
-            'Retirado' => Tab::make()->query(fn ($query) => $query->where('progress_status', 'Retirado'))->badge($this->orderByStatus('Retirado') ?? 0)->badgeColor(Color::Red),
+            null => Tab::make('All')->badge($this->orderByStatus() ?? 0)->label('Total de Usuarios'),
+    
+            true => Tab::make()->query(fn ($query) => $query->where('state', true))
+                        ->badge($this->orderByStatus(true) ?? 0)
+                        ->badgeColor(Color::Green)
+                        ->label('Activos'),
+    
+            false => Tab::make()->query(fn ($query) => $query->where('state', false))
+                        ->badge($this->orderByStatus(false) ?? 0)
+                        ->badgeColor(Color::Red)
+                        ->label('Inactivos'),
         ];
     }
 
-    private function orderByStatus(string $status =null){
-        if(blank($status)){
+    private function orderByStatus($status = null)
+    {
+        if (is_null($status)) {
             return User::count();
         }
-        return User::where('progress_status', $status)->count();
+        
+        return User::where('state', $status)->count();
     }
+
 }
