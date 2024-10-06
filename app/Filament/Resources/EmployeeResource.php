@@ -167,10 +167,10 @@ class EmployeeResource extends Resource
                     ->label(__('translate.employee.name'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
-                    ->label(__('translate.email'))
+                    ->label(__('translate.employee.email'))
                     ->searchable(),
                 Tables\Columns\IconColumn::make('contract_status')
-                    ->label(__('translate.contract_status'))
+                    ->label(__('translate.employee.contract_status'))
                     ->boolean()
                     ->alignCenter(),
                 Tables\Columns\TextColumn::make('progress_status')
