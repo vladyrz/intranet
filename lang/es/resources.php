@@ -8,6 +8,15 @@ return [
         'navigation_group' => 'Gestión de Usuarios',
     ],
 
+    'employee' => [
+        'label' => 'Empleado',
+        'plural' => 'Empleados',
+        'navigation' => 'Empleados',
+        'sectionEmployee' => 'Información del Empleado',
+        'sectionPersonal' => 'Información Personal',
+        'sectionAddress' => 'Dirección'
+    ],
+
     'timesheet' => [
         'label' => 'Registro de hora',
         'plural' => 'Registros de horas',
