@@ -18,7 +18,11 @@ class CalendarResource extends Resource
     protected static ?string $model = Calendar::class;
     protected static ?string $navigationGroup = 'System Management';
     protected static ?string $navigationIcon = 'heroicon-o-calendar';
-    protected static ?int $navigationSort = 5;
+    
+    public static function canViewAny(): bool
+    {
+        return false;
+    }
 
     public static function form(Form $form): Form
     {

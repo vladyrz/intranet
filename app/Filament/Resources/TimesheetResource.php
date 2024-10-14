@@ -42,7 +42,10 @@ class TimesheetResource extends Resource
         return __('resources.user.navigation_group');
     }
 
-    protected static ?int $navigationSort = 3;
+    public static function canViewAny(): bool
+    {
+        return false;
+    }
 
     public static function form(Form $form): Form
     {

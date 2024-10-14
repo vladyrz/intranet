@@ -18,7 +18,11 @@ class DepartamentResource extends Resource
     protected static ?string $model = Departament::class;
     protected static ?string $navigationGroup = 'System Management';
     protected static ?string $navigationIcon = 'heroicon-o-building-office';
-    protected static ?int $navigationSort = 6;
+
+    public static function canViewAny(): bool
+    {
+        return false;
+    }
 
     public static function form(Form $form): Form
     {

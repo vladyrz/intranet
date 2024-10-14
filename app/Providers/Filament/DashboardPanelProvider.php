@@ -66,7 +66,7 @@ class DashboardPanelProvider extends PanelProvider
             ])
             ->userMenuItems([
                 MenuItem::make()
-                    ->label('Personal')
+                    ->label('Panel Personal')
                     ->url('/personal')
                     ->icon('heroicon-o-cog-6-tooth')
                     ->visible(fn (): bool => auth()->user()?->hasAnyRole([
