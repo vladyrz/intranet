@@ -17,16 +17,4 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    // public function boot(): void
-    // {
-    //     //
-    //     PanelSwitch::configureUsing(function (PanelSwitch $panelSwitch) {
-    //         // Custom configurations go here
-    //         $panelSwitch
-    //         ->simple()
-    //         ->visible(fn (): bool => auth()->user()?->hasAnyRole([
-    //             'super_admin'
-    //         ]));
-    //     });
-    // }
 }
