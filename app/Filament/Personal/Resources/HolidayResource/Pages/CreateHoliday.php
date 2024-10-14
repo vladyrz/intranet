@@ -19,13 +19,16 @@ class CreateHoliday extends CreateRecord
     {
         $data['user_id'] = Auth::user()->id;
         $data['type'] = 'pending';
-        $userAdmin = User::find(1);
+        $superAdmins = User::role('super_admin')->get();
         $dataToSend = array (
             'day' => $data['day'],
             'name' => User::find($data['user_id'])->name,
             'email' => User::find($data['user_id'])->email,
         );
-        Mail::to($userAdmin)->send(new HolidayPending($dataToSend));
+
+        foreach ($superAdmins as $admin) {
+            Mail::to($admin)->send(new HolidayPending($dataToSend));
+        }
 
         // Notification::make()
         //     ->title('Solicitud de Vacaciones')

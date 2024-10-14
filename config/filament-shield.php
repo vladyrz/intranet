@@ -29,6 +29,14 @@ return [
         'name' => 'panel_user',
     ],
 
+    // 'panel_user' => [
+    //     'roles' => ['panel_user']
+    // ],
+
+    // 'soporte' => [
+    //     'roles' => ['soporte']
+    // ],
+
     'permission_prefixes' => [
         'resource' => [
             'view',
