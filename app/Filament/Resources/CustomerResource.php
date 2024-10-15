@@ -20,6 +20,13 @@ class CustomerResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationGroup = null;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('resources.employee.navigation_group');
+    }
+
     public static function form(Form $form): Form
     {
         return $form

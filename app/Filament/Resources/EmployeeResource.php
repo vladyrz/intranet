@@ -45,7 +45,7 @@ class EmployeeResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('resources.user.navigation_group');
+        return __('resources.employee.navigation_group');
     }
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';

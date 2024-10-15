@@ -13,6 +13,7 @@ return [
         'label' => 'Empleado',
         'plural' => 'Empleados',
         'navigation' => 'Empleados',
+        'navigation_group' => 'Gestión de Empleados',
         'sectionEmployee' => 'Información del Empleado',
         'sectionPersonal' => 'Información Personal',
         'sectionAddress' => 'Dirección'
