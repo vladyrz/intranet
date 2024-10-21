@@ -1,5 +1,6 @@
 <?php
 
+use App\Filament\Pages\CustomPropertyPage;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect('/personal');
 });
+
+Route::get('/custom-property-page', CustomPropertyPage::class)->name('custom.property.page');
