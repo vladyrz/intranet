@@ -8,11 +8,14 @@ use App\Models\Customer;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Parallax\FilamentComments\Infolists\Components\CommentsEntry;
+use Parallax\FilamentComments\Tables\Actions\CommentsAction;
 
 class CustomerResource extends Resource
 {
@@ -25,6 +28,14 @@ class CustomerResource extends Resource
     public static function getNavigationGroup(): ?string
     {
         return __('resources.employee.navigation_group');
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema(([
+                CommentsEntry::make('filament_comments')
+            ]));
     }
 
     public static function form(Form $form): Form
@@ -148,6 +159,9 @@ class CustomerResource extends Resource
                 //
             ])
             ->actions([
+                CommentsAction::make()
+                    ->color('info'),
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
