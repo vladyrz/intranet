@@ -48,7 +48,7 @@ class EmployeeResource extends Resource
         return __('resources.employee.navigation_group');
     }
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
     public static function form(Form $form): Form
     {
@@ -142,7 +142,7 @@ class EmployeeResource extends Resource
                         ->live()
                         ->afterStateUpdated(function (Set $set){
                             $set('city_id', null);
-                        }),                    
+                        }),
                     Forms\Components\Select::make('city_id')
                         ->label(__('translate.employee.locationCity'))
                         ->options(fn (Get $get): Collection => City::query()

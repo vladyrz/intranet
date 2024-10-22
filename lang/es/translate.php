@@ -30,5 +30,42 @@ return [
         'marital_status' => 'Estado civil',
         'created_at' => 'Creado el',
         'updated_at' => 'Actualizado el',
-    ]
+    ],
+
+    'customer' => [
+        'tab_total_customers' => 'Total de clientes',
+        'tab_buyer' => 'Compradores',
+        'tab_seller' => 'Vendedores',
+        'tab_investor' => 'Inversionistas',
+        'tab_tenant' => 'Inquilinos',
+        'tab_other' => 'Otros',
+        'options_cpreferences' => [
+            'Correo electrónico',
+            'WhatsApp',
+            'Teléfono',
+            'Otro'
+        ],
+        'options_cust_type' => [
+            'Comprador',
+            'Vendedor',
+            'Inversionista',
+            'Inquilino',
+            'Otro'
+        ],
+        'user_id' => 'Agente',
+        'full_name' => 'Nombre completo',
+        'customer_name' => 'Nombre del cliente',
+        'email' => 'Correo electrónico',
+        'phone_number' => 'Número de teléfono',
+        'contact_preferences' => 'Preferencias de contacto',
+        'initial_contact_date' => 'Fecha de contacto inicial',
+        'customer_type' => 'Tipo de cliente',
+        'credid_information' => 'Información de credid',
+        'budget' => 'Presupuesto',
+        'financing' => 'Financiamiento',
+        'expected_commission' => 'Comisión esperada',
+        'address' => 'Dirección',
+        'created_at' => 'Creado el',
+        'updated_at' => 'Actualizado el',
+    ],
 ];

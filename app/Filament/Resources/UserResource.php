@@ -50,7 +50,7 @@ class UserResource extends Resource
         return __('resources.user.navigation_group');
     }
 
-    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
     protected static ?int $navigationSort = 4;
     // protected static ?string $modelLabel = 'usuario';
     // protected static ?string $pluralModelLabel = 'Usuarios';

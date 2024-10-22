@@ -41,6 +41,11 @@ class HolidayResource extends Resource
         return 'The number of pending holidays';
     }
 
+    public static function canViewAny(): bool
+    {
+        return false;
+    }
+
     public static function form(Form $form): Form
     {
         return $form

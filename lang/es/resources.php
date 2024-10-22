@@ -19,6 +19,15 @@ return [
         'sectionAddress' => 'Dirección'
     ],
 
+    'customer' => [
+        'label' => 'Cliente',
+        'plural' => 'Clientes',
+        'navigation' => 'Clientes',
+        'navigation_group' => 'Gestión de Clientes',
+        'sectionCustomer' => 'Información del Cliente',
+        'sectionAgent' => 'Información del Agente',
+    ],
+
     'timesheet' => [
         'label' => 'Registro de hora',
         'plural' => 'Registros de horas',

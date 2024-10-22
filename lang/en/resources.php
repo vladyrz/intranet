@@ -19,6 +19,15 @@ return [
         'sectionAddress' => 'Address Info'
     ],
 
+    'customer' => [
+        'label' => 'Customer',
+        'plural' => 'Customers',
+        'navigation' => 'Customers',
+        'navigation_group' => 'Customers Management',
+        'sectionCustomer' => 'Customer Info',
+        'sectionAgent' => 'Agent Info'
+    ],
+
     'timesheet' => [
         'label' => 'Timesheet',
         'plural' => 'Timesheets',
