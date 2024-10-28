@@ -5,10 +5,12 @@ namespace App\Providers\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\Support\Enums\MaxWidth;
 use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -27,6 +29,7 @@ class SoportePanelProvider extends PanelProvider
             ->id('soporte')
             ->path('soporte')
             ->login()
+            ->maxContentWidth(MaxWidth::Full)
             ->colors([
                 'primary' => Color::Indigo,
             ])
@@ -38,7 +41,6 @@ class SoportePanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Soporte/Widgets'), for: 'App\\Filament\\Soporte\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -56,10 +58,19 @@ class SoportePanelProvider extends PanelProvider
             ])
             ->plugins([
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
-                // PanelRoles::make()
-                // ->roleToAssign('soporte')
-                // ->restrictedRoles(['soporte'])
+                PanelRoles::make()
+                ->roleToAssign('soporte')
+                ->restrictedRoles(['soporte'])
             ])
-            ;
+            ->userMenuItems([
+                MenuItem::make()
+                    ->label('Panel personal')
+                    ->url('/personal')
+                    ->icon('heroicon-o-cog-6-tooth')
+                    ->visible(fn (): bool => auth()->user()?->hasAnyRole([
+                        'soporte',
+                    ])),
+                // ...
+            ]);
     }
 }

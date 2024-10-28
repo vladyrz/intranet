@@ -66,11 +66,11 @@ class PersonalPanelProvider extends PanelProvider
             ])
             ->plugins([
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
-                
+
             ])
             ->userMenuItems([
                 MenuItem::make()
-                    ->label('Admin')
+                    ->label('Panel de Administración')
                     ->url('/admin')
                     ->icon('heroicon-o-cog-6-tooth')
                     ->visible(function (){
@@ -86,20 +86,28 @@ class PersonalPanelProvider extends PanelProvider
                             return false;
                         }
                         ;
-                    }) ,
+                    }),
+
+                MenuItem::make()
+                    ->label('Panel de Soporte')
+                    ->url('/soporte')
+                    ->icon('heroicon-o-check-badge')
+                    ->visible(fn (): bool => auth()->user()?->hasAnyRole([
+                        'soporte',
+                    ])),
                 // ...
             ])
             ;
-            
+
     }
 
     public function boot()
     {
- 
+
         LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
             $switch
                 ->locales(['es','en']); // also accepts a closure
         });
- 
+
     }
 }

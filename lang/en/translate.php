@@ -33,12 +33,6 @@ return [
     ],
 
     'customer' => [
-        'tab_total_customers' => 'Total customers',
-        'tab_buyer' => 'Buyers',
-        'tab_seller' => 'Sellers',
-        'tab_investor' => 'Investors',
-        'tab_tenant' => 'Tenants',
-        'tab_other' => 'Others',
         'options_cpreferences' => [
             'Email',
             'WhatsApp',
@@ -65,6 +59,51 @@ return [
         'financing' => 'Financing',
         'expected_commission' => 'Expected commission',
         'address' => 'Address',
+        'created_at' => 'Created at',
+        'updated_at' => 'Updated at',
+    ],
+
+    'organization' => [
+        'organization_type' => 'Organization type',
+        'options_organization_type' => [
+            'Banks',
+            'Cooperatives',
+            'Financial institutions',
+            'Associations',
+            'Funds',
+            'Development and others',
+            'Rent a car'
+        ],
+        'organization_name' => 'Organization name',
+        'remarks' => 'Remarks',
+        'asset_update_dates' => 'Asset update dates',
+        'sugef_report' => 'Sugef report',
+        'offer_form' => 'Offer form',
+        'catalog_or_website' => 'Catalog or website',
+        'vehicles_page' => 'Vehicles page',
+        'created_at' => 'Created at',
+        'updated_at' => 'Updated at',
+    ],
+
+    'organization_contact' => [
+        'organization_id' => 'Organization name',
+        'contact_type' => 'Contact type',
+        'option_contact_type' => [
+            'Adjudicated assets',
+            'Cotizations',
+            'Billing',
+        ],
+        'contact_name' => 'Contact name',
+        'contact_position' => 'Contact position',
+        'contact_phone_number' => 'Contact phone number',
+        'contact_email' => 'Contact email',
+        'contact_main_method' => 'Contact main method',
+        'option_contact_main_method' => [
+            'Email',
+            'WhatsApp',
+            'Both',
+        ],
+        'contact_remarks' => 'Contact remarks',
         'created_at' => 'Created at',
         'updated_at' => 'Updated at',
     ],

@@ -33,12 +33,6 @@ return [
     ],
 
     'customer' => [
-        'tab_total_customers' => 'Total de clientes',
-        'tab_buyer' => 'Compradores',
-        'tab_seller' => 'Vendedores',
-        'tab_investor' => 'Inversionistas',
-        'tab_tenant' => 'Inquilinos',
-        'tab_other' => 'Otros',
         'options_cpreferences' => [
             'Correo electrónico',
             'WhatsApp',
@@ -65,6 +59,51 @@ return [
         'financing' => 'Financiamiento',
         'expected_commission' => 'Comisión esperada',
         'address' => 'Dirección',
+        'created_at' => 'Creado el',
+        'updated_at' => 'Actualizado el',
+    ],
+
+    'organization' => [
+        'organization_type' => 'Tipo de organización',
+        'options_organization_type' => [
+            'Bancos',
+            'Cooperativas',
+            'Financieras',
+            'Asociaciones',
+            'Fondos',
+            'Desarrolladoras y otros',
+            'Alquiler de coches'
+        ],
+        'organization_name' => 'Nombre de la organización',
+        'remarks' => 'Observaciones',
+        'asset_update_dates' => 'Fechas de actualización de bienes',
+        'sugef_report' => 'Boleta sugef',
+        'offer_form' => 'Formulario de ofertas',
+        'catalog_or_website' => 'Catálogo o sitio web',
+        'vehicles_page' => 'Página de vehículos',
+        'created_at' => 'Creado el',
+        'updated_at' => 'Actualizado el',
+    ],
+
+    'organization_contact' => [
+        'organization_id' => 'Nombre de la organización',
+        'contact_type' => 'Tipo de contacto',
+        'option_contact_type' => [
+            'Bienes Adjudicados',
+            'Cotizaciones',
+            'Facturación',
+        ],
+        'contact_name' => 'Nombre del contacto',
+        'contact_position' => 'Posición del contacto',
+        'contact_phone_number' => 'Número de teléfono del contacto',
+        'contact_email' => 'Correo electrónico del contacto',
+        'contact_main_method' => 'Método principal de contacto',
+        'option_contact_main_method' => [
+            'Correo electrónico',
+            'WhatsApp',
+            'Ambos',
+        ],
+        'contact_remarks' => 'Observaciones del contacto',
         'created_at' => 'Creado el',
         'updated_at' => 'Actualizado el',
     ],
