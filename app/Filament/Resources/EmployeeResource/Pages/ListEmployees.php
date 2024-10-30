@@ -26,7 +26,7 @@ class ListEmployees extends ListRecords
             null => Tab::make('All')
                 ->badge($this->orderByStatus() ?? 0)
                 ->badgeColor(Color::Orange)
-                ->label('Total de usuarios'),
+                ->label(__('resources.employee.tab_total_employees')),
             'Pendiente' => Tab::make()
                 ->query(fn ($query) => $query->where('progress_status', 'Pendiente'))
                 ->badge($this->orderByStatus('Pendiente') ?? 0)

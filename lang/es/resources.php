@@ -16,7 +16,12 @@ return [
         'navigation_group' => 'Gestión de Empleados',
         'sectionEmployee' => 'Información del Empleado',
         'sectionPersonal' => 'Información Personal',
-        'sectionAddress' => 'Dirección'
+        'sectionAddress' => 'Dirección',
+        'tab_total_employees' => 'Total de empleados',
+        'tab_pending' => 'Pendientes',
+        'tab_in_form' => 'En formación',
+        'tab_certified' => 'Certificados',
+        'tab_retired' => 'Retirados',
     ],
 
     'customer' => [

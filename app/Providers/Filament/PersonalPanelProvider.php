@@ -95,6 +95,14 @@ class PersonalPanelProvider extends PanelProvider
                     ->visible(fn (): bool => auth()->user()?->hasAnyRole([
                         'soporte',
                     ])),
+
+                MenuItem::make()
+                    ->label('Panel de RRHH')
+                    ->url('/rrhh')
+                    ->icon('heroicon-o-cursor-arrow-ripple')
+                    ->visible(fn (): bool => auth()->user()?->hasAnyRole([
+                        'rrhh',
+                    ])),
                 // ...
             ])
             ;

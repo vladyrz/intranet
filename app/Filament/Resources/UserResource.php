@@ -115,7 +115,8 @@ class UserResource extends Resource
                     ->color(fn (string $state): string => match ($state) {
                         'super_admin' => 'info',
                         'panel_user' => 'warning',
-                        'soporte' => 'success'
+                        'soporte' => 'success',
+                        'rrhh' => 'danger',
                     })
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email_verified_at')

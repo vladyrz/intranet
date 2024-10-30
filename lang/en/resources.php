@@ -16,7 +16,12 @@ return [
         'navigation_group' => 'Employees Management',
         'sectionEmployee' => 'Employee Info',
         'sectionPersonal' => 'Personal Info',
-        'sectionAddress' => 'Address Info'
+        'sectionAddress' => 'Address Info',
+        'tab_total_employees' => 'Total employees',
+        'tab_pending' => 'Pending',
+        'tab_in_form' => 'In Form',
+        'tab_certified' => 'Certified',
+        'tab_retired' => 'Retired',
     ],
 
     'customer' => [

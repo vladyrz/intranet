@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Rrhh\Resources;
 
-use App\Filament\Resources\EmployeeResource\Pages;
-use App\Filament\Resources\EmployeeResource\RelationManagers;
+use App\Filament\Rrhh\Resources\EmployeeResource\Pages;
+use App\Filament\Rrhh\Resources\EmployeeResource\RelationManagers;
 use App\Models\City;
 use App\Models\Employee;
 use App\Models\State;
-use Filament\Actions\DeleteAction;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
@@ -155,7 +154,6 @@ class EmployeeResource extends Resource
                         ->label(__('translate.employee.address'))
                         ->columnSpanFull(),
                 ])
-
             ]);
     }
 
@@ -218,7 +216,8 @@ class EmployeeResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('profession')
                     ->label(__('translate.employee.profession'))
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('license_plate')
                     ->label(__('translate.employee.license_plate'))
                     ->searchable()
@@ -281,19 +280,10 @@ class EmployeeResource extends Resource
             ]);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListEmployees::route('/'),
-            'create' => Pages\CreateEmployee::route('/create'),
-            'edit' => Pages\EditEmployee::route('/{record}/edit'),
+            'index' => Pages\ManageEmployees::route('/'),
         ];
     }
 }
