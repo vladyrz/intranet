@@ -67,6 +67,20 @@ return [
         'tab_billing' => 'Facturación',
     ],
 
+    'sales' => [
+        'label' => 'Venta',
+        'plural' => 'Ventas',
+        'navigation' => 'Ventas',
+        'navigation_group' => 'Gestión de Ventas',
+        'sectionSale' => 'Información de la Venta',
+        'tab_total_sales' => 'Total de ventas',
+        'tab_offers' => 'Ofertadas',
+        'tab_in_process' => 'En proceso',
+        'tab_approved' => 'Aprobadas',
+        'tab_signed' => 'Firmadas',
+        'tab_rejected' => 'Rechazadas',
+    ],
+
     'timesheet' => [
         'label' => 'Registro de hora',
         'plural' => 'Registros de horas',

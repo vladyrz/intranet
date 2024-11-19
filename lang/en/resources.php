@@ -66,6 +66,20 @@ return [
         'tab_billing' => 'Billing',
     ],
 
+    'sales' => [
+        'label' => 'Sale',
+        'plural' => 'Sales',
+        'navigation' => 'Sales',
+        'navigation_group' => 'Sales Management',
+        'sectionSale' => 'Sale Info',
+        'tab_total_sales' => 'Total Sales',
+        'tab_offers' => 'Offers',
+        'tab_in_process' => 'In Process',
+        'tab_approved' => 'Approved',
+        'tab_signed' => 'Signed',
+        'tab_rejected' => 'Rejected',
+    ],
+
     'timesheet' => [
         'label' => 'Timesheet',
         'plural' => 'Timesheets',

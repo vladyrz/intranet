@@ -125,4 +125,33 @@ return [
         'created_at' => 'Creado el',
         'updated_at' => 'Actualizado el',
     ],
+
+    'sale' => [
+        'property_name' => 'Nombre de la propiedad',
+        'user_id' => 'Agente',
+        'organization_id' => 'Organización',
+        'offer_amount_usd' => 'Monto de oferta en $',
+        'offer_amount_crc' => 'Monto de oferta en ₡',
+        'status' => 'Estado',
+        'options_status' => [
+            'Ofertado',
+            'En proceso',
+            'Aprobado',
+            'Firmado',
+            'Rechazado',
+        ],
+        'client_name' => 'Nombre del cliente',
+        'client_email' => 'Correo electrónico del cliente',
+        'offer_date' => 'Fecha de oferta',
+        'comission_percentage' => 'Porcentaje de comisión',
+        'offer_currency' => 'Moneda de oferta',
+        'options_currency' => [
+            'Doláres',
+            'Colones',
+        ],
+        'commission_amount_usd' => 'Comisión en $',
+        'commission_amount_crc' => 'Comisión en ₡',
+        'created_at' => 'Creado el',
+        'updated_at' => 'Actualizado el',
+    ],
 ];

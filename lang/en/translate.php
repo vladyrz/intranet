@@ -125,4 +125,33 @@ return [
         'created_at' => 'Created at',
         'updated_at' => 'Updated at',
     ],
+
+    'sale' => [
+        'property_name' => 'Property name',
+        'user_id' => 'Agent',
+        'organization_id' => 'Organization',
+        'offer_amount_usd' => 'Offer amount in $',
+        'offer_amount_crc' => 'Offer amount in ₡',
+        'status' => 'Status',
+        'options_status' => [
+            'Offered',
+            'In process',
+            'Approved',
+            'Signed',
+            'Rejected',
+        ],
+        'client_name' => 'Client name',
+        'client_email' => 'Client email',
+        'offer_date' => 'Offer date',
+        'comission_percentage' => 'Commission percentage',
+        'offer_currency' => 'Offer currency',
+        'options_currency' => [
+            'Dollars',
+            'Colones',
+        ],
+        'commission_amount_usd' => 'Commission amount in $',
+        'commission_amount_crc' => 'Commission amount in ₡',
+        'created_at' => 'Created at',
+        'updated_at' => 'Updated at',
+    ],
 ];

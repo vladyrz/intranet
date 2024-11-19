@@ -27,21 +27,21 @@ class ListEmployees extends ListRecords
                 ->badge($this->orderByStatus() ?? 0)
                 ->badgeColor(Color::Orange)
                 ->label(__('resources.employee.tab_total_employees')),
-            'Pendiente' => Tab::make()
-                ->query(fn ($query) => $query->where('progress_status', 'Pendiente'))
-                ->badge($this->orderByStatus('Pendiente') ?? 0)
+            Tab::make(__('resources.employee.tab_pending'))
+                ->query(fn ($query) => $query->where('progress_status', 'pending'))
+                ->badge($this->orderByStatus('pending') ?? 0)
                 ->badgeColor(Color::Amber),
-            'En Formación' => Tab::make()
-                ->query(fn ($query) => $query->where('progress_status', 'En Formación'))
-                ->badge($this->orderByStatus('En Formación') ?? 0)
+            Tab::make(__('resources.employee.tab_in_form'))
+                ->query(fn ($query) => $query->where('progress_status', 'in_form'))
+                ->badge($this->orderByStatus('in_form') ?? 0)
                 ->badgeColor(Color::Indigo),
-            'Certificado' => Tab::make()
-                ->query(fn ($query) => $query->where('progress_status', 'Certificado'))
-                ->badge($this->orderByStatus('Certificado') ?? 0)
+            Tab::make(__('resources.employee.tab_certified'))
+                ->query(fn ($query) => $query->where('progress_status', 'certified'))
+                ->badge($this->orderByStatus('certified') ?? 0)
                 ->badgeColor(Color::Green),
-            'Retirado' => Tab::make()
-                ->query(fn ($query) => $query->where('progress_status', 'Retirado'))
-                ->badge($this->orderByStatus('Retirado') ?? 0)
+            Tab::make(__('resources.employee.tab_retired'))
+                ->query(fn ($query) => $query->where('progress_status', 'retired'))
+                ->badge($this->orderByStatus('retired') ?? 0)
                 ->badgeColor(Color::Red),
         ];
     }

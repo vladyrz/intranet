@@ -24,4 +24,8 @@ class Organization extends Model
     public function contacts() {
         return $this->hasMany(OrganizationContact::class);
     }
+
+    public function sales() {
+        return $this->hasMany(Sale::class);
+    }
 }
