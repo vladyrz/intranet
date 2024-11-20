@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Sales\Resources;
 
-use App\Filament\Resources\SaleResource\Pages;
-use App\Filament\Resources\SaleResource\RelationManagers;
+use App\Filament\Sales\Resources\SaleResource\Pages;
+use App\Filament\Sales\Resources\SaleResource\RelationManagers;
 use App\Models\Sale;
 use Filament\Forms;
 use Filament\Forms\Components\Section;

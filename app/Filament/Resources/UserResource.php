@@ -117,6 +117,7 @@ class UserResource extends Resource
                         'panel_user' => 'warning',
                         'soporte' => 'success',
                         'rrhh' => 'danger',
+                        'ventas' => 'success',
                     })
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email_verified_at')

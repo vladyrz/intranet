@@ -103,6 +103,14 @@ class PersonalPanelProvider extends PanelProvider
                     ->visible(fn (): bool => auth()->user()?->hasAnyRole([
                         'rrhh',
                     ])),
+
+                MenuItem::make()
+                    ->label('Panel de Ventas')
+                    ->url('/sales')
+                    ->icon('heroicon-o-currency-dollar')
+                    ->visible(fn (): bool => auth()->user()?->hasAnyRole([
+                        'ventas',
+                    ])),
                 // ...
             ])
             ;
