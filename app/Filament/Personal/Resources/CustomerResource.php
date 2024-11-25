@@ -87,11 +87,11 @@ class CustomerResource extends Resource
                     Forms\Components\Select::make('customer_type')
                         ->label(__('translate.customer.customer_type'))
                         ->options([
-                            'buyer' => __('translate.customer.options_cust_type.1'),
-                            'seller' => __('translate.customer.options_cust_type.2'),
-                            'investor' => __('translate.customer.options_cust_type.3'),
-                            'tenant' => __('translate.customer.options_cust_type.4'),
-                            'other' => __('translate.customer.options_cust_type.5')
+                            'buyer' => __('translate.customer.options_cust_type.0'),
+                            'seller' => __('translate.customer.options_cust_type.1'),
+                            'investor' => __('translate.customer.options_cust_type.2'),
+                            'tenant' => __('translate.customer.options_cust_type.3'),
+                            'other' => __('translate.customer.options_cust_type.4'),
                         ]),
                     Forms\Components\TextInput::make('property_name')
                         ->label(__('translate.customer.property_name'))
