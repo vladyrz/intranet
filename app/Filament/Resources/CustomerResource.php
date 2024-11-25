@@ -6,7 +6,12 @@ use App\Filament\Resources\CustomerResource\Pages;
 use App\Filament\Resources\CustomerResource\RelationManagers;
 use App\Models\Customer;
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
@@ -65,86 +70,94 @@ class CustomerResource extends Resource
                 Section::make(__('resources.customer.sectionCustomer'))
                 ->columns(3)
                 ->schema([
-                    Forms\Components\TextInput::make('full_name')
+                    Select::make('user_id')
+                        ->label(__('translate.customer.user_id'))
+                        ->relationship(
+                            name: 'user',
+                            titleAttribute: 'name',
+                        ),
+                    TextInput::make('full_name')
                         ->label(__('translate.customer.full_name'))
                         ->maxLength(255),
-                    Forms\Components\TextInput::make('national_id')
+                    TextInput::make('national_id')
                         ->label(__('translate.customer.national_id'))
                         ->maxLength(255),
-                    Forms\Components\TextInput::make('email')
+                    TextInput::make('email')
                         ->label(__('translate.customer.email'))
                         ->maxLength(255),
-                    Forms\Components\TextInput::make('phone_number')
+                    TextInput::make('phone_number')
                         ->label(__('translate.customer.phone_number'))
                         ->maxLength(20),
-                    Forms\Components\TextInput::make('property_name')
-                        ->label(__('translate.customer.property_name'))
-                        ->maxLength(255),
-                    Forms\Components\Select::make('organization_id')
-                        ->label(__('translate.customer.organization_id'))
-                        ->relationship(
-                            name: 'organization',
-                            titleAttribute: 'organization_name',
-                        ),
-                    Forms\Components\Select::make('contact_preferences')
-                        ->label(__('translate.customer.contact_preferences'))
-                        ->options([
-                            'email' => __('translate.customer.options_cpreferences.0'),
-                            'whatsapp' => __('translate.customer.options_cpreferences.1'),
-                            'phone' => __('translate.customer.options_cpreferences.2'),
-                            'other' => __('translate.customer.options_cpreferences.3')
-                        ])
-                        ,
-                    Forms\Components\DatePicker::make('initial_contact_date')
-                        ->label(__('translate.customer.initial_contact_date')),
-                    Forms\Components\Select::make('customer_type')
+                    Select::make('customer_type')
                         ->label(__('translate.customer.customer_type'))
                         ->options([
                             'buyer' => __('translate.customer.options_cust_type.0'),
                             'seller' => __('translate.customer.options_cust_type.1'),
                             'investor' => __('translate.customer.options_cust_type.2'),
                             'tenant' => __('translate.customer.options_cust_type.3'),
-                            'other' => __('translate.customer.options_cust_type.4')
-                        ])
-                        ,
-                    Forms\Components\TextInput::make('budget_usd')
-                        ->label(__('translate.customer.budget_usd'))
-                        ->numeric(),
-                    Forms\Components\TextInput::make('budget_crc')
-                        ->label(__('translate.customer.budget_crc'))
-                        ->numeric(),
-                    Forms\Components\TextInput::make('expected_commission_usd')
-                        ->label(__('translate.customer.expected_commission_usd'))
-                        ->numeric(),
-                    Forms\Components\TextInput::make('expected_commission_crc')
-                        ->label(__('translate.customer.expected_commission_crc'))
-                        ->numeric(),
-                    Forms\Components\Select::make('state')
+                            'other' => __('translate.customer.options_cust_type.4'),
+                        ]),
+                    TextInput::make('property_name')
+                        ->label(__('translate.customer.property_name'))
+                        ->maxLength(255),
+                    Select::make('organization_id')
+                        ->label(__('translate.customer.organization_id'))
+                        ->relationship(
+                            name: 'organization',
+                            titleAttribute: 'organization_name',
+                        ),
+                    Textarea::make('address')
+                        ->label(__('translate.customer.address')),
+                    Select::make('state')
                         ->label(__('translate.customer.state'))
                         ->options([
                             'pending' => __('translate.customer.options_state.0'),
                             'rejected' => __('translate.customer.options_state.1'),
                             'approved' => __('translate.customer.options_state.2'),
                             'in_process' => __('translate.customer.options_state.3'),
-                        ])
-                        ->required(),
-                    Forms\Components\Textarea::make('address')
-                        ->label(__('translate.customer.address')),
-                    // Forms\Components\Textarea::make('credid_information')
-                    //     ->columnSpanFull()
-                    //     ,
-                    Forms\Components\Toggle::make('financing')
-                        ->label(__('translate.customer.financing')),
+                        ]),
+
                 ]),
 
-                Section::make(__('resources.customer.sectionAgent'))
+                Section::make(__('resources.customer.section_source_customer'))
+                ->columns(3)
+                ->schema([
+                    Select::make('contact_source')
+                        ->label(__('translate.customer.contact_source'))
+                        ->options([
+                            'hubspot' => __('translate.customer.options_contact_source.0'),
+                            'referred' => __('translate.customer.options_contact_source.1'),
+                            'easychat' => __('translate.customer.options_contact_source.2'),
+                            'whatsapp' => __('translate.customer.options_contact_source.3'),
+                            'email' => __('translate.customer.options_contact_source.4'),
+                            'other' => __('translate.customer.options_contact_source.5'),
+                        ]),
+                    Select::make('contact_preferences')
+                        ->label(__('translate.customer.contact_preferences'))
+                        ->options([
+                            'email' => __('translate.customer.options_cpreferences.0'),
+                            'whatsapp' => __('translate.customer.options_cpreferences.1'),
+                            'phone' => __('translate.customer.options_cpreferences.2'),
+                            'other' => __('translate.customer.options_cpreferences.3')
+                        ]),
+                    DatePicker::make('initial_contact_date')
+                        ->label(__('translate.customer.initial_contact_date')),
+                ]),
+
+                Section::make(__('resources.customer.section_financial'))
                 ->columns(2)
                 ->schema([
-                    Forms\Components\Select::make('user_id')
-                        ->label(__('translate.customer.user_id'))
-                        ->relationship(name: 'user', titleAttribute: 'name')
-
-                ])
+                    TextInput::make('budget_usd')
+                        ->label(__('translate.customer.budget_usd')),
+                    TextInput::make('budget_crc')
+                        ->label(__('translate.customer.budget_crc')),
+                    TextInput::make('expected_commission_usd')
+                        ->label(__('translate.customer.expected_commission_usd')),
+                    TextInput::make('expected_commission_crc')
+                        ->label(__('translate.customer.expected_commission_crc')),
+                    Toggle::make('financing')
+                        ->label(__('translate.customer.financing')),
+                ]),
             ]);
     }
 
@@ -152,6 +165,11 @@ class CustomerResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('user.name')
+                    ->label(__('translate.customer.user_id'))
+                    ->searchable()
+                    ->alignCenter()
+                    ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('full_name')
                     ->label(__('translate.customer.customer_name'))
                     ->searchable()
@@ -170,15 +188,20 @@ class CustomerResource extends Resource
                     ->label(__('translate.customer.phone_number'))
                     ->searchable()
                     ->alignCenter(),
-                Tables\Columns\TextColumn::make('user.name')
-                    ->label(__('translate.customer.user_id'))
+                Tables\Columns\TextColumn::make('contact_source')
+                    ->label(__('translate.customer.contact_source'))
+                    ->alignCenter()
                     ->searchable()
-                    ->alignCenter()
-                    ->toggleable(isToggledHiddenByDefault: false),
-                Tables\Columns\IconColumn::make('user.state')
-                    ->label(__('translate.user.state'))
-                    ->alignCenter()
-                    ->boolean()
+                    ->formatStateUsing(function ($state){
+                        return match ($state) {
+                            'hubspot' => __('translate.customer.options_contact_source.0'),
+                            'referred' => __('translate.customer.options_contact_source.1'),
+                            'easychat' => __('translate.customer.options_contact_source.2'),
+                            'whatsapp' => __('translate.customer.options_contact_source.3'),
+                            'email' => __('translate.customer.options_contact_source.4'),
+                            'other' => __('translate.customer.options_contact_source.5'),
+                        };
+                    })
                     ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('property_name')
                     ->label(__('translate.customer.property_name'))
@@ -207,6 +230,7 @@ class CustomerResource extends Resource
                 Tables\Columns\TextColumn::make('initial_contact_date')
                     ->label(__('translate.customer.initial_contact_date'))
                     ->alignCenter()
+                    ->date()
                     ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('customer_type')
                     ->label(__('translate.customer.customer_type'))
@@ -285,6 +309,16 @@ class CustomerResource extends Resource
                         name: 'user',
                         titleAttribute: 'name',
                     ),
+                SelectFilter::make('contact_source')
+                    ->label(__('translate.customer.contact_source'))
+                    ->options([
+                        'hubspot' => __('translate.customer.options_contact_source.0'),
+                        'referred' => __('translate.customer.options_contact_source.1'),
+                        'easychat' => __('translate.customer.options_contact_source.2'),
+                        'whatsapp' => __('translate.customer.options_contact_source.3'),
+                        'email' => __('translate.customer.options_contact_source.4'),
+                        'other' => __('translate.customer.options_contact_source.5')
+                    ]),
                 SelectFilter::make('contact_preferences')
                     ->label(__('translate.customer.contact_preferences'))
                     ->options([

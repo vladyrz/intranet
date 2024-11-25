@@ -18,6 +18,7 @@ class Customer extends Model
         'national_id',
         'email',
         'phone_number',
+        'contact_source',
         'property_name',
         'organization_id',
         'address',

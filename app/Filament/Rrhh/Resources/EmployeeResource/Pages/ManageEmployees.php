@@ -43,6 +43,10 @@ class ManageEmployees extends ManageRecords
                 ->query(fn ($query) => $query->where('progress_status', 'retired'))
                 ->badge($this->orderByStatus('retired') ?? 0)
                 ->badgeColor(Color::Red),
+            Tab::make(__('resources.employee.tab_referred'))
+                ->query(fn ($query) => $query->where('progress_status', 'referred'))
+                ->badge($this->orderByStatus('referred') ?? 0)
+                ->badgeColor(Color::Fuchsia),
         ];
     }
 

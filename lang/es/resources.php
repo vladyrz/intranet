@@ -22,6 +22,7 @@ return [
         'tab_in_form' => 'En formación',
         'tab_certified' => 'Certificados',
         'tab_retired' => 'Retirados',
+        'tab_referred' => 'Referidos',
     ],
 
     'customer' => [
@@ -30,7 +31,8 @@ return [
         'navigation' => 'Clientes',
         'navigation_group' => 'Gestión de Clientes',
         'sectionCustomer' => 'Información del Cliente',
-        'sectionAgent' => 'Información del Agente',
+        'section_source_customer' => 'Fuente y Preferencias de Contacto',
+        'section_financial' => 'Información Financiera',
         'tab_total_customers' => 'Total de clientes',
         'tab_buyer' => 'Compradores',
         'tab_seller' => 'Vendedores',

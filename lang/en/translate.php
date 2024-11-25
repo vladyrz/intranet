@@ -21,6 +21,7 @@ return [
             'In Form',
             'Certified',
             'Retired',
+            'Referred'
         ],
         'job_position' => 'Job position',
         'options_job_position' => [
@@ -71,6 +72,15 @@ return [
         'email' => 'Email',
         'phone_number' => 'Phone number',
         'property_name' => 'Property name (or ID)',
+        'contact_source' => 'Contact source',
+        'options_contact_source' => [
+            'HubSpot',
+            'Referred',
+            'EasyChat',
+            'WhatsApp',
+            'Email',
+            'Other'
+        ],
         'organization_id' => 'Organization',
         'contact_preferences' => 'Contact preferences',
         'initial_contact_date' => 'Initial contact date',

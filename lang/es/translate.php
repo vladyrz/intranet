@@ -21,6 +21,7 @@ return [
             'En formación',
             'Certificado',
             'Retirado',
+            'Referidor'
         ],
         'job_position' => 'Posición de trabajo',
         'options_job_position' => [
@@ -71,6 +72,15 @@ return [
         'email' => 'Correo electrónico',
         'phone_number' => 'Número de teléfono',
         'property_name' => 'Nombre de la propiedad (o ID)',
+        'contact_source' => 'Fuente de contacto',
+        'options_contact_source' => [
+            'HubSpot',
+            'Referido',
+            'EasyChat',
+            'WhatsApp',
+            'Correo electrónico',
+            'Otro'
+        ],
         'organization_id' => 'Organización',
         'contact_preferences' => 'Preferencias de contacto',
         'initial_contact_date' => 'Fecha de contacto inicial',

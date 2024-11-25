@@ -15,6 +15,7 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -80,6 +81,7 @@ class EmployeeResource extends Resource
                             'in_form' => __('translate.employee.options_progress_status.1'),
                             'certified' => __('translate.employee.options_progress_status.2'),
                             'retired' => __('translate.employee.options_progress_status.3'),
+                            'referred' => __('translate.employee.options_progress_status.4'),
                         ])
                         ->required(),
                     Forms\Components\Toggle::make('contract_status')
@@ -182,6 +184,7 @@ class EmployeeResource extends Resource
                             'in_form' => __('translate.employee.options_progress_status.1'),
                             'certified' => __('translate.employee.options_progress_status.2'),
                             'retired' => __('translate.employee.options_progress_status.3'),
+                            'referred' => __('translate.employee.options_progress_status.4'),
                         };
                     })
                     ->color(fn (string $state): string => match ($state) {
@@ -189,6 +192,7 @@ class EmployeeResource extends Resource
                         'in_form' => 'info',
                         'certified' => 'success',
                         'retired' => 'danger',
+                        'referred' => 'info',
                     })
                     ->searchable()
                     ->alignCenter(),
@@ -268,11 +272,15 @@ class EmployeeResource extends Resource
                     ]),
             ])
             ->actions([
-                CommentsAction::make()
-                    ->color('info'),
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                ActionGroup::make([
+                    CommentsAction::make()
+                        ->color('info'),
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make()
+                        ->color('warning'),
+                    Tables\Actions\DeleteAction::make()
+                        ->color('danger'),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -22,6 +22,7 @@ return [
         'tab_in_form' => 'In Form',
         'tab_certified' => 'Certified',
         'tab_retired' => 'Retired',
+        'tab_referred' => 'Referred',
     ],
 
     'customer' => [
@@ -30,7 +31,8 @@ return [
         'navigation' => 'Customers',
         'navigation_group' => 'Customers Management',
         'sectionCustomer' => 'Customer Info',
-        'sectionAgent' => 'Agent Info',
+        'section_source_customer' => 'Source and Contact Preferences',
+        'section_financial' => 'Financial Info',
         'tab_total_customers' => 'Total customers',
         'tab_buyer' => 'Buyers',
         'tab_seller' => 'Sellers',
