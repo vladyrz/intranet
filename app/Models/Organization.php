@@ -28,4 +28,8 @@ class Organization extends Model
     public function sales() {
         return $this->hasMany(Sale::class);
     }
+
+    public function customers() {
+        return $this->hasMany(Customer::class);
+    }
 }

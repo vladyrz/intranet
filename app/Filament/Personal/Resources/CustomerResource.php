@@ -10,6 +10,8 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -44,6 +46,16 @@ class CustomerResource extends Resource
         return __('resources.customer.navigation_group');
     }
 
+    public static function getNavigationBadge(): ?string
+    {
+        return parent::getEloquentQuery()->where('user_id', Auth::user()->id)->where('state', 'pending')->count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return parent::getEloquentQuery()->where('user_id', Auth::user()->id)->where('state','pending')->count() > 0 ? 'warning' : 'primary';
+    }
+
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
 
     public static function getEloquentQuery(): Builder
@@ -63,12 +75,25 @@ class CustomerResource extends Resource
                     Forms\Components\TextInput::make('full_name')
                         ->label(__('translate.customer.full_name'))
                         ->maxLength(255),
+                    Forms\Components\TextInput::make('national_id')
+                        ->label(__('translate.customer.national_id'))
+                        ->maxLength(255),
                     Forms\Components\TextInput::make('email')
                         ->label(__('translate.customer.email'))
                         ->maxLength(255),
                     Forms\Components\TextInput::make('phone_number')
                         ->label(__('translate.customer.phone_number'))
                         ->maxLength(20),
+                    Forms\Components\TextInput::make('property_name')
+                        ->label(__('translate.customer.property_name'))
+                        ->maxLength(255),
+                    Forms\Components\Select::make('organization_id')
+                        ->label(__('translate.customer.organization_id'))
+                        ->relationship(
+                            name: 'organization',
+                            titleAttribute: 'organization_name',
+                        )
+                        ,
                     Forms\Components\Select::make('contact_preferences')
                         ->label(__('translate.customer.contact_preferences'))
                         ->options([
@@ -90,14 +115,21 @@ class CustomerResource extends Resource
                             'other' => __('translate.customer.options_cust_type.4')
                         ])
                         ,
-                    Forms\Components\TextInput::make('budget')
-                        ->label(__('translate.customer.budget'))
+                    Forms\Components\TextInput::make('budget_usd')
+                        ->label(__('translate.customer.budget_usd'))
                         ->numeric(),
-                    Forms\Components\TextInput::make('expected_commission')
-                        ->label(__('translate.customer.expected_commission'))
+                    Forms\Components\TextInput::make('budget_crc')
+                        ->label(__('translate.customer.budget_crc'))
+                        ->numeric(),
+                    Forms\Components\TextInput::make('expected_commission_usd')
+                        ->label(__('translate.customer.expected_commission_usd'))
+                        ->numeric(),
+                    Forms\Components\TextInput::make('expected_commission_crc')
+                        ->label(__('translate.customer.expected_commission_crc'))
                         ->numeric(),
                     Forms\Components\Textarea::make('address')
-                        ->label(__('translate.customer.address')),
+                        ->label(__('translate.customer.address'))
+                        ->columnSpan(2),
                     // Forms\Components\Textarea::make('credid_information')
                     //     ->columnSpanFull()
                     //     ,
@@ -115,25 +147,36 @@ class CustomerResource extends Resource
                     ->label(__('translate.customer.customer_name'))
                     ->searchable()
                     ->alignCenter(),
+                Tables\Columns\TextColumn::make('national_id')
+                    ->label(__('translate.customer.national_id'))
+                    ->searchable()
+                    ->alignCenter()
+                    ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('email')
                     ->label(__('translate.customer.email'))
                     ->searchable()
                     ->alignCenter()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('phone_number')
                     ->label(__('translate.customer.phone_number'))
                     ->searchable()
                     ->alignCenter(),
+                Tables\Columns\TextColumn::make('property_name')
+                    ->label(__('translate.customer.property_name'))
+                    ->alignCenter()
+                    ->toggleable(isToggledHiddenByDefault: false),
+                Tables\Columns\TextColumn::make('organization.organization_name')
+                    ->label(__('translate.customer.organization_id'))
+                    ->alignCenter()
+                    ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('address')
                     ->label(__('translate.customer.address'))
-                    ->searchable()
                     ->alignCenter()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('contact_preferences')
                     ->label(__('translate.customer.contact_preferences'))
                     ->alignCenter()
-                    ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->toggleable(isToggledHiddenByDefault: false)
                     ->formatStateUsing(function ($state){
                         return match ($state) {
                             'email' => __('translate.customer.options_cpreferences.0'),
@@ -145,11 +188,9 @@ class CustomerResource extends Resource
                 Tables\Columns\TextColumn::make('initial_contact_date')
                     ->label(__('translate.customer.initial_contact_date'))
                     ->alignCenter()
-                    ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('customer_type')
                     ->label(__('translate.customer.customer_type'))
-                    ->searchable()
                     ->alignCenter()
                     ->formatStateUsing(function ($state){
                         return match ($state) {
@@ -163,18 +204,49 @@ class CustomerResource extends Resource
                 // Tables\Columns\TextColumn::make('credid_information')
                 //     ->searchable()
                 //     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('budget')
-                    ->label(__('translate.customer.budget'))
+                Tables\Columns\TextColumn::make('budget_usd')
+                    ->label(__('translate.customer.budget_usd'))
                     ->alignCenter()
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('expected_commission')
-                    ->label(__('translate.customer.expected_commission'))
+                    ->numeric()
+                    ->toggleable(isToggledHiddenByDefault: false),
+                Tables\Columns\TextColumn::make('budget_crc')
+                    ->label(__('translate.customer.budget_crc'))
                     ->alignCenter()
-                    ->searchable(),
+                    ->numeric()
+                    ->toggleable(isToggledHiddenByDefault: false),
+                Tables\Columns\TextColumn::make('expected_commission_usd')
+                    ->label(__('translate.customer.expected_commission_usd'))
+                    ->alignCenter()
+                    ->numeric()
+                    ->toggleable(isToggledHiddenByDefault: false),
+                Tables\Columns\TextColumn::make('expected_commission_crc')
+                    ->label(__('translate.customer.expected_commission_crc'))
+                    ->alignCenter()
+                    ->numeric()
+                    ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\IconColumn::make('financing')
                     ->label(__('translate.customer.financing'))
                     ->alignCenter()
                     ->boolean(),
+                Tables\Columns\TextColumn::make('state')
+                    ->label(__('translate.customer.state'))
+                    ->alignCenter()
+                    ->searchable()
+                    ->formatStateUsing(function ($state){
+                        return match ($state) {
+                            'pending' => __('translate.customer.options_state.0'),
+                            'rejected' => __('translate.customer.options_state.1'),
+                            'approved' => __('translate.customer.options_state.2'),
+                            'in_process' => __('translate.customer.options_state.3'),
+                        };
+                    })
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'pending' => 'warning',
+                        'rejected' => 'danger',
+                        'approved' => 'success',
+                        'in_process' => 'info',
+                    }),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label(__('translate.customer.created_at'))
                     ->dateTime()
@@ -186,14 +258,25 @@ class CustomerResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
-                //
+                SelectFilter::make('contact_preferences')
+                    ->label(__('translate.customer.contact_preferences'))
+                    ->options([
+                        'email' => __('translate.customer.options_cpreferences.0'),
+                        'whatsapp' => __('translate.customer.options_cpreferences.1'),
+                        'phone' => __('translate.customer.options_cpreferences.2'),
+                        'other' => __('translate.customer.options_cpreferences.3')
+                    ])
             ])
             ->actions([
-                CommentsAction::make()
-                    ->color('info'),
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                ActionGroup::make([
+                    CommentsAction::make()
+                        ->color('info'),
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make()
+                        ->color('warning'),
+                ])
             ])
             // ->bulkActions([
             //     Tables\Actions\BulkActionGroup::make([

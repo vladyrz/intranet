@@ -15,19 +15,29 @@ class Customer extends Model
     protected $fillable = [
         'user_id',
         'full_name',
+        'national_id',
         'email',
         'phone_number',
+        'property_name',
+        'organization_id',
         'address',
         'contact_preferences',
         'initial_contact_date',
         'customer_type',
         'credid_information',
-        'budget',
+        'budget_usd',
+        'budget_crc',
         'financing',
-        'expected_commission',
+        'expected_commission_usd',
+        'expected_commission_crc',
+        'state'
     ];
 
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function organization(){
+        return $this->belongsTo(Organization::class);
     }
 }
