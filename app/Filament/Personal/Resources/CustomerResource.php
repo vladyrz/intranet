@@ -274,7 +274,6 @@ class CustomerResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->defaultSort('created_at', 'desc')
             ->filters([
                 SelectFilter::make('contact_source')
                     ->label(__('translate.customer.contact_source'))
