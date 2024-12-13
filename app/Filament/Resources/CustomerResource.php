@@ -51,16 +51,6 @@ class CustomerResource extends Resource
         return __('resources.employee.navigation_group');
     }
 
-    public static function getNavigationBadge(): ?string
-    {
-        return parent::getEloquentQuery()->where('state', 'pending')->count();
-    }
-
-    public static function getNavigationBadgeColor(): ?string
-    {
-        return parent::getEloquentQuery()->where('state','pending')->count() > 0 ? 'warning' : 'primary';
-    }
-
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
 
     public static function form(Form $form): Form

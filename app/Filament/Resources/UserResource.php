@@ -79,6 +79,7 @@ class UserResource extends Resource
                             'edit',
                             'view'
                         ])
+                        ->revealable()
                         ->required()
                         ->maxLength(255),
                     Forms\Components\DateTimePicker::make('email_verified_at')
@@ -118,6 +119,7 @@ class UserResource extends Resource
                         'soporte' => 'success',
                         'rrhh' => 'danger',
                         'ventas' => 'success',
+                        'gerente' => 'info',
                     })
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email_verified_at')
