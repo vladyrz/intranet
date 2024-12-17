@@ -93,5 +93,28 @@ return [
         'label' => 'Vacación',
         'plural' => 'Vacaciones',
         'navigation' => 'Vacaciones'
-    ]
+    ],
+
+    'departament' => [
+        'label' => 'Departamento',
+        'plural' => 'Departamentos',
+        'navigation' => 'Departamentos',
+        'sectionDepartment' => 'Información del Departamento',
+    ],
+
+    'document' => [
+        'label' => 'Documento',
+        'plural' => 'Documentos',
+        'navigation' => 'Documentos',
+        'navigation_group' => 'Gestión de Documentos',
+        'sectionDocument' => 'Información del Documento',
+    ],
+
+    'operation' => [
+        'label' => 'Operación',
+        'plural' => 'Operaciones',
+        'navigation' => 'Operaciones',
+        'navigation_group' => 'Gestión de Operaciones',
+        'sectionOperation' => 'Información General'
+    ],
 ];

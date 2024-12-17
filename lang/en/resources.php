@@ -92,5 +92,28 @@ return [
         'label' => 'Holiday',
         'plural' => 'Holidays',
         'navigation' => 'Holidays'
-    ]
+    ],
+
+    'departament' => [
+        'label' => 'Department',
+        'plural' => 'Departments',
+        'navigation' => 'Departments',
+        'sectionDepartment' => 'Department Info',
+    ],
+
+    'document' => [
+        'label' => 'Document',
+        'plural' => 'Documents',
+        'navigation' => 'Documents',
+        'navigation_group' => 'Documents Management',
+        'sectionDocument' => 'Document Info',
+    ],
+
+    'operation' => [
+        'label' => 'Operation',
+        'plural' => 'Operations',
+        'navigation' => 'Operations',
+        'navigation_group' => 'Operations Management',
+        'sectionOperation' => 'General Info'
+    ],
 ];

@@ -6,6 +6,7 @@ use App\Filament\Resources\DepartamentResource\Pages;
 use App\Filament\Resources\DepartamentResource\RelationManagers;
 use App\Models\Departament;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -16,20 +17,50 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class DepartamentResource extends Resource
 {
     protected static ?string $model = Departament::class;
-    protected static ?string $navigationGroup = 'System Management';
+
+    protected static ?string $navigationLabel = null;
+    protected static ?string $navigationGroup = null;
+
+    public static function getLabel(): ?string
+    {
+        return __('resources.departament.label');
+    }
+
+    public static function getPluralLabel(): ?string
+    {
+        return __('resources.departament.plural');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('resources.departament.navigation');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('resources.operation.navigation_group');
+    }
+
     protected static ?string $navigationIcon = 'heroicon-o-building-office';
 
-    public static function canViewAny(): bool
-    {
-        return false;
-    }
+    // public static function canViewAny(): bool
+    // {
+    //     return false;
+    // }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                ->required()
+                Section::make(__('resources.departament.sectionDepartment'))
+                ->columns(2)
+                ->schema([
+                    Forms\Components\TextInput::make('name')
+                        ->label(__('translate.departament.name'))
+                        ->required(),
+                    Forms\Components\Textarea::make('description')
+                        ->label(__('translate.departament.description'))
+                ]),
             ]);
     }
 
@@ -37,13 +68,20 @@ class DepartamentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('name')
+                ->label(__('translate.departament.name'))
+                ->alignCenter()
+                ->searchable(),
+                Tables\Columns\TextColumn::make('description')
+                ->label(__('translate.departament.description'))
+                ->alignCenter(),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

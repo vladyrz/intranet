@@ -176,4 +176,31 @@ return [
         'created_at' => 'Created at',
         'updated_at' => 'Updated at',
     ],
+
+    'departament' => [
+        'name' => 'Name',
+        'description' => 'Description',
+    ],
+
+    'document' => [
+        'name' => 'Name',
+        'description' => 'Description',
+        'image' => 'Image',
+        'created_at' => 'Created at',
+        'updated_at' => 'Updated at',
+    ],
+
+    'operation' => [
+        'user_id' => 'Agent',
+        'document_id' => 'Document type',
+        'departament_id' => 'Department',
+        'scope' => 'Scope',
+        'benefits' => 'Benefits',
+        'references' => 'References',
+        'policies' => 'Policies',
+        'steps' => 'Steps',
+        'attachments' => 'Attach file',
+        'created_at' => 'Created at',
+        'updated_at' => 'Updated at',
+    ],
 ];

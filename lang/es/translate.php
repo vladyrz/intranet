@@ -176,4 +176,31 @@ return [
         'created_at' => 'Creado el',
         'updated_at' => 'Actualizado el',
     ],
+
+    'departament' => [
+        'name' => 'Nombre',
+        'description' => 'Descripción',
+    ],
+
+    'document' => [
+        'name' => 'Nombre',
+        'description' => 'Descripción',
+        'image' => 'Imagen',
+        'created_at' => 'Creado el',
+        'updated_at' => 'Actualizado el',
+    ],
+
+    'operation' => [
+        'user_id' => 'Agente',
+        'document_id' => 'Tipo de Documento',
+        'departament_id' => 'Departamento',
+        'scope' => 'Alcance',
+        'benefits' => 'Beneficios',
+        'references' => 'Referencias',
+        'policies' => 'Políticas',
+        'steps' => 'Pasos',
+        'attachments' => 'Adjuntar archivo',
+        'created_at' => 'Creado el',
+        'updated_at' => 'Actualizado el',
+    ],
 ];
