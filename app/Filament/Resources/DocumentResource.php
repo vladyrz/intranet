@@ -81,6 +81,7 @@ class DocumentResource extends Resource
                     ->label(__('translate.document.description'))
                     ->alignCenter(),
                 ImageColumn::make('image')
+                    ->disk('public')
                     ->label(__('translate.document.image'))
                     ->alignCenter(),
             ])
