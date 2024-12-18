@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Ops\Resources;
 
-use App\Filament\Resources\OperationResource\Pages;
-use App\Filament\Resources\OperationResource\RelationManagers;
+use App\Filament\Ops\Resources\OperationResource\Pages;
+use App\Filament\Ops\Resources\OperationResource\RelationManagers;
 use App\Models\Operation;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
@@ -53,7 +53,7 @@ class OperationResource extends Resource
         return $form
             ->schema([
                 Section::make(__('resources.operation.sectionOperation'))
-                ->columns(3)
+                ->columns(2)
                 ->schema([
                     Select::make('user_id')
                         ->label(__('translate.operation.user_id'))
@@ -144,7 +144,8 @@ class OperationResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->color('warning'),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Ops\Resources;
 
-use App\Filament\Resources\DocumentResource\Pages;
-use App\Filament\Resources\DocumentResource\RelationManagers;
+use App\Filament\Ops\Resources\DocumentResource\Pages;
+use App\Filament\Ops\Resources\DocumentResource\RelationManagers;
 use App\Models\Document;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
