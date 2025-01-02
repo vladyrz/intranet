@@ -1,16 +1,20 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Ops\Resources;
 
-use App\Filament\Resources\OrganizationContactResource\Pages;
-use App\Filament\Resources\OrganizationContactResource\RelationManagers;
+use App\Filament\Ops\Resources\OrganizationContactResource\Pages;
+use App\Filament\Ops\Resources\OrganizationContactResource\RelationManagers;
 use App\Models\OrganizationContact;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -53,40 +57,40 @@ class OrganizationContactResource extends Resource
                 Section::make(__('resources.organization_contact.sectionContact'))
                 ->columns(3)
                 ->schema([
-                    Forms\Components\Select::make('organization_id')
+                    Select::make('organization_id')
                         ->label(__('translate.organization_contact.organization_id'))
                         ->relationship(
                             name: 'organization',
                             titleAttribute: 'organization_name'
                         ),
-                    Forms\Components\Select::make('contact_type')
+                    Select::make('contact_type')
                         ->label(__('translate.organization_contact.contact_type'))
                         ->options([
                             'adjudicated_assets' => __('translate.organization_contact.option_contact_type.0'),
                             'cotizations' => __('translate.organization_contact.option_contact_type.1'),
                             'billing' => __('translate.organization_contact.option_contact_type.2'),
                         ]),
-                    Forms\Components\TextInput::make('contact_name')
+                    TextInput::make('contact_name')
                         ->label(__('translate.organization_contact.contact_name'))
                         ->maxLength(100),
-                    Forms\Components\TextInput::make('contact_position')
+                    TextInput::make('contact_position')
                         ->label(__('translate.organization_contact.contact_position'))
                         ->maxLength(100),
-                    Forms\Components\TextInput::make('contact_phone_number')
+                    TextInput::make('contact_phone_number')
                         ->label(__('translate.organization_contact.contact_phone_number'))
                         ->maxLength(20),
-                    Forms\Components\TextInput::make('contact_email')
+                    TextInput::make('contact_email')
                         ->label(__('translate.organization_contact.contact_email'))
                         ->maxLength(255)
                         ->email(),
-                    Forms\Components\Select::make('contact_main_method')
+                    Select::make('contact_main_method')
                         ->label(__('translate.organization_contact.contact_main_method'))
                         ->options([
                             'email' => __('translate.organization_contact.option_contact_main_method.0'),
                             'whatsapp' => __('translate.organization_contact.option_contact_main_method.1'),
                             'both' => __('translate.organization_contact.option_contact_main_method.2'),
                         ]),
-                    Forms\Components\Textarea::make('contact_remarks')
+                    Textarea::make('contact_remarks')
                         ->label(__('translate.organization_contact.contact_remarks'))
                         ->columnSpan(2),
                 ])
@@ -97,28 +101,28 @@ class OrganizationContactResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('organization.organization_name')
+                TextColumn::make('organization.organization_name')
                     ->label(__('translate.organization_contact.organization_id'))
                     ->searchable()
                     ->alignCenter(),
-                Tables\Columns\TextColumn::make('contact_name')
+                TextColumn::make('contact_name')
                     ->label(__('translate.organization_contact.contact_name'))
                     ->searchable()
                     ->alignCenter(),
-                Tables\Columns\TextColumn::make('contact_position')
+                TextColumn::make('contact_position')
                     ->label(__('translate.organization_contact.contact_position'))
                     ->searchable()
                     ->alignCenter()
                     ->toggleable(isToggledHiddenByDefault: false),
-                Tables\Columns\TextColumn::make('contact_phone_number')
+                TextColumn::make('contact_phone_number')
                     ->label(__('translate.organization_contact.contact_phone_number'))
                     ->searchable()
                     ->alignCenter(),
-                Tables\Columns\TextColumn::make('contact_email')
+                TextColumn::make('contact_email')
                     ->label(__('translate.organization_contact.contact_email'))
                     ->searchable()
                     ->alignCenter(),
-                Tables\Columns\TextColumn::make('contact_main_method')
+                TextColumn::make('contact_main_method')
                     ->label(__('translate.organization_contact.contact_main_method'))
                     ->searchable()
                     ->alignCenter()
@@ -130,16 +134,16 @@ class OrganizationContactResource extends Resource
                         };
                     })
                     ->toggleable(isToggledHiddenByDefault: false),
-                Tables\Columns\TextColumn::make('contact_remarks')
+                TextColumn::make('contact_remarks')
                     ->label(__('translate.organization_contact.contact_remarks'))
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->alignCenter(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->label(__('translate.organization_contact.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->label(__('translate.organization_contact.updated_at'))
                     ->dateTime()
                     ->sortable()

@@ -1,16 +1,24 @@
 <?php
 
-namespace App\Filament\Soporte\Resources;
+namespace App\Filament\Ops\Resources;
 
-use App\Filament\Soporte\Resources\OrganizationResource\Pages;
-use App\Filament\Soporte\Resources\OrganizationResource\RelationManagers;
+use App\Filament\Ops\Resources\OrganizationResource\Pages;
+use App\Filament\Ops\Resources\OrganizationResource\RelationManagers;
 use App\Models\Organization;
 use Filament\Forms;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -38,7 +46,7 @@ class OrganizationResource extends Resource
         return __('resources.organization.navigation');
     }
 
-    public static function getNavigationGroup(): ?string
+    public static function getNavigationGroup(): string
     {
         return __('resources.organization.navigation_group');
     }
@@ -52,7 +60,7 @@ class OrganizationResource extends Resource
                 Section::make(__('resources.organization.sectionOrganization'))
                     ->columns(2)
                     ->schema([
-                        Forms\Components\Select::make('organization_type')
+                        Select::make('organization_type')
                             ->label(__('translate.organization.organization_type'))
                             ->options([
                                 'banks' => __('translate.organization.options_organization_type.0'),
@@ -64,22 +72,22 @@ class OrganizationResource extends Resource
                                 'rent_a_car' => __('translate.organization.options_organization_type.6'),
                             ])
                             ->required(),
-                        Forms\Components\TextInput::make('organization_name')
+                        TextInput::make('organization_name')
                             ->label(__('translate.organization.organization_name'))
                             ->maxLength(150)
                             ->required(),
                     ]),
                 Section::make(__('resources.organization.sectionOther'))
                     ->schema([
-                        Forms\Components\Textarea::make('asset_update_dates')
+                        Textarea::make('asset_update_dates')
                             ->label(__('translate.organization.asset_update_dates')),
-                        Forms\Components\RichEditor::make('sugef_report')
+                        RichEditor::make('sugef_report')
                             ->label(__('translate.organization.sugef_report')),
-                        Forms\Components\RichEditor::make('offer_form')
+                        RichEditor::make('offer_form')
                             ->label(__('translate.organization.offer_form')),
-                        Forms\Components\RichEditor::make('catalog_or_website')
+                        RichEditor::make('catalog_or_website')
                             ->label(__('translate.organization.catalog_or_website')),
-                        Forms\Components\RichEditor::make('vehicles_page')
+                        RichEditor::make('vehicles_page')
                             ->label(__('translate.organization.vehicles_page')),
                     ]),
             ]);
@@ -89,29 +97,29 @@ class OrganizationResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('organization_name')
+                TextColumn::make('organization_name')
                     ->label(__('translate.organization.organization_name'))
                     ->searchable()
                     ->alignCenter(),
-                Tables\Columns\TextColumn::make('sugef_report')
+                TextColumn::make('sugef_report')
                     ->label(__('translate.organization.sugef_report'))
                     ->html()
                     ->alignCenter()
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('offer_form')
+                TextColumn::make('offer_form')
                     ->html()
                     ->label(__('translate.organization.offer_form'))
                     ->alignCenter()
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('catalog_or_website')
+                TextColumn::make('catalog_or_website')
                     ->html()
                     ->label(__('translate.organization.catalog_or_website'))
                     ->alignCenter()
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('vehicles_page')
+                TextColumn::make('vehicles_page')
                     ->html()
                     ->label(__('translate.organization.vehicles_page'))
                     ->alignCenter()
@@ -125,10 +133,10 @@ class OrganizationResource extends Resource
                 ActionGroup::make([
                     CommentsAction::make()
                         ->color('info'),
-                    Tables\Actions\ViewAction::make(),
-                    Tables\Actions\EditAction::make()
+                    ViewAction::make(),
+                    EditAction::make()
                         ->color('warning'),
-                    Tables\Actions\DeleteAction::make(),
+                    DeleteAction::make()
                 ])
             ])
             ->bulkActions([

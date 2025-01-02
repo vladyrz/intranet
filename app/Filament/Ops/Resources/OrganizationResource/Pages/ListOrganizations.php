@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\OrganizationResource\Pages;
+namespace App\Filament\Ops\Resources\OrganizationResource\Pages;
 
 use App\Filament\Ops\Resources\OrganizationResource;
 use App\Models\Organization;

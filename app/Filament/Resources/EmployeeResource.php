@@ -117,6 +117,11 @@ class EmployeeResource extends Resource
                         ->label(__('translate.employee.license_plate')),
                     Forms\Components\DatePicker::make('birthday')
                         ->label(__('translate.employee.birthday')),
+                    Forms\Components\FileUpload::make('credid')
+                        ->acceptedFileTypes(['application/pdf'])
+                        ->directory('attachments/' .now()->format('Y/m/d'))
+                        ->downloadable()
+                        ->columnSpan(2),
                 ]),
 
                 Section::make(__('resources.employee.sectionAddress'))

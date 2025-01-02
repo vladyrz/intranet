@@ -22,7 +22,8 @@ class ListOrganizationContacts extends ListRecords
     public function getTabs(): array {
         return [
             null => Tab::make('All')
-                ->label(__('resources.organization_contact.tab_total_contacts')),
+                ->label(__('resources.organization_contact.tab_total_contacts'))
+                ->badge($this->orderByOrganizationType() ?? 0),
             'Adjudicated assets' => Tab::make()
                 ->query(fn ($query) => $query->where('contact_type', 'adjudicated_assets'))
                 ->badge($this->orderByOrganizationType('adjudicated_assets') ?? 0)
