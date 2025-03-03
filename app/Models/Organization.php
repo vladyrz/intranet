@@ -32,4 +32,8 @@ class Organization extends Model
     public function customers() {
         return $this->hasMany(Customer::class);
     }
+
+    public function properties() {
+        return $this->hasMany(PropertyAssignment::class);
+    }
 }

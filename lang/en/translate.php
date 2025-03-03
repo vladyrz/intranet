@@ -203,4 +203,24 @@ return [
         'created_at' => 'Created at',
         'updated_at' => 'Updated at',
     ],
+
+    'property_assignment' => [
+        'user_id' => 'Agent',
+        'property_info' => 'Property info',
+        'organization_id' => 'Bank/Financial institution',
+        'property_observations' => 'Property observations (ID or Link)',
+        'property_images' => 'Property images',
+        'property_assignment_status' => 'Property assignment status',
+        'created_at' => 'Created at',
+        'updated_at' => 'Updated at',
+        'options_property_assignment_status' => [
+            'Pending',
+            'Submitted',
+            'Approved',
+            'Rejected',
+            'Published',
+            'Assigned',
+            'Finished',
+        ],
+    ],
 ];

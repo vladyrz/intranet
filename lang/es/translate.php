@@ -65,7 +65,7 @@ return [
             'Inquilino',
             'Otro'
         ],
-        'user_id' => 'Agente',
+        'user_id' => 'Asesor',
         'full_name' => 'Nombre completo',
         'national_id' => 'Número de cédula',
         'customer_name' => 'Nombre del cliente',
@@ -81,7 +81,7 @@ return [
             'Correo electrónico',
             'Otro'
         ],
-        'organization_id' => 'Organización',
+        'organization_id' => 'Banco/Financiera',
         'contact_preferences' => 'Preferencias de contacto',
         'initial_contact_date' => 'Fecha de contacto inicial',
         'customer_type' => 'Tipo de cliente',
@@ -104,7 +104,7 @@ return [
     ],
 
     'organization' => [
-        'organization_type' => 'Tipo de organización',
+        'organization_type' => 'Tipo de Banco/Financiera',
         'options_organization_type' => [
             'Bancos',
             'Cooperativas',
@@ -114,7 +114,7 @@ return [
             'Desarrolladoras y otros',
             'Alquiler de coches'
         ],
-        'organization_name' => 'Nombre de la organización',
+        'organization_name' => 'Nombre del Banco/Financiera',
         'remarks' => 'Observaciones',
         'asset_update_dates' => 'Fechas de actualización de bienes',
         'sugef_report' => 'Boleta sugef',
@@ -126,7 +126,7 @@ return [
     ],
 
     'organization_contact' => [
-        'organization_id' => 'Nombre de la organización',
+        'organization_id' => 'Nombre del Banco/Financiera',
         'contact_type' => 'Tipo de contacto',
         'option_contact_type' => [
             'Bienes Adjudicados',
@@ -150,8 +150,8 @@ return [
 
     'sale' => [
         'property_name' => 'Nombre de la propiedad',
-        'user_id' => 'Agente',
-        'organization_id' => 'Organización',
+        'user_id' => 'Asesor',
+        'organization_id' => 'Banco/Financiera',
         'offer_amount_usd' => 'Monto de oferta en $',
         'offer_amount_crc' => 'Monto de oferta en ₡',
         'status' => 'Estado',
@@ -191,7 +191,7 @@ return [
     ],
 
     'operation' => [
-        'user_id' => 'Agente',
+        'user_id' => 'Asesor',
         'document_id' => 'Tipo de Documento',
         'departament_id' => 'Departamento',
         'scope' => 'Alcance',
@@ -202,5 +202,25 @@ return [
         'attachments' => 'Adjuntar archivo',
         'created_at' => 'Creado el',
         'updated_at' => 'Actualizado el',
+    ],
+
+    'property_assignment' => [
+        'user_id' => 'Asesor',
+        'property_info' => 'Información de la propiedad (ID o Link)',
+        'organization_id' => 'Banco/Financiera',
+        'property_observations' => 'Observaciones de la propiedad',
+        'property_images' => 'Imágenes de la propiedad',
+        'property_assignment_status' => 'Estado de la asignación de propiedad',
+        'created_at' => 'Creado el',
+        'updated_at' => 'Actualizado el',
+        'options_property_assignment_status' => [
+            'Pendiente',
+            'Tramitado',
+            'Aprobado',
+            'Rechazado',
+            'Publicado',
+            'Asignado',
+            'Finalizado',
+        ],
     ],
 ];

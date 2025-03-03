@@ -116,4 +116,12 @@ return [
         'navigation_group' => 'Operations Management',
         'sectionOperation' => 'General Info'
     ],
+
+    'property_assignment' => [
+        'label' => 'Property Assignment',
+        'plural' => 'Property Assignments',
+        'navigation' => 'Property Assignments',
+        'sectionMainInfo' => 'Main Info',
+        'sectionImages' => 'Images',
+    ],
 ];

@@ -117,4 +117,12 @@ return [
         'navigation_group' => 'Gestión de Operaciones',
         'sectionOperation' => 'Información General'
     ],
+
+    'property_assignment' => [
+        'label' => 'Asignación de Propiedad',
+        'plural' => 'Asignaciones de Propiedad',
+        'navigation' => 'Asignaciones de Propiedad',
+        'sectionMainInfo' => 'Información Principal',
+        'sectionImages' => 'Imágenes',
+    ],
 ];

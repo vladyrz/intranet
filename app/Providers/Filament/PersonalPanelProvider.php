@@ -36,7 +36,7 @@ class PersonalPanelProvider extends PanelProvider
                 'gray' => Color::Gray,
                 'info' => Color::Blue,
                 'primary' => Color::Purple,
-                'warning' => Color::Orange,
+                'warning' => Color::Yellow,
             ])
             ->profile()
             ->discoverResources(in: app_path('Filament/Personal/Resources'), for: 'App\\Filament\\Personal\\Resources')
