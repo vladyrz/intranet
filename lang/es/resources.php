@@ -13,7 +13,7 @@ return [
         'label' => 'Empleado',
         'plural' => 'Empleados',
         'navigation' => 'Empleados',
-        'navigation_group' => 'Gestión de Empleados',
+        'navigation_group' => 'Gestión de Asesores',
         'sectionEmployee' => 'Información del Empleado',
         'sectionPersonal' => 'Información Personal',
         'sectionAddress' => 'Dirección',
@@ -26,10 +26,10 @@ return [
     ],
 
     'customer' => [
-        'label' => 'Cliente',
-        'plural' => 'Clientes',
-        'navigation' => 'Clientes',
-        'navigation_group' => 'Gestión de Clientes',
+        'label' => 'Reporte de Cliente',
+        'plural' => 'Reporte de Clientes',
+        'navigation' => 'Reporte de Clientes',
+        'navigation_group' => 'Mis gestiones',
         'sectionCustomer' => 'Información del Cliente',
         'section_source_customer' => 'Fuente y Preferencias de Contacto',
         'section_financial' => 'Información Financiera',

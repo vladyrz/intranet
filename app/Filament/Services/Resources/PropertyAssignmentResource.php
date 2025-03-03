@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Services\Resources;
 
-use App\Filament\Resources\PropertyAssignmentResource\Pages;
-use App\Filament\Resources\PropertyAssignmentResource\RelationManagers;
+use App\Filament\Services\Resources\PropertyAssignmentResource\Pages;
+use App\Filament\Services\Resources\PropertyAssignmentResource\RelationManagers;
 use App\Models\Organization;
 use App\Models\PropertyAssignment;
 use App\Models\User;
@@ -81,10 +81,6 @@ class PropertyAssignmentResource extends Resource
                         Select::make('property_assignment_status')
                             ->label(__('translate.property_assignment.property_assignment_status'))
                             ->options([
-                                'pending' => __('translate.property_assignment.options_property_assignment_status.0'),
-                                'submitted' => __('translate.property_assignment.options_property_assignment_status.1'),
-                                'approved' => __('translate.property_assignment.options_property_assignment_status.2'),
-                                'rejected' => __('translate.property_assignment.options_property_assignment_status.3'),
                                 'published' => __('translate.property_assignment.options_property_assignment_status.4'),
                                 'assigned' => __('translate.property_assignment.options_property_assignment_status.5'),
                                 'finished' => __('translate.property_assignment.options_property_assignment_status.6'),
@@ -103,6 +99,7 @@ class PropertyAssignmentResource extends Resource
                             ->directory('property_assignments/' .now()->format('Y/m/d'))
                             ->downloadable()
                     ])
+
             ]);
     }
 
@@ -176,14 +173,14 @@ class PropertyAssignmentResource extends Resource
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make()
                         ->color('warning'),
-                    Tables\Actions\DeleteAction::make()
-                ])
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            // ->bulkActions([
+            //     Tables\Actions\BulkActionGroup::make([
+            //         Tables\Actions\DeleteBulkAction::make(),
+            //     ]),
+            // ])
+            ;
     }
 
     public static function getRelations(): array

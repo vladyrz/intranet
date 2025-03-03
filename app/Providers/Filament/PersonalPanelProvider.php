@@ -119,6 +119,14 @@ class PersonalPanelProvider extends PanelProvider
                     ->visible(fn (): bool => auth()->user()?->hasAnyRole([
                         'gerente',
                     ])),
+
+                MenuItem::make()
+                    ->label('Panel de Servicio al Cliente')
+                    ->url('/services')
+                    ->icon('heroicon-o-check-badge')
+                    ->visible(fn (): bool => auth()->user()?->hasAnyRole([
+                        'servicio al cliente',
+                    ])),
                 // ...
             ])
             ;

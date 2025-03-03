@@ -78,7 +78,8 @@ class PropertyAssignmentResource extends Resource
                                 ->pluck('organization_name', 'id')
                             ),
                         Textarea::make('property_observations')
-                            ->label(__('translate.property_assignment.property_observations')),
+                            ->label(__('translate.property_assignment.property_observations'))
+                            ->columnSpanFull(),
                     ]),
 
                 Section::make(__('resources.property_assignment.sectionImages'))
@@ -107,9 +108,7 @@ class PropertyAssignmentResource extends Resource
                     ->alignCenter(),
                 TextColumn::make('property_observations')
                     ->label(__('translate.property_assignment.property_observations'))
-                    ->searchable()
-                    ->alignCenter()
-                    ->toggleable(isToggledHiddenByDefault: false),
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('property_assignment_status')
                     ->label(__('translate.property_assignment.property_assignment_status'))
                     ->searchable()
@@ -125,6 +124,16 @@ class PropertyAssignmentResource extends Resource
                             'finished' => __('translate.property_assignment.options_property_assignment_status.6'),
                         };
                     }),
+                TextColumn::make('created_at')
+                    ->label(__('translate.property_assignment.created_at'))
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updated_at')
+                    ->label(__('translate.property_assignment.updated_at'))
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 SelectFilter::make('organization_id')
