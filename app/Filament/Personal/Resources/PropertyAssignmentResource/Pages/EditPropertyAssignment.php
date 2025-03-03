@@ -10,10 +10,10 @@ class EditPropertyAssignment extends EditRecord
 {
     protected static string $resource = PropertyAssignmentResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            Actions\DeleteAction::make(),
-        ];
-    }
+    // protected function getHeaderActions(): array
+    // {
+    //     return [
+    //         Actions\DeleteAction::make(),
+    //     ];
+    // }
 }
