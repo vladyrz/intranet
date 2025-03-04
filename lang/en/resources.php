@@ -40,6 +40,16 @@ return [
         'tab_tenant' => 'Tenants',
     ],
 
+    'personal_customer' => [
+        'label' => 'Personal Customer',
+        'plural' => 'Personal Customers',
+        'navigation' => 'Personal Customers',
+        'navigation_group' => 'My Management',
+        'section_customer' => 'Customer Info',
+        'section_follow_up' => 'Follow Up',
+        'section_financial' => 'Financial Info',
+    ],
+
     'organization' => [
         'label' => 'Organization',
         'plural' => 'Organizations',

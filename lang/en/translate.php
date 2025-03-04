@@ -66,7 +66,7 @@ return [
             'Other'
         ],
         'user_id' => 'Agent',
-        'full_name' => 'Full name',
+        'full_name' => 'Full name of the customer',
         'national_id' => 'National id',
         'customer_name' => 'Customer name',
         'email' => 'Email',
@@ -88,7 +88,7 @@ return [
         'credid_information' => 'Credid information',
         'budget_usd' => 'Budget in $',
         'budget_crc' => 'Budget in ₡',
-        'financing' => 'Financing',
+        'financing' => 'Does it require financing?',
         'expected_commission_usd' => 'Expected commission in $',
         'expected_commission_crc' => 'Expected commission in ₡',
         'state' => 'State',
@@ -99,6 +99,26 @@ return [
             'In process',
         ],
         'address' => 'Address',
+        'created_at' => 'Created at',
+        'updated_at' => 'Updated at',
+    ],
+
+    'personal_customer' => [
+        'options_prospect_status' => [
+            'Hot',
+            'Warm',
+            'Cold'
+        ],
+        'options_next_action' => [
+            'Call',
+            'Send information',
+            'Schedule a call',
+        ],
+        'prospect_status' => 'Prospect status',
+        'customer_need' => 'Customer needs',
+        'date_of_birth' => 'Date of birth',
+        'next_action' => 'Next action',
+        'next_action_date' => 'Next action date',
         'created_at' => 'Created at',
         'updated_at' => 'Updated at',
     ],

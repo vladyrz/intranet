@@ -41,6 +41,16 @@ return [
         'tab_other' => 'Otros',
     ],
 
+    'personal_customer' => [
+        'label' => 'Cliente Personal',
+        'plural' => 'Clientes Personales',
+        'navigation' => 'Clientes Personales',
+        'navigation_group' => 'Mis gestiones',
+        'section_customer' => 'Información del Cliente',
+        'section_follow_up' => 'Seguimiento del Cliente',
+        'section_financial' => 'Información Financiera',
+    ],
+
     'organization' => [
         'label' => 'Organización',
         'plural' => 'Organizaciones',

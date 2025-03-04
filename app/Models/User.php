@@ -80,4 +80,8 @@ class User extends Authenticatable
     public function properties(){
         return $this->hasMany(PropertyAssignment::class);
     }
+
+    public function personalcustomers(){
+        return $this->hasMany(PersonalCustomer::class);
+    }
 }

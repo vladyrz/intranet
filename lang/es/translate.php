@@ -66,7 +66,7 @@ return [
             'Otro'
         ],
         'user_id' => 'Asesor',
-        'full_name' => 'Nombre completo',
+        'full_name' => 'Nombre completo del cliente',
         'national_id' => 'Número de cédula',
         'customer_name' => 'Nombre del cliente',
         'email' => 'Correo electrónico',
@@ -88,7 +88,7 @@ return [
         'credid_information' => 'Información de credid',
         'budget_usd' => 'Presupuesto en $',
         'budget_crc' => 'Presupuesto en ₡',
-        'financing' => 'Financiamiento',
+        'financing' => '¿Requiere financiamiento?',
         'expected_commission_usd' => 'Comisión esperada en $',
         'expected_commission_crc' => 'Comisión esperada en ₡',
         'state' => 'Estado',
@@ -99,6 +99,26 @@ return [
             'En proceso',
         ],
         'address' => 'Dirección',
+        'created_at' => 'Creado el',
+        'updated_at' => 'Actualizado el',
+    ],
+
+    'personal_customer' => [
+        'options_prospect_status' => [
+            'Caliente',
+            'Tibio',
+            'Frío'
+        ],
+        'options_next_action' => [
+            'Llamar',
+            'Enviar información',
+            'Agendar cita',
+        ],
+        'prospect_status' => 'Estado del Prospecto',
+        'customer_need' => 'Necesidades del cliente',
+        'date_of_birth' => 'Fecha de nacimiento',
+        'next_action' => 'Siguiente acción',
+        'next_action_date' => 'Fecha de la siguiente acción',
         'created_at' => 'Creado el',
         'updated_at' => 'Actualizado el',
     ],
