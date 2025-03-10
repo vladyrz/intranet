@@ -34,7 +34,7 @@ class PersonalPanelProvider extends PanelProvider
             ->colors([
                 'danger' => Color::Rose,
                 'gray' => Color::Gray,
-                'info' => Color::Blue,
+                'info' => Color::Red,
                 'primary' => Color::Purple,
                 'warning' => Color::Yellow,
             ])
@@ -125,7 +125,7 @@ class PersonalPanelProvider extends PanelProvider
                     ->url('/services')
                     ->icon('heroicon-o-check-badge')
                     ->visible(fn (): bool => auth()->user()?->hasAnyRole([
-                        'servicio al cliente',
+                        'servicio_al_cliente',
                     ])),
                 // ...
             ])
