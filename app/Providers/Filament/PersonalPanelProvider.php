@@ -34,7 +34,7 @@ class PersonalPanelProvider extends PanelProvider
             ->colors([
                 'danger' => Color::Rose,
                 'gray' => Color::Gray,
-                'info' => Color::Red,
+                'info' => Color::Blue,
                 'primary' => Color::Purple,
                 'warning' => Color::Yellow,
             ])
@@ -60,7 +60,7 @@ class PersonalPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
-            ->databaseNotifications()
+            // ->databaseNotifications()
             ->authMiddleware([
                 Authenticate::class,
             ])

@@ -1,4 +1,4 @@
-<p>Se ha solicitado la asignación de la siguiente propiedad: <strong>{{ $data['property_info'] }}</strong></p>
+<p>Se ha registrada una nueva oferta para la propiedad: <strong>{{ $data['property_name'] }}</strong></p>
 <p>Datos de la solicitud:</p>
 <ul>
     <li>Nombre del asesor: <strong>{{ $data['name'] }}</strong></li>

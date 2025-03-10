@@ -197,6 +197,30 @@ return [
         'updated_at' => 'Actualizado el',
     ],
 
+    'offer' => [
+        'property_name' => 'Nombre de la propiedad',
+        'property_value_usd' => 'Valor de la propiedad en $',
+        'property_value_crc' => 'Valor de la propiedad en ₡',
+        'organization_id' => 'Banco/Financiera',
+        'user_id' => 'Asesor',
+        'offer_amount_usd' => 'Monto de oferta en $',
+        'offer_amount_crc' => 'Monto de oferta en ₡',
+        'personal_customer_id' => 'Nombre del Cliente',
+        'personal_customer_phone_number' => 'Teléfono del cliente',
+        'personal_customer_email' => 'Correo del cliente',
+        'offer_files' => 'Archivos de oferta',
+        'offer_status' => 'Estado de la oferta',
+        'created_at' => 'Enviado el',
+        'updated_at' => 'Actualizado el',
+        'options_offer_status' => [
+            'Pendiente',
+            'Enviada',
+            'Aprobada',
+            'Rechazada',
+            'Firmada'
+        ],
+    ],
+
     'departament' => [
         'name' => 'Nombre',
         'description' => 'Descripción',
@@ -226,12 +250,12 @@ return [
 
     'property_assignment' => [
         'user_id' => 'Asesor',
-        'property_info' => 'Información de la propiedad (ID o Link)',
+        'property_info' => 'Información de la propiedad (ID)',
         'organization_id' => 'Banco/Financiera',
         'property_observations' => 'Observaciones de la propiedad',
         'property_images' => 'Imágenes de la propiedad',
         'property_assignment_status' => 'Estado de la asignación de propiedad',
-        'created_at' => 'Creado el',
+        'created_at' => 'Enviado el',
         'updated_at' => 'Actualizado el',
         'options_property_assignment_status' => [
             'Pendiente',

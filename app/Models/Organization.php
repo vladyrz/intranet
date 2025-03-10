@@ -36,4 +36,8 @@ class Organization extends Model
     public function properties() {
         return $this->hasMany(PropertyAssignment::class);
     }
+
+    public function offers() {
+        return $this->hasMany(Offer::class);
+    }
 }

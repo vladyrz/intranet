@@ -197,6 +197,30 @@ return [
         'updated_at' => 'Updated at',
     ],
 
+    'offer' => [
+        'property_name' => 'Property name',
+        'property_value_usd' => 'Property value in $',
+        'property_value_crc' => 'Property value in ₡',
+        'organization_id' => 'Organization',
+        'user_id' => 'Agent',
+        'offer_amount_usd' => 'Offer amount in $',
+        'offer_amount_crc' => 'Offer amount in ₡',
+        'personal_customer_id' => 'Personal customer',
+        'personal_customer_phone_number' => 'Personal customer phone number',
+        'personal_customer_email' => 'Personal customer email',
+        'offer_files' => 'Offer files',
+        'offer_status' => 'Offer status',
+        'created_at' => 'Sent at',
+        'updated_at' => 'Updated at',
+        'options_offer_status' => [
+            'Pending',
+            'Sent',
+            'Approved',
+            'Rejected',
+            'Signed'
+        ],
+    ],
+
     'departament' => [
         'name' => 'Name',
         'description' => 'Description',
@@ -228,10 +252,10 @@ return [
         'user_id' => 'Agent',
         'property_info' => 'Property info',
         'organization_id' => 'Bank/Financial institution',
-        'property_observations' => 'Property observations (ID or Link)',
+        'property_observations' => 'Property observations (ID)',
         'property_images' => 'Property images',
         'property_assignment_status' => 'Property assignment status',
-        'created_at' => 'Created at',
+        'created_at' => 'Sent at',
         'updated_at' => 'Updated at',
         'options_property_assignment_status' => [
             'Pending',

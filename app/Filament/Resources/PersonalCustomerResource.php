@@ -139,10 +139,6 @@ class PersonalCustomerResource extends Resource
                         ->label(__('translate.customer.budget_usd')),
                     TextInput::make('budget_crc')
                         ->label(__('translate.customer.budget_crc')),
-                    TextInput::make('expected_commission_usd')
-                        ->label(__('translate.customer.expected_commission_usd')),
-                    TextInput::make('expected_commission_crc')
-                        ->label(__('translate.customer.expected_commission_crc')),
                     Toggle::make('financing')
                         ->label(__('translate.customer.financing')),
                 ]),
@@ -250,16 +246,6 @@ class PersonalCustomerResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('budget_crc')
                     ->label(__('translate.customer.budget_crc'))
-                    ->alignCenter()
-                    ->numeric()
-                    ->toggleable(isToggledHiddenByDefault: false),
-                TextColumn::make('expected_commission_usd')
-                    ->label(__('translate.customer.expected_commission_usd'))
-                    ->alignCenter()
-                    ->numeric()
-                    ->toggleable(isToggledHiddenByDefault: false),
-                TextColumn::make('expected_commission_crc')
-                    ->label(__('translate.customer.expected_commission_crc'))
                     ->alignCenter()
                     ->numeric()
                     ->toggleable(isToggledHiddenByDefault: false),

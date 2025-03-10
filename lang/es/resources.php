@@ -93,6 +93,19 @@ return [
         'tab_rejected' => 'Rechazadas',
     ],
 
+    'offer' => [
+        'label' => 'Oferta',
+        'plural' => 'Ofertas',
+        'navigation' => 'Envíos de Ofertas',
+        'section_offer' => 'Información de la Oferta',
+        'tab_total_offers' => 'Total de ofertas',
+        'tab_pending' => 'Pendientes',
+        'tab_sent' => 'Enviadas',
+        'tab_approved' => 'Aprobadas',
+        'tab_rejected' => 'Rechazadas',
+        'tab_signed' => 'Firmadas',
+    ],
+
     'timesheet' => [
         'label' => 'Registro de hora',
         'plural' => 'Registros de horas',

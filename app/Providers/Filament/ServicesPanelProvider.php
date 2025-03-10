@@ -59,8 +59,8 @@ class ServicesPanelProvider extends PanelProvider
             ->plugins([
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
                 PanelRoles::make()
-                ->roleToAssign('servicio al cliente')
-                ->restrictedRoles(['servicio al cliente']),
+                ->roleToAssign('servicio_al_cliente')
+                ->restrictedRoles(['servicio_al_cliente']),
             ])
             ->userMenuItems([
                 MenuItem::make()
@@ -68,7 +68,7 @@ class ServicesPanelProvider extends PanelProvider
                     ->url('/personal')
                     ->icon('heroicon-o-cog-6-tooth')
                     ->visible(fn (): bool => auth()->user()?->hasAnyRole([
-                        'servicio al cliente',
+                        'servicio_al_cliente',
                     ])),
             ]);
     }

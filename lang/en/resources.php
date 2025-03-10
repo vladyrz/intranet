@@ -92,6 +92,19 @@ return [
         'tab_rejected' => 'Rejected',
     ],
 
+    'offer' => [
+        'label' => 'Offer',
+        'plural' => 'Offers',
+        'navigation' => 'Offers submissions',
+        'section_offer' => 'Offer Info',
+        'tab_total_offers' => 'Total Offers',
+        'tab_pending' => 'Pending',
+        'tab_sent' => 'Sent',
+        'tab_approved' => 'Approved',
+        'tab_rejected' => 'Rejected',
+        'tab_signed' => 'Signed',
+    ],
+
     'timesheet' => [
         'label' => 'Timesheet',
         'plural' => 'Timesheets',

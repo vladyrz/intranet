@@ -102,6 +102,8 @@ class PropertyAssignmentResource extends Resource
                             ->image()
                             ->directory('property_assignments/' .now()->format('Y/m/d'))
                             ->downloadable()
+                            ->minFiles(1)
+                            ->maxFiles(5)
                     ])
             ]);
     }
