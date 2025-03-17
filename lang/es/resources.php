@@ -147,5 +147,13 @@ return [
         'navigation' => 'Asignaciones de Propiedad',
         'sectionMainInfo' => 'Información Principal',
         'sectionImages' => 'Imágenes',
+        'tab_total_property_assignments' => 'Total de asignaciones',
+        'tab_pending' => 'Pendientes',
+        'tab_submitted' => 'Enviadas',
+        'tab_approved' => 'Aprobadas',
+        'tab_rejected' => 'Rechazadas',
+        'tab_published' => 'Publicadas',
+        'tab_assigned' => 'Asignadas',
+        'tab_finished' => 'Finalizadas',
     ],
 ];

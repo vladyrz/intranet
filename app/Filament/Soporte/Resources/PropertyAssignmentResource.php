@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Soporte\Resources;
 
-use App\Filament\Resources\PropertyAssignmentResource\Pages;
-use App\Filament\Resources\PropertyAssignmentResource\RelationManagers;
-use App\Models\Organization;
+use App\Filament\Soporte\Resources\PropertyAssignmentResource\Pages;
+use App\Filament\Soporte\Resources\PropertyAssignmentResource\RelationManagers;
 use App\Models\PropertyAssignment;
-use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
@@ -58,53 +56,53 @@ class PropertyAssignmentResource extends Resource
         return $form
             ->schema([
                 Section::make(__('resources.property_assignment.sectionMainInfo'))
-                    ->columns(2)
-                    ->schema([
-                        Select::make('user_id')
-                            ->label(__('translate.property_assignment.user_id'))
-                            ->searchable()
-                            ->preload()
-                            ->options(
-                                User::all()
-                                ->pluck('name', 'id')
-                            ),
-                        TextInput::make('property_info')
-                            ->label(__('translate.property_assignment.property_info')),
-                        Select::make('organization_id')
-                            ->label(__('translate.property_assignment.organization_id'))
-                            ->searchable()
-                            ->preload()
-                            ->options(
-                                Organization::all()
-                                ->pluck('organization_name', 'id')
-                            ),
-                        Select::make('property_assignment_status')
-                            ->label(__('translate.property_assignment.property_assignment_status'))
-                            ->options([
-                                'pending' => __('translate.property_assignment.options_property_assignment_status.0'),
-                                'submitted' => __('translate.property_assignment.options_property_assignment_status.1'),
-                                'approved' => __('translate.property_assignment.options_property_assignment_status.2'),
-                                'rejected' => __('translate.property_assignment.options_property_assignment_status.3'),
-                                'published' => __('translate.property_assignment.options_property_assignment_status.4'),
-                                'assigned' => __('translate.property_assignment.options_property_assignment_status.5'),
-                                'finished' => __('translate.property_assignment.options_property_assignment_status.6'),
-                            ]),
-                        Textarea::make('property_observations')
-                            ->label(__('translate.property_assignment.property_observations'))
-                            ->columnSpanFull(),
-                    ]),
+                ->columns(2)
+                ->schema([
+                    Select::make('user_id')
+                        ->label(__('translate.property_assignment.user_id'))
+                        ->relationship(
+                            name: 'user',
+                            titleAttribute: 'name',
+                        )
+                        ->searchable()
+                        ->preload(),
+                    TextInput::make('property_info')
+                        ->label(__('translate.property_assignment.property_info')),
+                    Select::make('organization_id')
+                        ->label(__('translate.property_assignment.organization_id'))
+                        ->relationship(
+                            name: 'organization',
+                            titleAttribute: 'organization_name',
+                        )
+                        ->searchable()
+                        ->preload(),
+                    Select::make('property_assignment_status')
+                        ->label(__('translate.property_assignment.property_assignment_status'))
+                        ->options([
+                            'pending' => __('translate.property_assignment.options_property_assignment_status.0'),
+                            'submitted' => __('translate.property_assignment.options_property_assignment_status.1'),
+                            'approved' => __('translate.property_assignment.options_property_assignment_status.2'),
+                            'rejected' => __('translate.property_assignment.options_property_assignment_status.3'),
+                            'published' => __('translate.property_assignment.options_property_assignment_status.4'),
+                            'assigned' => __('translate.property_assignment.options_property_assignment_status.5'),
+                            'finished' => __('translate.property_assignment.options_property_assignment_status.6'),
+                        ]),
+                    Textarea::make('property_observations')
+                        ->label(__('translate.property_assignment.property_observations'))
+                        ->columnSpanFull(),
+                ]),
 
                 Section::make(__('resources.property_assignment.sectionImages'))
-                    ->schema([
-                        FileUpload::make('property_images')
-                            ->label(__('translate.property_assignment.property_images'))
-                            ->multiple()
-                            ->image()
-                            ->directory('property_assignments/' .now()->format('Y/m/d'))
-                            ->downloadable()
-                            ->minFiles(1)
-                            ->maxFiles(5)
-                    ])
+                ->schema([
+                    FileUpload::make('property_images')
+                        ->label(__('translate.property_assignment.property_images'))
+                        ->multiple()
+                        ->image()
+                        ->directory('property_assignments/' .now()->format('Y/m/d'))
+                        ->downloadable()
+                        ->minFiles(1)
+                        ->maxFiles(5),
+                ]),
             ]);
     }
 
@@ -165,25 +163,25 @@ class PropertyAssignmentResource extends Resource
             ->filters([
                 SelectFilter::make('user_id')
                     ->label(__('translate.property_assignment.user_id'))
-                    ->searchable()
                     ->relationship(
                         name: 'user',
                         titleAttribute: 'name',
                     )
+                    ->searchable()
                     ->preload(),
                 SelectFilter::make('organization_id')
                     ->label(__('translate.property_assignment.organization_id'))
-                    ->searchable()
                     ->relationship(
                         name: 'organization',
                         titleAttribute: 'organization_name',
                     )
+                    ->searchable()
                     ->preload(),
             ])
             ->actions([
                 ActionGroup::make([
                     CommentsAction::make()
-                        ->color('info'),
+                    ->color('info'),
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make()
                         ->color('warning'),

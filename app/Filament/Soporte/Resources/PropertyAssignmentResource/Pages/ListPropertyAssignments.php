@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\PropertyAssignmentResource\Pages;
+namespace App\Filament\Soporte\Resources\PropertyAssignmentResource\Pages;
 
-use App\Filament\Resources\PropertyAssignmentResource;
+use App\Filament\Soporte\Resources\PropertyAssignmentResource;
 use App\Models\PropertyAssignment;
 use Filament\Actions;
 use Filament\Resources\Components\Tab;

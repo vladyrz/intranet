@@ -146,5 +146,13 @@ return [
         'navigation' => 'Property Assignments',
         'sectionMainInfo' => 'Main Info',
         'sectionImages' => 'Images',
+        'tab_total_property_assignments' => 'Total ofassignments',
+        'tab_pending' => 'Pending',
+        'tab_submitted' => 'Submitted',
+        'tab_approved' => 'Approved',
+        'tab_rejected' => 'Rejected',
+        'tab_published' => 'Published',
+        'tab_assigned' => 'Assigned',
+        'tab_finished' => 'Finished',
     ],
 ];

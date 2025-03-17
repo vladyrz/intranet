@@ -139,6 +139,11 @@ class OfferResource extends Resource
                     ->label(__('translate.offer.personal_customer_id'))
                     ->searchable()
                     ->alignCenter(),
+                TextColumn::make('personal_customer.national_id')
+                    ->label(__('translate.offer.personal_customer_national_id'))
+                    ->searchable()
+                    ->alignCenter()
+                    ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('personal_customer.phone_number')
                     ->label(__('translate.offer.personal_customer_phone_number'))
                     ->alignCenter()

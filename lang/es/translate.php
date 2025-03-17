@@ -206,6 +206,7 @@ return [
         'offer_amount_usd' => 'Monto de oferta en $',
         'offer_amount_crc' => 'Monto de oferta en ₡',
         'personal_customer_id' => 'Nombre del Cliente',
+        'personal_customer_national_id' => 'Número de cédula',
         'personal_customer_phone_number' => 'Teléfono del cliente',
         'personal_customer_email' => 'Correo del cliente',
         'offer_files' => 'Archivos de oferta',
