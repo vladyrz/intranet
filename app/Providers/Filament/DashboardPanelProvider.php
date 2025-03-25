@@ -21,6 +21,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Leandrocfe\FilamentApexCharts\FilamentApexChartsPlugin;
 use Shanerbaner82\PanelRoles\PanelRoles;
 
 class DashboardPanelProvider extends PanelProvider
@@ -65,6 +66,7 @@ class DashboardPanelProvider extends PanelProvider
                 PanelRoles::make()
                 ->roleToAssign('super_admin')
                 ->restrictedRoles(['super_admin']),
+                FilamentApexChartsPlugin::make(),
             ])
             ->userMenuItems([
                 MenuItem::make()

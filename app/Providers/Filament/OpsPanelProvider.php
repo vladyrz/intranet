@@ -19,6 +19,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Leandrocfe\FilamentApexCharts\FilamentApexChartsPlugin;
 use Shanerbaner82\PanelRoles\PanelRoles;
 
 class OpsPanelProvider extends PanelProvider
@@ -60,7 +61,8 @@ class OpsPanelProvider extends PanelProvider
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
                 PanelRoles::make()
                 ->roleToAssign('gerente')
-                ->restrictedRoles(['gerente'])
+                ->restrictedRoles(['gerente']),
+                FilamentApexChartsPlugin::make(),
             ])
             ->userMenuItems([
                 MenuItem::make()

@@ -1,20 +1,24 @@
 <?php
 
-namespace App\Traits;
+namespace App\Filament\Personal\Traits;
 
 use App\Models\Offer;
 use Flowframe\Trend\Trend;
+use Illuminate\Support\Facades\Auth;
 
-trait OfferStatusTrait
+trait PersonalOfferTrait
 {
     protected function getChartData(): array
     {
+        $userId = Auth::id();
+
         $statuses = ['pending', 'sent', 'approved', 'rejected', 'signed'];
         $trendData = [];
 
         foreach ($statuses as $status) {
             $trendData[$status] = Trend::query(
-                Offer::where('offer_status', $status)
+                Offer::where('user_id', $userId)
+                    ->where('offer_status', $status)
             )
                 ->between(
                     start: now()->startOfYear(),

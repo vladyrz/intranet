@@ -19,6 +19,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Leandrocfe\FilamentApexCharts\FilamentApexChartsPlugin;
 use Shanerbaner82\PanelRoles\PanelRoles;
 
 class SoportePanelProvider extends PanelProvider
@@ -40,7 +41,7 @@ class SoportePanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Soporte/Widgets'), for: 'App\\Filament\\Soporte\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
+                // Widgets\AccountWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -60,7 +61,8 @@ class SoportePanelProvider extends PanelProvider
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
                 PanelRoles::make()
                 ->roleToAssign('soporte')
-                ->restrictedRoles(['soporte'])
+                ->restrictedRoles(['soporte']),
+                FilamentApexChartsPlugin::make(),
             ])
             ->userMenuItems([
                 MenuItem::make()

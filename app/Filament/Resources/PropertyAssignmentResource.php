@@ -81,7 +81,6 @@ class PropertyAssignmentResource extends Resource
                         Select::make('property_assignment_status')
                             ->label(__('translate.property_assignment.property_assignment_status'))
                             ->options([
-                                'pending' => __('translate.property_assignment.options_property_assignment_status.0'),
                                 'submitted' => __('translate.property_assignment.options_property_assignment_status.1'),
                                 'approved' => __('translate.property_assignment.options_property_assignment_status.2'),
                                 'rejected' => __('translate.property_assignment.options_property_assignment_status.3'),
@@ -162,6 +161,7 @@ class PropertyAssignmentResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 SelectFilter::make('user_id')
                     ->label(__('translate.property_assignment.user_id'))

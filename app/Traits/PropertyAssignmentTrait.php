@@ -3,25 +3,41 @@
 namespace App\Traits;
 
 use App\Models\PropertyAssignment;
+use Flowframe\Trend\Trend;
 
 trait PropertyAssignmentTrait
 {
     protected function getChartData(): array
     {
-        return PropertyAssignment::selectRaw("
-            DATE_FORMAT(created_at, '%Y-%m') as month,
-                COUNT(CASE WHEN property_assignment_status = 'pending' THEN 1 END) as pending,
-                COUNT(CASE WHEN property_assignment_status = 'submitted' THEN 1 END) as submitted,
-                COUNT(CASE WHEN property_assignment_status = 'approved' THEN 1 END) as approved,
-                COUNT(CASE WHEN property_assignment_status = 'rejected' THEN 1 END) as rejected,
-                COUNT(CASE WHEN property_assignment_status = 'published' THEN 1 END) as published,
-                COUNT(CASE WHEN property_assignment_status = 'assigned' THEN 1 END) as assigned,
-                COUNT(CASE WHEN property_assignment_status = 'finished' THEN 1 END) as finished
-        ")
-        ->groupBy('month')
-        ->orderBy('month')
-        ->get()
-        ->keyBy('month')
-        ->toArray();
+        $statuses = ['pending', 'submitted', 'approved', 'rejected', 'published', 'assigned', 'finished'];
+        $trendData = [];
+
+        foreach ($statuses as $status) {
+            $trendData[$status] = Trend::query(
+                PropertyAssignment::where('property_assignment_status', $status)
+            )
+                ->between(
+                    start: now()->startOfYear(),
+                    end: now()->endOfYear()
+                )
+                ->perMonth()
+                ->count();
+        }
+
+        $formattedData = [];
+        foreach ($trendData[array_key_first($trendData)] as $trendValue) {
+            $month = $trendValue->date;
+            $formattedData[$month] = [
+                'pending' => $trendData['pending']->firstWhere('date', $month)?->aggregate ?? 0,
+                'submitted' => $trendData['submitted']->firstWhere('date', $month)?->aggregate ?? 0,
+                'approved' => $trendData['approved']->firstWhere('date', $month)?->aggregate ?? 0,
+                'rejected' => $trendData['rejected']->firstWhere('date', $month)?->aggregate ?? 0,
+                'published' => $trendData['published']->firstWhere('date', $month)?->aggregate ?? 0,
+                'assigned' => $trendData['assigned']->firstWhere('date', $month)?->aggregate ?? 0,
+                'finished' => $trendData['finished']->firstWhere('date', $month)?->aggregate ?? 0,
+            ];
+        }
+
+        return $formattedData;
     }
 }

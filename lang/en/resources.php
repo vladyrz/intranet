@@ -103,6 +103,13 @@ return [
         'tab_approved' => 'Approved',
         'tab_rejected' => 'Rejected',
         'tab_signed' => 'Signed',
+        'tab_offer_status' => [
+            'Pendings',
+            'Sents',
+            'Approveds',
+            'Rejecteds',
+            'Signeds',
+        ],
     ],
 
     'timesheet' => [
@@ -154,5 +161,15 @@ return [
         'tab_published' => 'Published',
         'tab_assigned' => 'Assigned',
         'tab_finished' => 'Finished',
+        'stats_overview' => [
+            'Pending',
+            'Submitted',
+            'Approved',
+        ],
+        'stats_overview_description' => [
+            'Amount of property assignments pending',
+            'Amount of property assignments submitted',
+            'Amount of property assignments approved',
+        ],
     ],
 ];

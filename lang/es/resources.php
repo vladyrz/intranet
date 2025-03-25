@@ -104,6 +104,13 @@ return [
         'tab_approved' => 'Aprobadas',
         'tab_rejected' => 'Rechazadas',
         'tab_signed' => 'Firmadas',
+        'tab_offer_status' => [
+            'Pendientes',
+            'Enviadas',
+            'Aprobadas',
+            'Rechazadas',
+            'Firmadas',
+        ],
     ],
 
     'timesheet' => [
@@ -149,11 +156,21 @@ return [
         'sectionImages' => 'Imágenes',
         'tab_total_property_assignments' => 'Total de asignaciones',
         'tab_pending' => 'Pendientes',
-        'tab_submitted' => 'Enviadas',
+        'tab_submitted' => 'Tramitadas',
         'tab_approved' => 'Aprobadas',
         'tab_rejected' => 'Rechazadas',
         'tab_published' => 'Publicadas',
         'tab_assigned' => 'Asignadas',
         'tab_finished' => 'Finalizadas',
+        'stats_overview' => [
+            'Pendientes',
+            'Tramitadas',
+            'Aprobadas',
+        ],
+        'stats_overview_description' => [
+            'Cantidad de asignaciones pendientes',
+            'Cantidad de asignaciones tramitadas',
+            'Cantidad de asignaciones aprobadas',
+        ],
     ],
 ];

@@ -81,7 +81,6 @@ class PropertyAssignmentResource extends Resource
                         Select::make('property_assignment_status')
                             ->label(__('translate.property_assignment.property_assignment_status'))
                             ->options([
-                                'pending' => __('translate.property_assignment.options_property_assignment_status.0'),
                                 'submitted' => __('translate.property_assignment.options_property_assignment_status.1'),
                                 'approved' => __('translate.property_assignment.options_property_assignment_status.2'),
                                 'rejected' => __('translate.property_assignment.options_property_assignment_status.3'),
@@ -102,6 +101,8 @@ class PropertyAssignmentResource extends Resource
                             ->image()
                             ->directory('property_assignments/' .now()->format('Y/m/d'))
                             ->downloadable()
+                            ->minFiles(1)
+                            ->maxFiles(5)
                     ])
 
             ]);
