@@ -125,7 +125,6 @@ class OfferResource extends Resource
                             ->columnSpanFull()
                             ->downloadable()
                             ->directory('attachments/' .now()->format('Y/m/d'))
-                            ->minFiles(1)
                             ->maxFiles(5),
                     ])
             ]);

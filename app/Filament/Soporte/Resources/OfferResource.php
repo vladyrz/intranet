@@ -111,7 +111,6 @@ class OfferResource extends Resource
                         Select::make('offer_status')
                             ->label(__('translate.offer.offer_status'))
                             ->options([
-                                'pending' => __('translate.offer.options_offer_status.0'),
                                 'sent' => __('translate.offer.options_offer_status.1'),
                                 'approved' => __('translate.offer.options_offer_status.2'),
                                 'rejected' => __('translate.offer.options_offer_status.3'),
@@ -124,7 +123,6 @@ class OfferResource extends Resource
                             ->columnSpanFull()
                             ->downloadable()
                             ->directory('attachments/' .now()->format('Y/m/d'))
-                            ->minFiles(1)
                             ->maxFiles(5),
                     ]),
             ]);
