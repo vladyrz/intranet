@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mail\AssignmentStatus;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -9,7 +10,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class PropertyAssignmentApproved extends Mailable
+class PropertySubmitted extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -28,8 +29,14 @@ class PropertyAssignmentApproved extends Mailable
      */
     public function envelope(): Envelope
     {
+        $userRoles = User::role(['soporte', 'ventas', 'servicio_al_cliente'])
+            ->where('email', '!=', $this->data['email'])
+            ->pluck('email')
+            ->toArray();
+
         return new Envelope(
-            subject: 'Asignación de Propiedad Aprobada',
+            subject: 'Asignación de Propiedad Tramitada',
+            cc: $userRoles,
         );
     }
 
@@ -39,7 +46,7 @@ class PropertyAssignmentApproved extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mails.propertyAssignment.approved',
+            view: 'mails.propertyAssignment.submitted',
         );
     }
 

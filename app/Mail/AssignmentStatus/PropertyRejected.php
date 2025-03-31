@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mail\AssignmentStatus;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -9,11 +10,12 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class PropertyAssignmentPending extends Mailable
+class PropertyRejected extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $data;
+
     /**
      * Create a new message instance.
      */
@@ -27,9 +29,14 @@ class PropertyAssignmentPending extends Mailable
      */
     public function envelope(): Envelope
     {
+        $userRoles = User::role(['soporte', 'ventas', 'servicio_al_cliente'])
+            ->where('email', '!=', $this->data['email'])
+            ->pluck('email')
+            ->toArray();
+
         return new Envelope(
-            subject: 'Asignación de Propiedad Pendiente',
-            cc: $this->data['email'],
+            subject: 'Asignación de Propiedad Rechazada',
+            cc: $userRoles,
         );
     }
 
@@ -39,7 +46,7 @@ class PropertyAssignmentPending extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mails.propertyAssignment.pending',
+            view: 'mails.propertyAssignment.rejected',
         );
     }
 

@@ -1,2 +1,3 @@
-<h2>Solicitud de Asignación de Propiedad Rechazada</h2>
-<p>La propiedad <strong>{{ $data['property_info'] }}</strong> ha sido <strong style="color:red">Rechazada</strong></p>
+<p>Se ha rechazado la asignación de la propiedad: <strong>{{ $data['property_info'] }}</strong></p>
+<p>Para m&aacute;s informaci&oacute;n, por favor revise la secci&oacute;n de comentarios en el registro de EasyCore.</p>
+<p>En caso de duda o de no haber comentarios, por favor contacte con soporte.</p>

@@ -10,7 +10,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class PropertyAssigned extends Mailable
+class PropertyPublished extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -35,7 +35,7 @@ class PropertyAssigned extends Mailable
             ->toArray();
 
         return new Envelope(
-            subject: 'Propiedad Asignada',
+            subject: 'Propiedad publicada',
             cc: $userRoles,
         );
     }
@@ -46,7 +46,7 @@ class PropertyAssigned extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mails.propertyAssignment.assigned',
+            view: 'mails.propertyAssignment.published',
         );
     }
 
