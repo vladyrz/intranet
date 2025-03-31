@@ -48,6 +48,8 @@ class OrganizationContactResource extends Resource
         return __('resources.organization.navigation_group');
     }
 
+    protected static ?int $navigationSort = 8;
+
     protected static ?string $navigationIcon = 'heroicon-o-envelope-open';
 
     public static function form(Form $form): Form

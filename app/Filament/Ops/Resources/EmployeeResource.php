@@ -34,6 +34,8 @@ class EmployeeResource extends Resource
 {
     protected static ?string $model = Employee::class;
 
+    protected static ?int $navigationSort = 1;
+
     protected static ?string $navigationLabel = null;
     protected static ?string $navigationGroup = null;
 

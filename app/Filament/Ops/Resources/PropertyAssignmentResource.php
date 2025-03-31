@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Ops\Resources;
 
-use App\Filament\Resources\PropertyAssignmentResource\Pages;
-use App\Filament\Resources\PropertyAssignmentResource\RelationManagers;
+use App\Filament\Ops\Resources\PropertyAssignmentResource\Pages;
+use App\Filament\Ops\Resources\PropertyAssignmentResource\RelationManagers;
 use App\Models\Organization;
 use App\Models\PropertyAssignment;
 use App\Models\User;
@@ -27,6 +27,8 @@ use Parallax\FilamentComments\Tables\Actions\CommentsAction;
 class PropertyAssignmentResource extends Resource
 {
     protected static ?string $model = PropertyAssignment::class;
+
+    protected static ?int $navigationSort = 4;
 
     protected static ?string $navigationLabel = null;
     protected static ?string $navigationGroup = null;
@@ -58,7 +60,7 @@ class PropertyAssignmentResource extends Resource
         return $form
             ->schema([
                 Section::make(__('resources.property_assignment.sectionMainInfo'))
-                    ->columns(2)
+                    ->columns(3)
                     ->schema([
                         Select::make('user_id')
                             ->label(__('translate.property_assignment.user_id'))
@@ -78,16 +80,6 @@ class PropertyAssignmentResource extends Resource
                                 Organization::all()
                                 ->pluck('organization_name', 'id')
                             ),
-                        Select::make('property_assignment_status')
-                            ->label(__('translate.property_assignment.property_assignment_status'))
-                            ->options([
-                                'submitted' => __('translate.property_assignment.options_property_assignment_status.1'),
-                                'approved' => __('translate.property_assignment.options_property_assignment_status.2'),
-                                'rejected' => __('translate.property_assignment.options_property_assignment_status.3'),
-                                'published' => __('translate.property_assignment.options_property_assignment_status.4'),
-                                'assigned' => __('translate.property_assignment.options_property_assignment_status.5'),
-                                'finished' => __('translate.property_assignment.options_property_assignment_status.6'),
-                            ]),
                         Textarea::make('property_observations')
                             ->label(__('translate.property_assignment.property_observations'))
                             ->columnSpanFull(),
@@ -118,7 +110,7 @@ class PropertyAssignmentResource extends Resource
                 TextColumn::make('property_info')
                     ->label(__('translate.property_assignment.property_info'))
                     ->searchable()
-                    ->alignCenter(),
+                    ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('organization.organization_name')
                     ->label(__('translate.property_assignment.organization_id'))
                     ->searchable()
@@ -154,7 +146,7 @@ class PropertyAssignmentResource extends Resource
                     ->label(__('translate.property_assignment.created_at'))
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('updated_at')
                     ->label(__('translate.property_assignment.updated_at'))
                     ->dateTime()

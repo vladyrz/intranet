@@ -100,7 +100,7 @@ class PropertyAssignmentResource extends Resource
                         ->directory('property_assignments/' .now()->format('Y/m/d'))
                         ->downloadable()
                         ->minFiles(1)
-                        ->maxFiles(5),
+                        ->maxFiles(10),
                 ]),
             ]);
     }
@@ -152,13 +152,14 @@ class PropertyAssignmentResource extends Resource
                     ->label(__('translate.property_assignment.created_at'))
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('updated_at')
                     ->label(__('translate.property_assignment.updated_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 SelectFilter::make('user_id')
                     ->label(__('translate.property_assignment.user_id'))

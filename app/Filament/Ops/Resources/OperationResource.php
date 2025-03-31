@@ -23,6 +23,8 @@ class OperationResource extends Resource
 {
     protected static ?string $model = Operation::class;
 
+    protected static ?int $navigationSort = 7;
+
     protected static ?string $navigationLabel = null;
     protected static ?string $navigationGroup = null;
 

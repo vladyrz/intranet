@@ -51,6 +51,8 @@ class OrganizationResource extends Resource
         return __('resources.organization.navigation_group');
     }
 
+    protected static ?int $navigationSort = 9;
+
     protected static ?string $navigationIcon = 'heroicon-o-briefcase';
 
     public static function form(Form $form): Form

@@ -252,7 +252,7 @@ class PersonalCustomerResource extends Resource
                     ->label(__('translate.customer.created_at'))
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('updated_at')
                     ->label(__('translate.customer.updated_at'))
                     ->dateTime()

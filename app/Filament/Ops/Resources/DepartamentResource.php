@@ -19,6 +19,8 @@ class DepartamentResource extends Resource
 {
     protected static ?string $model = Departament::class;
 
+    protected static ?int $navigationSort = 5;
+
     protected static ?string $navigationLabel = null;
     protected static ?string $navigationGroup = null;
 

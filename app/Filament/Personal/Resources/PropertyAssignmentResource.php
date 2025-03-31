@@ -91,7 +91,7 @@ class PropertyAssignmentResource extends Resource
                             ->directory('property_assignments/' .now()->format('Y/m/d'))
                             ->downloadable()
                             ->minFiles(1)
-                            ->maxFiles(5)
+                            ->maxFiles(10)
                     ])
             ]);
     }
@@ -103,7 +103,7 @@ class PropertyAssignmentResource extends Resource
                 TextColumn::make('property_info')
                     ->label(__('translate.property_assignment.property_info'))
                     ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: false),
+                    ->alignCenter(),
                 TextColumn::make('organization.organization_name')
                     ->label(__('translate.property_assignment.organization_id'))
                     ->searchable()
@@ -113,8 +113,8 @@ class PropertyAssignmentResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('property_assignment_status')
                     ->label(__('translate.property_assignment.property_assignment_status'))
-                    ->searchable()
                     ->alignCenter()
+                    ->badge()
                     ->formatStateUsing(function ($state){
                         return match ($state) {
                             'pending' => __('translate.property_assignment.options_property_assignment_status.0'),
@@ -125,12 +125,21 @@ class PropertyAssignmentResource extends Resource
                             'assigned' => __('translate.property_assignment.options_property_assignment_status.5'),
                             'finished' => __('translate.property_assignment.options_property_assignment_status.6'),
                         };
+                    })
+                    ->color(fn (string $state): string => match ($state) {
+                        'pending' => 'warning',
+                        'submitted' => 'info',
+                        'approved' => 'success',
+                        'rejected' => 'danger',
+                        'published' => 'info',
+                        'assigned' => 'info',
+                        'finished' => 'info',
                     }),
                 TextColumn::make('created_at')
                     ->label(__('translate.property_assignment.created_at'))
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('updated_at')
                     ->label(__('translate.property_assignment.updated_at'))
                     ->dateTime()

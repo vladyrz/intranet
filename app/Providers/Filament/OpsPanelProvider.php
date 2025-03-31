@@ -41,7 +41,7 @@ class OpsPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Ops/Widgets'), for: 'App\\Filament\\Ops\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
+                // Widgets\AccountWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

@@ -23,6 +23,8 @@ class DocumentResource extends Resource
 {
     protected static ?string $model = Document::class;
 
+    protected static ?int $navigationSort = 6;
+
     protected static ?string $navigationLabel = null;
     protected static ?string $navigationGroup = null;
 

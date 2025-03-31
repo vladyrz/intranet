@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Soporte\Resources;
+namespace App\Filament\Ops\Resources;
 
-use App\Filament\Soporte\Resources\PersonalCustomerResource\Pages;
-use App\Filament\Soporte\Resources\PersonalCustomerResource\RelationManagers;
+use App\Filament\Ops\Resources\PersonalCustomerResource\Pages;
+use App\Filament\Ops\Resources\PersonalCustomerResource\RelationManagers;
 use App\Models\PersonalCustomer;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -27,6 +27,8 @@ use Parallax\FilamentComments\Tables\Actions\CommentsAction;
 class PersonalCustomerResource extends Resource
 {
     protected static ?string $model = PersonalCustomer::class;
+
+    protected static ?int $navigationSort = 3;
 
     protected static ?string $navigationLabel = null;
     protected static ?string $navigationGroup = null;
@@ -57,90 +59,91 @@ class PersonalCustomerResource extends Resource
     {
         return $form
             ->schema([
-                Section::make(__('resources.personal_customer.sectionCustomer'))
-                ->columns(3)
-                ->schema([
-                    Select::make('user_id')
-                        ->label(__('translate.customer.user_id'))
-                        ->relationship(
-                            name: 'user',
-                            titleAttribute: 'name',
-                        )
-                        ->searchable()
-                        ->preload(),
-                    TextInput::make('full_name')
+                Section::make(__('resources.personal_customer.section_customer'))
+                    ->columns(3)
+                    ->schema([
+                        Select::make('user_id')
+                            ->label(__('translate.customer.user_id'))
+                            ->relationship(
+                                name: 'user',
+                                titleAttribute: 'name',
+                            )
+                            ->searchable()
+                            ->preload()
+                            ->required(),
+                        TextInput::make('full_name')
                             ->label(__('translate.customer.full_name'))
+                            ->required()
+                            ->maxLength(255),
+                        TextInput::make('national_id')
+                            ->label(__('translate.customer.national_id'))
+                            ->maxLength(255),
+                        TextInput::make('email')
+                            ->label(__('translate.customer.email'))
+                            ->email()
+                            ->maxLength(255),
+                        TextInput::make('phone_number')
+                            ->label(__('translate.customer.phone_number'))
                             ->maxLength(255)
                             ->required(),
-                    TextInput::make('national_id')
-                        ->label(__('translate.customer.national_id'))
-                        ->maxLength(255),
-                    TextInput::make('email')
-                        ->email()
-                        ->label(__('translate.customer.email'))
-                        ->maxLength(255),
-                    TextInput::make('phone_number')
-                        ->label(__('translate.customer.phone_number'))
-                        ->maxLength(20)
-                        ->required(),
-                    Textarea::make('address')
-                        ->label(__('translate.customer.address')),
-                    Select::make('contact_preferences')
-                        ->label(__('translate.customer.contact_preferences'))
-                        ->options([
-                            'email' => __('translate.customer.options_cpreferences.0'),
-                            'whatsapp' => __('translate.customer.options_cpreferences.1'),
-                            'phone' => __('translate.customer.options_cpreferences.2'),
-                            'other' => __('translate.customer.options_cpreferences.3')
-                        ]),
-                    Select::make('customer_type')
-                        ->label(__('translate.customer.customer_type'))
-                        ->options([
-                            'buyer' => __('translate.customer.options_cust_type.0'),
-                            'seller' => __('translate.customer.options_cust_type.1'),
-                            'investor' => __('translate.customer.options_cust_type.2'),
-                            'tenant' => __('translate.customer.options_cust_type.3'),
-                            'other' => __('translate.customer.options_cust_type.4'),
-                        ]),
-                    DatePicker::make('date_of_birth')
-                        ->label(__('translate.personal_customer.date_of_birth')),
-                    Textarea::make('customer_need')
-                        ->label(__('translate.personal_customer.customer_need'))
-                        ->columnSpanFull()
-                        ->required(),
-                ]),
+                        Textarea::make('address')
+                            ->label(__('translate.customer.address')),
+                        Select::make('contact_preferences')
+                            ->label(__('translate.customer.contact_preferences'))
+                            ->options([
+                                'email' => __('translate.customer.options_cpreferences.0'),
+                                'whatsapp' => __('translate.customer.options_cpreferences.1'),
+                                'phone' => __('translate.customer.options_cpreferences.2'),
+                                'other' => __('translate.customer.options_cpreferences.3')
+                            ]),
+                        Select::make('customer_type')
+                            ->label(__('translate.customer.customer_type'))
+                            ->options([
+                                'buyer' => __('translate.customer.options_cust_type.0'),
+                                'seller' => __('translate.customer.options_cust_type.1'),
+                                'investor' => __('translate.customer.options_cust_type.2'),
+                                'tenant' => __('translate.customer.options_cust_type.3'),
+                                'other' => __('translate.customer.options_cust_type.4'),
+                            ]),
+                        DatePicker::make('date_of_birth')
+                            ->label(__('translate.personal_customer.date_of_birth')),
+                        Textarea::make('customer_need')
+                            ->label(__('translate.personal_customer.customer_need'))
+                            ->columnSpanFull()
+                            ->required(),
+                    ]),
 
-                Section::make(__('resources.personal_customer.section_follow_up'))
-                ->columns(3)
-                ->schema([
-                    Select::make('prospect_status')
-                        ->label(__('translate.personal_customer.prospect_status'))
-                        ->options([
-                            'hot' => __('translate.personal_customer.options_prospect_status.0'),
-                            'warm' => __('translate.personal_customer.options_prospect_status.1'),
-                            'cold' => __('translate.personal_customer.options_prospect_status.2'),
-                        ]),
-                    Select::make('next_action')
-                        ->label(__('translate.personal_customer.next_action'))
-                        ->options([
-                            'call' => __('translate.personal_customer.options_next_action.0'),
-                            'send_info' => __('translate.personal_customer.options_next_action.1'),
-                            'schedule_call' => __('translate.personal_customer.options_next_action.2'),
-                        ]),
-                    DatePicker::make('next_action_date')
-                        ->label(__('translate.personal_customer.next_action_date')),
-                ]),
+                    Section::make(__('resources.personal_customer.section_follow_up'))
+                    ->columns(3)
+                    ->schema([
+                        Select::make('prospect_status')
+                            ->label(__('translate.personal_customer.prospect_status'))
+                            ->options([
+                                'hot' => __('translate.personal_customer.options_prospect_status.0'),
+                                'warm' => __('translate.personal_customer.options_prospect_status.1'),
+                                'cold' => __('translate.personal_customer.options_prospect_status.2'),
+                            ]),
+                        Select::make('next_action')
+                            ->label(__('translate.personal_customer.next_action'))
+                            ->options([
+                                'call' => __('translate.personal_customer.options_next_action.0'),
+                                'send_info' => __('translate.personal_customer.options_next_action.1'),
+                                'schedule_call' => __('translate.personal_customer.options_next_action.2'),
+                            ]),
+                        DatePicker::make('next_action_date')
+                            ->label(__('translate.personal_customer.next_action_date')),
+                    ]),
 
-                Section::make(__('resources.personal_customer.section_financial'))
-                ->columns(2)
-                ->schema([
-                    TextInput::make('budget_usd')
-                        ->label(__('translate.customer.budget_usd')),
-                    TextInput::make('budget_crc')
-                        ->label(__('translate.customer.budget_crc')),
-                    Toggle::make('financing')
-                        ->label(__('translate.customer.financing')),
-                ]),
+                    Section::make(__('resources.personal_customer.section_financial'))
+                    ->columns(2)
+                    ->schema([
+                        TextInput::make('budget_usd')
+                            ->label(__('translate.customer.budget_usd')),
+                        TextInput::make('budget_crc')
+                            ->label(__('translate.customer.budget_crc')),
+                        Toggle::make('financing')
+                            ->label(__('translate.customer.financing')),
+                    ]),
             ]);
     }
 
