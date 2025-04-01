@@ -19,6 +19,7 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\FormsComponent;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Support\Collection;
 
@@ -101,12 +102,20 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
+                ImageColumn::make('avatar_url')
+                    ->label(__('translate.user.avatar_url'))
+                    ->circular()
+                    ->alignCenter()
+                    ->height(50)
+                    ->width(50),
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('translate.user.name'))
-                    ->searchable(),
+                    ->searchable()
+                    ->alignCenter(),
                 Tables\Columns\TextColumn::make('email')
                     ->label(__('translate.user.email'))
-                    ->searchable(),
+                    ->searchable()
+                    ->alignCenter(),
                 Tables\Columns\IconColumn::make('state')
                     ->label(__('translate.user.state'))
                     ->boolean()

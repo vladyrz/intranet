@@ -5,13 +5,14 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
+use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasAvatar
 {
     use HasApiTokens, HasFactory, Notifiable;
     use HasRoles;
@@ -28,6 +29,7 @@ class User extends Authenticatable
         'state',
         'password',
         'email_verified_at',
+        'avatar_url',
     ];
 
     /**
@@ -49,6 +51,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return asset('storage/'.$this->avatar_url);
+    }
 
     public function calendars(){
         return $this->belongsToMany(Calendar::class);

@@ -2,6 +2,7 @@
 
 return [
     'user' => [
+        'avatar_url' => 'Avatar',
         'name' => 'Nombre',
         'email' => 'Correo electrónico',
         'password' => 'Contraseña',

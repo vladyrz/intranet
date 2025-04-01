@@ -9,6 +9,10 @@ return [
         'userSection' => 'User Info'
     ],
 
+    'app' => [
+        'navigation_group' => 'Settings',
+    ],
+
     'employee' => [
         'label' => 'Employee',
         'plural' => 'Employees',

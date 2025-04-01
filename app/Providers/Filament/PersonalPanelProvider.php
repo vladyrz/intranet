@@ -20,6 +20,8 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
+use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 use Leandrocfe\FilamentApexCharts\FilamentApexChartsPlugin;
 
 class PersonalPanelProvider extends PanelProvider
@@ -39,7 +41,6 @@ class PersonalPanelProvider extends PanelProvider
                 'primary' => Color::Purple,
                 'warning' => Color::Yellow,
             ])
-            ->profile()
             ->discoverResources(in: app_path('Filament/Personal/Resources'), for: 'App\\Filament\\Personal\\Resources')
             ->discoverPages(in: app_path('Filament/Personal/Pages'), for: 'App\\Filament\\Personal\\Pages')
             ->pages([
@@ -68,9 +69,16 @@ class PersonalPanelProvider extends PanelProvider
             ->plugins([
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
                 FilamentApexChartsPlugin::make(),
-
+                FilamentEditProfilePlugin::make()
+                    ->setIcon('heroicon-o-user')
+                    ->shouldShowAvatarForm()
+                    ->setNavigationGroup(__('resources.app.navigation_group'))
+                    ->shouldShowDeleteAccountForm(false)
             ])
             ->userMenuItems([
+                'profile' => MenuItem::make()
+                    ->url(fn(): string => EditProfilePage::getUrl())
+                    ->icon('heroicon-m-user-circle'),
                 MenuItem::make()
                     ->label('Panel de Administración')
                     ->url('/admin')

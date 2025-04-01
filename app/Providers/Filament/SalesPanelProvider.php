@@ -19,6 +19,8 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
+use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 use Leandrocfe\FilamentApexCharts\FilamentApexChartsPlugin;
 use Shanerbaner82\PanelRoles\PanelRoles;
 
@@ -64,8 +66,16 @@ class SalesPanelProvider extends PanelProvider
                     ->roleToAssign('ventas')
                     ->restrictedRoles(['ventas']),
                 FilamentApexChartsPlugin::make(),
+                FilamentEditProfilePlugin::make()
+                    ->setIcon('heroicon-o-user')
+                    ->shouldShowAvatarForm()
+                    ->setNavigationGroup(__('resources.app.navigation_group'))
+                    ->shouldShowDeleteAccountForm(false)
             ])
             ->userMenuItems([
+                'profile' => MenuItem::make()
+                    ->url(fn(): string => EditProfilePage::getUrl())
+                    ->icon('heroicon-m-user-circle'),
                 MenuItem::make()
                     ->label('Panel personal')
                     ->url('/personal')
