@@ -10,12 +10,14 @@ use App\Models\State;
 use Filament\Actions\DeleteAction;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -59,6 +61,10 @@ class EmployeeResource extends Resource
                 Section::make(__('resources.employee.sectionEmployee'))
                 ->columns(2)
                 ->schema([
+                    Select::make('user_id')
+                        ->relationship(name: 'user', titleAttribute:'name')
+                        ->searchable()
+                        ->preload(),
                     Forms\Components\TextInput::make('name')
                         ->label(__('translate.employee.name'))
                         ->required()
@@ -170,6 +176,8 @@ class EmployeeResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('user.name')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('translate.employee.name'))
                     ->searchable(),

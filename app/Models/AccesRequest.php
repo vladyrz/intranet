@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Parallax\FilamentComments\Models\Traits\HasFilamentComments;
+
+class AccesRequest extends Model
+{
+    use HasFactory;
+    use HasFilamentComments;
+
+    protected $fillable = [
+        'user_id',
+        'type_of_request',
+        'property',
+        'organization_id',
+        'pickup_datetime',
+        'visit_datetime',
+        'request_status',
+    ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function organization(){
+        return $this->belongsTo(Organization::class);
+    }
+}

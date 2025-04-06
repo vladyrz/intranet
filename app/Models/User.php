@@ -57,6 +57,10 @@ class User extends Authenticatable implements HasAvatar
         return asset('storage/'.$this->avatar_url);
     }
 
+    public function employee(){
+        return $this->hasOne(Employee::class);
+    }
+
     public function calendars(){
         return $this->belongsToMany(Calendar::class);
     }
@@ -95,5 +99,9 @@ class User extends Authenticatable implements HasAvatar
 
     public function offers(){
         return $this->hasMany(Offer::class);
+    }
+
+    public function accesRequests(){
+        return $this->hasMany(AccesRequest::class);
     }
 }

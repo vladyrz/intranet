@@ -40,4 +40,8 @@ class Organization extends Model
     public function offers() {
         return $this->hasMany(Offer::class);
     }
+
+    public function accesRequests() {
+        return $this->hasMany(AccesRequest::class);
+    }
 }

@@ -12,6 +12,7 @@ class Employee extends Model
     use HasFilamentComments;
 
     protected $fillable = [
+        'user_id',
         'name',
         'email',
         'contract_status',
@@ -31,6 +32,10 @@ class Employee extends Model
         'credid',
         'contract'
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 
     public function country(){
         return $this->belongsTo(Country::class);
