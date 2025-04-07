@@ -269,4 +269,50 @@ return [
             'Finalizado',
         ],
     ],
+
+    'vehicle' => [
+        'license_plate' => 'Placa',
+        'brand' => 'Marca',
+        'style' => 'Estilo',
+        'year' => 'Año',
+        'vehicle_status' => 'Estado del vehículo',
+        'options_vehicle_status' => [
+            'Activo',
+            'Inactivo',
+            'Vendido',
+            'Eliminado',
+        ],
+        'created_at' => 'Creado el',
+        'updated_at' => 'Actualizado el',
+    ],
+
+    'movement' => [
+        'movement_type' => 'Tipo de movimiento',
+        'options_movement_type' => [
+            'Salida',
+            'Ingreso',
+        ],
+        'movement_date' => 'Fecha del movimiento',
+        'vehicle_id' => 'Vehículo',
+        'initial_mileage' => 'Kilometraje inicial',
+        'final_mileage' => 'Kilometraje final',
+        'attachments' => 'Adjuntar archivos',
+        'created_at' => 'Creado el',
+        'updated_at' => 'Actualizado el',
+    ],
+
+    'maintenance' => [
+        'maintenance_type' => 'Tipo de mantenimiento',
+        'options_maintenance_type' => [
+            'Limpieza',
+            'Reparación',
+            'Mantenimiento',
+            'Otro',
+        ],
+        'maintenance_date' => 'Fecha del mantenimiento',
+        'vehicle_id' => 'Vehículo',
+        'attachments' => 'Adjuntar archivos',
+        'created_at' => 'Creado el',
+        'updated_at' => 'Actualizado el',
+    ],
 ];

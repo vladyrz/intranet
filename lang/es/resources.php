@@ -177,4 +177,31 @@ return [
             'Cantidad de asignaciones aprobadas',
         ],
     ],
+
+    'vehicle' => [
+        'label' => 'Vehículo',
+        'plural' => 'Vehículos',
+        'navigation' => 'Vehículos',
+        'navigation_group' => 'Gestión de Vehículos',
+        'sectionVehicle' => 'Información del Vehículo',
+        'tab_total_vehicles' => 'Total de vehículos',
+        'tab_active' => 'Activos',
+        'tab_inactive' => 'Inactivos',
+        'tab_sold' => 'Vendidos',
+        'tab_eliminated' => 'Eliminados',
+    ],
+
+    'movement' => [
+        'label' => 'Movimiento',
+        'plural' => 'Movimientos',
+        'navigation' => 'Movimientos',
+        'sectionMovement' => 'Información del Movimiento',
+    ],
+
+    'maintenance' => [
+        'label' => 'Mantenimiento',
+        'plural' => 'Mantenimientos',
+        'navigation' => 'Mantenimientos',
+        'sectionMaintenance' => 'Información del Mantenimiento',
+    ],
 ];

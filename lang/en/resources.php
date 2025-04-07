@@ -176,4 +176,31 @@ return [
             'Amount of property assignments approved',
         ],
     ],
+
+    'vehicle' => [
+        'label' => 'Vehicle',
+        'plural' => 'Vehicles',
+        'navigation' => 'Vehicles',
+        'navigation_group' => 'Vehicles',
+        'sectionVehicle' => 'Vehicle Information',
+        'tab_total_vehicles' => 'Total vehicles',
+        'tab_active' => 'Active',
+        'tab_inactive' => 'Inactive',
+        'tab_sold' => 'Sold',
+        'tab_eliminated' => 'Eliminated',
+    ],
+
+    'movement' => [
+        'label' => 'Movement',
+        'plural' => 'Movements',
+        'navigation' => 'Movements',
+        'sectionMovement' => 'Movement Information',
+    ],
+
+    'maintenance' => [
+        'label' => 'Maintenance',
+        'plural' => 'Maintenances',
+        'navigation' => 'Maintenances',
+        'sectionMaintenance' => 'Maintenance Information',
+    ],
 ];
