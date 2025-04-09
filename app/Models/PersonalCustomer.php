@@ -18,6 +18,7 @@ class PersonalCustomer extends Model
         'national_id',
         'email',
         'phone_number',
+        'license_plate',
         'customer_need',
         'address',
         'contact_preferences',
@@ -38,5 +39,9 @@ class PersonalCustomer extends Model
 
     public function offers(){
         return $this->hasMany(Offer::class);
+    }
+
+    public function acces_requests(){
+        return $this->hasMany(AccesRequest::class);
     }
 }

@@ -177,6 +177,19 @@ return [
         ],
     ],
 
+    'acces_request' => [
+        'label' => 'Access Request',
+        'plural' => 'Access Requests',
+        'navigation' => 'Access Requests',
+        'sectionRequest' => 'Request Information',
+        'section_description' => 'Note: Access keys and licenses must be requested with 24 hours of advance notice, Davivienda keys are delivered only on Monday and Wednesday. If the visit is with a client, it must be indicated in the request',
+        'tab_total_acces_requests' => 'Total access requests',
+        'tab_pending' => 'Pending',
+        'tab_sent' => 'Sent',
+        'tab_approved' => 'Approved',
+        'tab_rejected' => 'Rejected',
+    ],
+
     'vehicle' => [
         'label' => 'Vehicle',
         'plural' => 'Vehicles',

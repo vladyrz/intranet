@@ -118,6 +118,7 @@ return [
         'prospect_status' => 'Prospect status',
         'customer_need' => 'Customer needs',
         'date_of_birth' => 'Date of birth',
+        'license_plate' => 'License plate',
         'next_action' => 'Next action',
         'next_action_date' => 'Next action date',
         'created_at' => 'Created at',
@@ -268,6 +269,31 @@ return [
             'Assigned',
             'Finished',
         ],
+    ],
+
+    'access_request' => [
+        'user_id' => 'Agent',
+        'type_of_request' => 'Type of request',
+        'options_type_of_request' => [
+            'keys' => 'Keys',
+            'access' => 'Access',
+            'both' => 'Both',
+        ],
+        'user_national_id' => 'Agent national id',
+        'property' => 'Property (ID)',
+        'organization_id' => 'Organization',
+        'visit_datetime' => 'Visit date',
+        'pickup_datetime' => 'Pickup date',
+        'personal_customer_id' => 'Customer',
+        'request_status' => 'Request status',
+        'options_request_status' => [
+            'Pending',
+            'Sent',
+            'Approved',
+            'Rejected',
+        ],
+        'created_at' => 'Sent at',
+        'updated_at' => 'Updated at',
     ],
 
     'vehicle' => [

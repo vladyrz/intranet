@@ -59,7 +59,7 @@ class PersonalCustomerResource extends Resource
         return $form
             ->schema([
                 Section::make(__('resources.personal_customer.section_customer'))
-                ->columns(3)
+                ->columns(2)
                 ->schema([
                     Select::make('user_id')
                         ->label(__('translate.customer.user_id'))
@@ -84,6 +84,9 @@ class PersonalCustomerResource extends Resource
                         ->label(__('translate.customer.phone_number'))
                         ->maxLength(20)
                         ->required(),
+                    TextInput::make('license_plate')
+                        ->label(__('translate.personal_customer.license_plate'))
+                        ->maxLength(15),
                     Textarea::make('address')
                         ->label(__('translate.customer.address')),
                     Select::make('contact_preferences')
@@ -187,6 +190,11 @@ class PersonalCustomerResource extends Resource
                     ->label(__('translate.customer.phone_number'))
                     ->searchable()
                     ->alignCenter(),
+                TextColumn::make('license_plate')
+                    ->label(__('translate.personal_customer.license_plate'))
+                    ->searchable()
+                    ->alignCenter()
+                    ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('address')
                     ->label(__('translate.customer.address'))
                     ->toggleable(isToggledHiddenByDefault: true),

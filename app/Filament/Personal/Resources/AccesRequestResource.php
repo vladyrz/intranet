@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Personal\Resources;
 
-use App\Filament\Resources\AccesRequestResource\Pages;
-use App\Filament\Resources\AccesRequestResource\RelationManagers;
+use App\Filament\Personal\Resources\AccesRequestResource\Pages;
+use App\Filament\Personal\Resources\AccesRequestResource\RelationManagers;
 use App\Models\AccesRequest;
 use App\Models\PersonalCustomer;
 use Filament\Forms;
@@ -13,15 +13,16 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
-use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
+use Parallax\FilamentComments\Tables\Actions\CommentsAction;
 
 class AccesRequestResource extends Resource
 {
@@ -47,10 +48,17 @@ class AccesRequestResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('resources.employee.navigation_group');
+        return __('resources.customer.navigation_group');
     }
 
     protected static ?string $navigationIcon = 'heroicon-o-key';
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->where('user_id', Auth::user()->id)
+            ->orderBy('created_at', 'desc');
+    }
 
     public static function form(Form $form): Form
     {
@@ -60,16 +68,6 @@ class AccesRequestResource extends Resource
                     ->description(__('resources.acces_request.section_description'))
                     ->columns(2)
                     ->schema([
-                        Select::make('user_id')
-                            ->label(__('translate.access_request.user_id'))
-                            ->relationship(name: 'user', titleAttribute:'name')
-                            ->searchable()
-                            ->preload()
-                            ->required()
-                            ->live()
-                            ->afterStateUpdated(function (Set $set){
-                                $set('peronal_customer_id', null);
-                            }),
                         Select::make('type_of_request')
                             ->label(__('translate.access_request.type_of_request'))
                             ->options(__('translate.access_request.options_type_of_request'))
@@ -92,21 +90,12 @@ class AccesRequestResource extends Resource
                             ->visible(fn (Get $get): bool => in_array($get('type_of_request'), ['keys', 'both'])),
                         Select::make('personal_customer_id')
                             ->label(__('translate.access_request.personal_customer_id'))
-                            ->options(fn (Get $get): Collection => PersonalCustomer::query()
-                                ->where('user_id', $get('user_id'))
+                            ->options(PersonalCustomer::query()
+                                ->where('user_id', Auth::user()->id)
                                 ->pluck('full_name', 'id')
                             )
                             ->searchable()
                             ->preload(),
-                        Select::make('request_status')
-                            ->label(__('translate.access_request.request_status'))
-                            ->options([
-                                'pending' => __('translate.access_request.options_request_status.0'),
-                                'sent' => __('translate.access_request.options_request_status.1'),
-                                'approved' => __('translate.access_request.options_request_status.2'),
-                                'rejected' => __('translate.access_request.options_request_status.3'),
-                            ])
-                            ->required(),
                     ]),
             ]);
     }
@@ -115,26 +104,15 @@ class AccesRequestResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('user.name')
-                    ->label(__('translate.access_request.user_id'))
-                    ->searchable()
-                    ->alignCenter(),
                 TextColumn::make('type_of_request')
                     ->label(__('translate.access_request.type_of_request'))
                     ->alignCenter()
                     ->formatStateUsing(fn($state) => __('translate.access_request.options_type_of_request.' . $state))
                     ->searchable(),
-                TextColumn::make('user.employee.national_id')
-                    ->label(__('translate.access_request.user_national_id'))
-                    ->searchable()
-                    ->alignCenter()
-                    ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('property')
                     ->label(__('translate.access_request.property'))
                     ->alignCenter()
-                    ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: false),
+                    ->searchable(),
                 TextColumn::make('organization.organization_name')
                     ->label(__('translate.access_request.organization_id'))
                     ->searchable()
@@ -195,17 +173,9 @@ class AccesRequestResource extends Resource
                     ->sortable()
                     ->alignCenter()
                     ->toggleable(isToggledHiddenByDefault: true),
+
             ])
-            ->defaultSort('created_at', 'desc')
             ->filters([
-                SelectFilter::make('user_id')
-                    ->label(__('translate.access_request.user_id'))
-                    ->relationship(
-                        name: 'user',
-                        titleAttribute:'name',
-                    )
-                    ->searchable()
-                    ->preload(),
                 SelectFilter::make('type_of_request')
                     ->label(__('translate.access_request.type_of_request'))
                     ->options(__('translate.access_request.options_type_of_request')),
@@ -216,13 +186,20 @@ class AccesRequestResource extends Resource
                     ->preload(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                ActionGroup::make([
+                    CommentsAction::make()
+                        ->color('info'),
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make()
+                        ->color('warning'),
+                ])
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+            // ->bulkActions([
+            //     Tables\Actions\BulkActionGroup::make([
+            //         Tables\Actions\DeleteBulkAction::make(),
+            //     ]),
+            // ])
+            ;
     }
 
     public static function getRelations(): array

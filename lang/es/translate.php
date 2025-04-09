@@ -118,6 +118,7 @@ return [
         'prospect_status' => 'Estado del Prospecto',
         'customer_need' => 'Necesidades del cliente',
         'date_of_birth' => 'Fecha de nacimiento',
+        'license_plate' => 'Placa',
         'next_action' => 'Siguiente acción',
         'next_action_date' => 'Fecha de la siguiente acción',
         'created_at' => 'Creado el',
@@ -268,6 +269,33 @@ return [
             'Asignado',
             'Finalizado',
         ],
+    ],
+
+    'access_request' => [
+        'user_id' => 'Asesor',
+        'type_of_request' => 'Tipo de solicitud',
+        'options_type_of_request' => [
+            'keys' => 'Llaves',
+            'access' => 'Ingreso',
+            'both' => 'Ambos',
+        ],
+        'user_national_id' => 'Cédula del asesor',
+        'property' => 'Propiedad (ID)',
+        'organization_id' => 'Banco/Financiera',
+        'visit_datetime' => 'Fecha de visita',
+        'pickup_datetime' => 'Fecha de recolección',
+        'personal_customer_id' => 'Cliente',
+        'personal_customer_national_id' => 'Cédula del cliente',
+        'personal_customer_license_plate' => 'Placa del cliente',
+        'request_status' => 'Estado de la solicitud',
+        'options_request_status' => [
+            'Pendiente',
+            'Enviada',
+            'Aprobada',
+            'Rechazada',
+        ],
+        'created_at' => 'Enviado el',
+        'updated_at' => 'Actualizado el',
     ],
 
     'vehicle' => [

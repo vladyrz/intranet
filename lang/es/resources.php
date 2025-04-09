@@ -178,6 +178,19 @@ return [
         ],
     ],
 
+    'acces_request' => [
+        'label' => 'Solicitud de Permiso',
+        'plural' => 'Solicitudes de Permiso',
+        'navigation' => 'Solicitudes de Permiso',
+        'sectionRequest' => 'Información de la Solicitud',
+        'section_description' => 'Nota: Los permisos y llaves se deben solicitar con 24 horas de anticipación, llaves de Davivienda se entregan unicamente martes y viernes. Si la visita es con cliente, se debe indicar en la solicitud',
+        'tab_total_acces_requests' => 'Total de solicitudes',
+        'tab_pending' => 'Pendientes',
+        'tab_sent' => 'Enviadas',
+        'tab_approved' => 'Aprobadas',
+        'tab_rejected' => 'Rechazadas',
+    ],
+
     'vehicle' => [
         'label' => 'Vehículo',
         'plural' => 'Vehículos',

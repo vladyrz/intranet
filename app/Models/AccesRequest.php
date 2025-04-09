@@ -18,6 +18,7 @@ class AccesRequest extends Model
         'organization_id',
         'pickup_datetime',
         'visit_datetime',
+        'personal_customer_id',
         'request_status',
     ];
 
@@ -27,5 +28,9 @@ class AccesRequest extends Model
 
     public function organization(){
         return $this->belongsTo(Organization::class);
+    }
+
+    public function personal_customer(){
+        return $this->belongsTo(PersonalCustomer::class);
     }
 }
