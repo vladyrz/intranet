@@ -82,6 +82,10 @@ class PersonalCustomerResource extends Resource
                         ->label(__('translate.customer.phone_number'))
                         ->maxLength(20)
                         ->required(),
+                    TextInput::make('license_plate')
+                        ->label(__('translate.personal_customer.license_plate'))
+                        ->unique()
+                        ->maxLength(15),
                     Select::make('contact_preferences')
                         ->label(__('translate.customer.contact_preferences'))
                         ->options([
@@ -102,8 +106,7 @@ class PersonalCustomerResource extends Resource
                     DatePicker::make('date_of_birth')
                         ->label(__('translate.personal_customer.date_of_birth')),
                     Textarea::make('address')
-                        ->label(__('translate.customer.address'))
-                        ->columnSpan(2),
+                        ->label(__('translate.customer.address')),
                     Textarea::make('customer_need')
                         ->label(__('translate.personal_customer.customer_need'))
                         ->columnSpanFull()

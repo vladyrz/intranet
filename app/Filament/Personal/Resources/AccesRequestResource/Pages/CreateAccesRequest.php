@@ -25,6 +25,7 @@ class CreateAccesRequest extends CreateRecord
             'type_of_request' => __('translate.access_request.options_type_of_request.' . $data['type_of_request']),
             'property' => $data['property'],
             'organization' => Organization::find($data['organization_id'])->organization_name,
+            'name' => User::find($data['user_id'])->name,
             'email' => User::find($data['user_id'])->email,
         );
 
