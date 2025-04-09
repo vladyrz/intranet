@@ -43,7 +43,7 @@ class RrhhPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Rrhh/Widgets'), for: 'App\\Filament\\Rrhh\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
+                // Widgets\AccountWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
