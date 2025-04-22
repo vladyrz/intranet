@@ -29,6 +29,7 @@ class SalesPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
+            ->favicon(asset('images/favicon.ico'))
             ->id('sales')
             ->path('sales')
             ->login()

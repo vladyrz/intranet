@@ -29,6 +29,7 @@ class RrhhPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
+            ->favicon(asset('images/favicon.ico'))
             ->id('rrhh')
             ->path('rrhh')
             ->login()
