@@ -138,9 +138,11 @@ class PersonalCustomerResource extends Resource
                 ->columns(2)
                 ->schema([
                     TextInput::make('budget_usd')
-                        ->label(__('translate.customer.budget_usd')),
+                        ->label(__('translate.customer.budget_usd'))
+                        ->numeric(),
                     TextInput::make('budget_crc')
-                        ->label(__('translate.customer.budget_crc')),
+                        ->label(__('translate.customer.budget_crc'))
+                        ->numeric(),
                     Toggle::make('financing')
                         ->label(__('translate.customer.financing')),
                 ]),

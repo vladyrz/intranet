@@ -19,3 +19,4 @@ Route::get('/', function () {
 });
 
 Route::get('/custom-property-page', CustomPropertyPage::class)->name('custom.property.page');
+Route::view('/legal', 'pages.legal-notice-public')->name('legal.notice');
