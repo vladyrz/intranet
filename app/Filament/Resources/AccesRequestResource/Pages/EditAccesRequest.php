@@ -9,7 +9,6 @@ use App\Mail\RequestStatus\AccesSent;
 use App\Models\User;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Mail;
 
 class EditAccesRequest extends EditRecord
@@ -23,43 +22,27 @@ class EditAccesRequest extends EditRecord
         ];
     }
 
-    protected function handleRecordUpdate(Model $record, array $data): Model
+    protected function afterSave(): void
     {
-        $record->update($data);
+        $record = $this->record;
 
-        //send email only if the request status is sent
-        if ($record->request_status == 'sent') {
-            $user = User::find($record->user_id);
-            $data = array(
-                'name' => $user->name,
-                'email' => $user->email,
-                'property' => $record->property,
-            );
-            Mail::to($user)->send(new AccesSent($data));
+        $user = User::find($record->user_id);
+
+        if (!$user) {
+            return; // Evitamos errores si no existe el usuario
         }
 
-        //send email only if the request status is approved
-        if ($record->request_status == 'approved') {
-            $user = User::find($record->user_id);
-            $data = array(
-                'name' => $user->name,
-                'email' => $user->email,
-                'property' => $record->property,
-            );
-            Mail::to($user)->send(new AccesApproved($data));
-        }
+        $data = [
+            'name' => $user->name,
+            'email' => $user->email,
+            'property' => $record->property,
+        ];
 
-        //send email only if the request status is rejected
-        if ($record->request_status == 'rejected') {
-            $user = User::find($record->user_id);
-            $data = array(
-                'name' => $user->name,
-                'email' => $user->email,
-                'property' => $record->property,
-            );
-            Mail::to($user)->send(new AccesRejected($data));
-        }
-
-        return $record;
+        match ($record->request_status) {
+            'sent' => Mail::to($user->email)->send(new AccesSent($data)),
+            'approved' => Mail::to($user->email)->send(new AccesApproved($data)),
+            'rejected' => Mail::to($user->email)->send(new AccesRejected($data)),
+            default => null,
+        };
     }
 }

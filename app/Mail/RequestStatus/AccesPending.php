@@ -9,12 +9,14 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Address;
 
 class AccesPending extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $data;
+    protected $ccEmails;
 
     /**
      * Create a new message instance.
@@ -22,6 +24,12 @@ class AccesPending extends Mailable
     public function __construct($data)
     {
         $this->data = $data;
+
+        $userRoles = User::role(['ventas', 'servicio_al_cliente', 'rrhh'])
+            ->pluck('email')
+            ->toArray();
+
+        $this->ccEmails = array_unique(array_merge([$this->data['email']], $userRoles));
     }
 
     /**
@@ -29,16 +37,9 @@ class AccesPending extends Mailable
      */
     public function envelope(): Envelope
     {
-
-        $userRoles = User::role(['ventas', 'servicio_al_cliente', 'rrhh'])
-            ->pluck('email')
-            ->toArray();
-
-        $ccEmails = array_merge([$this->data['email']], $userRoles);
-
         return new Envelope(
             subject: 'Solicitud de Permiso Pendiente',
-            cc: $ccEmails,
+            cc: $this->ccEmails,
         );
     }
 
@@ -54,8 +55,6 @@ class AccesPending extends Mailable
 
     /**
      * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
      */
     public function attachments(): array
     {
