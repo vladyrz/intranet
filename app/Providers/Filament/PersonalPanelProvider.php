@@ -69,7 +69,6 @@ class PersonalPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->plugins([
-                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
                 PanelRoles::make()
                 ->roleToAssign('panel_user')
                 ->restrictedRoles(['panel_user', 'super_admin']),

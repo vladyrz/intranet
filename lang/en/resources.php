@@ -55,13 +55,13 @@ return [
     ],
 
     'organization' => [
-        'label' => 'Organization',
-        'plural' => 'Organizations',
-        'navigation' => 'Organizations',
-        'navigation_group' => 'Organizations Management',
-        'sectionOrganization' => 'Organization Info',
+        'label' => 'Bank/FI',
+        'plural' => 'Banks/FIs',
+        'navigation' => 'Banks/FIs',
+        'navigation_group' => 'Banks/FIs Management',
+        'sectionOrganization' => 'Bank/FI Info',
         'sectionOther' => 'Other Relevant Info',
-        'tab_total_organizations' => 'Total organizations',
+        'tab_total_organizations' => 'Total Banks/FI',
         'tab_banks' => 'Banks',
         'tab_cooperatives' => 'Cooperatives',
         'tab_financial_institutions' => 'Financial institutions',
@@ -72,9 +72,9 @@ return [
     ],
 
     'organization_contact' => [
-        'label' => 'Organization Contact',
-        'plural' => 'Organization Contacts',
-        'navigation' => 'Organization Contacts',
+        'label' => 'Bank/FI Contact',
+        'plural' => 'Banks/FIs Contacts',
+        'navigation' => 'Banks/FIs Contacts',
         'sectionContact' => 'Contact Info',
         'tab_total_contacts' => 'Total Contacts',
         'tab_adjudicated_assets' => 'Adjudicated assets',

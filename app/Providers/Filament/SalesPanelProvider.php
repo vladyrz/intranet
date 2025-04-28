@@ -62,7 +62,6 @@ class SalesPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->plugins([
-                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
                 PanelRoles::make()
                     ->roleToAssign('ventas')
                     ->restrictedRoles(['ventas']),

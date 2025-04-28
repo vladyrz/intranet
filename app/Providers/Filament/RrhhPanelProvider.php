@@ -61,7 +61,6 @@ class RrhhPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->plugins([
-                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
                 PanelRoles::make()
                     ->roleToAssign('rrhh')
                     ->restrictedRoles(['rrhh']),

@@ -5,3 +5,4 @@
     <li>Correo: <strong>{{ $data['email'] }}</strong></li>
     <li>Banco/Financiera: <strong>{{ $data['organization'] }}</strong></li>
 </ul>
+<a href="https://easycore.g-easypro.com/">Ver solicitud en el sitio</a>

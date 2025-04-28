@@ -61,7 +61,6 @@ class OpsPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->plugins([
-                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
                 PanelRoles::make()
                 ->roleToAssign('gerente')
                 ->restrictedRoles(['gerente']),

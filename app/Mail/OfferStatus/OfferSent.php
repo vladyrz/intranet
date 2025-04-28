@@ -15,6 +15,7 @@ class OfferSent extends Mailable
     use Queueable, SerializesModels;
 
     public $data;
+    protected $ccEmails;
 
     /**
      * Create a new message instance.
@@ -22,6 +23,14 @@ class OfferSent extends Mailable
     public function __construct($data)
     {
         $this->data = $data;
+
+        // Cargar correos en el constructor
+        $userRoles = User::role(['soporte', 'ventas', 'servicio_al_cliente'])
+            ->where('email', '!=', $this->data['email'])
+            ->pluck('email')
+            ->toArray();
+
+        $this->ccEmails = array_unique($userRoles);
     }
 
     /**
@@ -29,14 +38,9 @@ class OfferSent extends Mailable
      */
     public function envelope(): Envelope
     {
-        $userRoles = User::role(['soporte', 'ventas', 'servicio_al_cliente'])
-            ->where('email', '!=', $this->data['email'])
-            ->pluck('email')
-            ->toArray();
-
         return new Envelope(
             subject: 'Oferta Enviada',
-            cc: $userRoles,
+            cc: $this->ccEmails,
         );
     }
 

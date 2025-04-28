@@ -61,7 +61,6 @@ class ServicesPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->plugins([
-                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
                 PanelRoles::make()
                 ->roleToAssign('servicio_al_cliente')
                 ->restrictedRoles(['servicio_al_cliente']),

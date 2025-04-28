@@ -16,12 +16,18 @@ class OfferPending extends Mailable
     use Queueable, SerializesModels;
 
     public $data;
+    protected $ccEmails;
+
     /**
      * Create a new message instance.
      */
     public function __construct($data)
     {
         $this->data = $data;
+
+        $userRoles = User::role(['ventas', 'servicio_al_cliente'])->pluck('email')->toArray();
+
+        $this->ccEmails = array_unique(array_merge([$this->data['email']], $userRoles));
     }
 
     /**
@@ -29,13 +35,9 @@ class OfferPending extends Mailable
      */
     public function envelope(): Envelope
     {
-        $userRoles = User::role(['ventas', 'servicio_al_cliente'])->pluck('email')->toArray();
-
-        $ccEmails = array_merge([$this->data['email']], $userRoles);
-
         return new Envelope(
             subject: 'Oferta Pendiente',
-            cc: $ccEmails,
+            cc: $this->ccEmails,
         );
     }
 
@@ -58,8 +60,8 @@ class OfferPending extends Mailable
     {
         $attachments = [];
 
-        foreach ($this->data['attachments'] ?? [] as $files) {
-            $attachments[] = Attachment::fromPath($files);
+        foreach ($this->data['attachments'] ?? [] as $filePath) {
+            $attachments[] = Attachment::fromPath($filePath);
         }
 
         return $attachments;

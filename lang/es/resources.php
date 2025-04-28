@@ -56,13 +56,13 @@ return [
     ],
 
     'organization' => [
-        'label' => 'Organización',
-        'plural' => 'Organizaciones',
-        'navigation' => 'Organizaciones',
-        'navigation_group' => 'Gestión de Organizaciones',
-        'sectionOrganization' => 'Información de la Organización',
+        'label' => 'Banco/Financiera',
+        'plural' => 'Bancos/Financieras',
+        'navigation' => 'Bancos/Financieras',
+        'navigation_group' => 'Gestión de Bancos/Financieras',
+        'sectionOrganization' => 'Información del Banco/Financiera',
         'sectionOther' => 'Otra Información Relevante',
-        'tab_total_organizations' => 'Total de organizaciones',
+        'tab_total_organizations' => 'Total de Bancos/Financieras',
         'tab_banks' => 'Bancos',
         'tab_cooperatives' => 'Cooperativas',
         'tab_financial_institutions' => 'Financieras',
@@ -73,9 +73,9 @@ return [
     ],
 
     'organization_contact' => [
-        'label' => 'Contacto de Organización',
-        'plural' => 'Contactos de Organización',
-        'navigation' => 'Contactos de Organización',
+        'label' => 'Contacto de Banco/Financiera',
+        'plural' => 'Contactos de Bancos/Financieras',
+        'navigation' => 'Contactos de Bancos/Financieras',
         'sectionContact' => 'Información de Contacto',
         'tab_total_contacts' => 'Total de contactos',
         'tab_adjudicated_assets' => 'Bienes Ajustados',

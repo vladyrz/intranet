@@ -61,7 +61,6 @@ class SoportePanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->plugins([
-                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
                 PanelRoles::make()
                 ->roleToAssign('soporte')
                 ->restrictedRoles(['soporte']),

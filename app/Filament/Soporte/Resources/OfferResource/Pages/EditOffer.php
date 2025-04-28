@@ -24,58 +24,43 @@ class EditOffer extends EditRecord
         ];
     }
 
-    protected function handleRecordUpdate(Model $record, array $data): Model
+    protected function mutateFormDataBeforeSave(array $data): array
     {
-        $record->update($data);
+        return $data;
+    }
 
-        // Send Email only if Approved
+    protected function afterSave(): void
+    {
+        $record = $this->record;
 
-        if ($record->offer_status == 'approved') {
-            $user = User::find($record->user_id);
-            $data = array(
-                'name' => $user->name,
-                'email' => $user->email,
-                'property_name' => $record->property_name
-            );
-            Mail::to($user)->send(new OfferApproved($data));
+        $user = User::find($record->user_id);
+
+        if (!$user) {
+            return; // Evitar errores si no se encuentra el usuario
         }
 
-        // Send Email only if Rejected
+        $data = [
+            'name' => $user->name,
+            'email' => $user->email,
+            'property_name' => $record->property_name,
+        ];
 
-        else if ($record->offer_status == 'rejected') {
-            $user = User::find($record->user_id);
-            $data = array(
-                'name' => $user->name,
-                'email' => $user->email,
-                'property_name' => $record->property_name
-            );
-            Mail::to($user)->send(new OfferRejected($data));
+        switch ($record->offer_status) {
+            case 'approved':
+                Mail::to($user->email)->send(new OfferApproved($data));
+                break;
+
+            case 'rejected':
+                Mail::to($user->email)->send(new OfferRejected($data));
+                break;
+
+            case 'sent':
+                Mail::to($user->email)->send(new OfferSent($data));
+                break;
+
+            case 'signed':
+                Mail::to($user->email)->send(new OfferSigned($data));
+                break;
         }
-
-        // Send Email only if Sent
-
-        else if ($record->offer_status == 'sent') {
-            $user = User::find($record->user_id);
-            $data = array(
-                'name' => $user->name,
-                'email' => $user->email,
-                'property_name' => $record->property_name
-            );
-            Mail::to($user)->send(new OfferSent($data));
-        }
-
-        // Send Email only if Signed
-
-        else if ($record->offer_status == 'signed') {
-            $user = User::find($record->user_id);
-            $data = array(
-                'name' => $user->name,
-                'email' => $user->email,
-                'property_name' => $record->property_name
-            );
-            Mail::to($user)->send(new OfferSigned($data));
-        }
-
-        return $record;
     }
 }
