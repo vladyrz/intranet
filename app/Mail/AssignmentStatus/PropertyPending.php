@@ -15,6 +15,7 @@ class PropertyPending extends Mailable
     use Queueable, SerializesModels;
 
     public $data;
+    protected $ccEmails;
 
     /**
      * Create a new message instance.
@@ -22,6 +23,10 @@ class PropertyPending extends Mailable
     public function __construct($data)
     {
         $this->data = $data;
+
+        $userRoles = User::role(['soporte', 'ventas'])->pluck('email')->toArray();
+
+        $this->ccEmails = array_unique(array_merge([$this->data['email']], $userRoles));
     }
 
     /**
@@ -29,13 +34,9 @@ class PropertyPending extends Mailable
      */
     public function envelope(): Envelope
     {
-        $userRoles = User::role(['soporte', 'ventas'])->pluck('email')->toArray();
-
-        $ccEmails = array_merge([$this->data['email']], $userRoles);
-
         return new Envelope(
             subject: 'Asignación de Propiedad Pendiente',
-            cc: $ccEmails,
+            cc: $this->ccEmails,
         );
     }
 

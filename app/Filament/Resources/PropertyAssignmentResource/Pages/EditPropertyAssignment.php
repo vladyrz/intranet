@@ -10,9 +10,7 @@ use App\Mail\AssignmentStatus\PropertyRejected;
 use App\Mail\AssignmentStatus\PropertySubmitted;
 use App\Models\User;
 use Filament\Actions;
-use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Mail;
 
 class EditPropertyAssignment extends EditRecord
@@ -26,66 +24,29 @@ class EditPropertyAssignment extends EditRecord
         ];
     }
 
-    protected function handleRecordUpdate(Model $record, array $data): Model
+    protected function afterSave(): void
     {
-        $record->update($data);
+        $record = $this->record;
 
-        //Send Email only if Approved
-        if ($record->property_assignment_status == 'approved') {
-            $user = User::find($record->user_id);
-            $data = array(
-                'name' => $user->name,
-                'email' => $user->email,
-                'property_info' => $record->property_info
-            );
-            Mail::to($user)->send(new PropertyApproved($data));
+        $user = User::find($record->user_id);
+
+        if (!$user) {
+            return; // Seguridad: si no existe usuario, no seguimos
         }
 
-        //Send Email only if Rejected
+        $data = [
+            'name' => $user->name,
+            'email' => $user->email,
+            'property_info' => $record->property_info,
+        ];
 
-        else if($record->property_assignment_status == 'rejected') {
-            $user = User::find($record->user_id);
-            $data = array(
-                'name' => $user->name,
-                'email' => $user->email,
-                'property_info' => $record->property_info
-            );
-            Mail::to($user)->send(new PropertyRejected($data));
-        }
-
-        //Send Email only if Published
-        else if($record->property_assignment_status == 'published') {
-            $user = User::find($record->user_id);
-            $data = array(
-                'name' => $user->name,
-                'email' => $user->email,
-                'property_info' => $record->property_info
-            );
-            Mail::to($user)->send(new PropertyPublished($data));
-        }
-
-        //Send Email only if Finished
-        else if($record->property_assignment_status == 'finished') {
-            $user = User::find($record->user_id);
-            $data = array(
-                'name' => $user->name,
-                'email' => $user->email,
-                'property_info' => $record->property_info
-            );
-            Mail::to($user)->send(new PropertyFinished($data));
-        }
-
-        //Send Email only if Submitted
-        else if($record->property_assignment_status == 'submitted') {
-            $user = User::find($record->user_id);
-            $data = array(
-                'name' => $user->name,
-                'email' => $user->email,
-                'property_info' => $record->property_info
-            );
-            Mail::to($user)->send(new PropertySubmitted($data));
-        }
-
-        return $record;
+        match ($record->property_assignment_status) {
+            'approved' => Mail::to($user->email)->send(new PropertyApproved($data)),
+            'rejected' => Mail::to($user->email)->send(new PropertyRejected($data)),
+            'published' => Mail::to($user->email)->send(new PropertyPublished($data)),
+            'finished' => Mail::to($user->email)->send(new PropertyFinished($data)),
+            'submitted' => Mail::to($user->email)->send(new PropertySubmitted($data)),
+            default => null,
+        };
     }
 }
