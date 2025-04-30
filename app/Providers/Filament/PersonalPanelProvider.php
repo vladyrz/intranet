@@ -77,7 +77,7 @@ class PersonalPanelProvider extends PanelProvider
                     ->setIcon('heroicon-o-user')
                     ->shouldShowAvatarForm()
                     ->setNavigationGroup(__('resources.app.navigation_group'))
-                    ->shouldShowDeleteAccountForm(false)
+                    ->shouldShowDeleteAccountForm(true)
             ])
             ->userMenuItems([
                 'profile' => MenuItem::make()

@@ -95,6 +95,21 @@
             </ol>
         </div>
 
+        <div class="mt-12 border-t pt-8">
+            <h2 class="text-2xl font-bold mb-4">¿Tienes dudas o consultas?</h2>
+            <p class="mb-4">
+                Si tienes alguna pregunta sobre el uso de EasyCore, los Términos y Condiciones, o cualquier aspecto relacionado con nuestra plataforma, no dudes en contactarnos. Nuestro equipo estará encantado de ayudarte.
+            </p>
+
+            <ul class="space-y-2">
+                <li><strong>Email general:</strong> <a href="mailto:ventas@g-easypro.com" class="text-blue-600 hover:underline">ventas@g-easypro.com</a></li>
+                <li><strong>Soporte técnico:</strong> <a href="mailto:tecnologia@g-easypro.com" class="text-blue-600 hover:underline">tecnologia@g-easypro.com</a></li>
+                <li><strong>Teléfono:</strong> (+506) 4070-0079</li>
+                <li><strong>Oficina Central:</strong> San José, Costa Rica</li>
+                <li><strong>Sucursal San Carlos:</strong> Ciudad Quesada, 50 mts Norte de la Cruz Roja</li>
+            </ul>
+        </div>
+
         <a href="{{ filament()->getLoginUrl() }}" class="inline-block mt-8 px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
             ← Volver al login
         </a>
