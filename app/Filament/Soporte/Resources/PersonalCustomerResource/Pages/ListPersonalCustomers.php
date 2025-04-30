@@ -43,7 +43,7 @@ class ListPersonalCustomers extends ListRecords
         ];
     }
 
-    public function orderByCustomerType(string $type = null) {
+    public function orderByCustomerType(?string $type = null) {
         if(blank($type)){
             return PersonalCustomer::count();
         }

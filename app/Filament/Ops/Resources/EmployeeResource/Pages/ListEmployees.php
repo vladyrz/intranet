@@ -49,7 +49,7 @@ class ListEmployees extends ListRecords
         ];
     }
 
-    public function orderByStatus(string $status = null) {
+    public function orderByStatus(?string $status = null) {
         if (blank($status)) {
             return Employee::count();
         }

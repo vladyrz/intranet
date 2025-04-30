@@ -11,26 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('customer_reports', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
-            $table->string('full_name', 255);
-            $table->string('national_id', 255)->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('customer_name', 255);
+            $table->string('national_id', 20)->nullable();
             $table->string('email', 255)->nullable();
-            $table->string('phone_number', 20)->nullable();
+            $table->string('phone_number', 40)->nullable();
             $table->string('property_name', 255)->nullable();
-            $table->foreignId('organization_id')->nullable()->constrained()->nullOnDelete();
-            $table->string('address')->nullable();
-            $table->string('contact_preferences')->nullable();
-            $table->date('initial_contact_date')->nullable();
-            $table->string('customer_type')->nullable();
-            $table->json('credid_information')->nullable();
+            $table->foreignId('organization_id')->constrained()->onDelete('cascade');
             $table->decimal('budget_usd', 15, 2)->nullable();
             $table->decimal('budget_crc', 15, 2)->nullable();
             $table->boolean('financing')->default(false);
             $table->decimal('expected_commission_usd', 15, 2)->nullable();
             $table->decimal('expected_commission_crc', 15, 2)->nullable();
-            $table->string('state')->default('pending');
+            $table->string('report_status')->default('pending');
             $table->timestamps();
         });
     }
@@ -40,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('customer_reports');
     }
 };

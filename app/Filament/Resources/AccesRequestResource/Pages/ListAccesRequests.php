@@ -45,7 +45,7 @@ class ListAccesRequests extends ListRecords
         ];
     }
 
-    public function orderByRequestStatus(string $status = null) {
+    public function orderByRequestStatus(?string $status = null) {
         if(blank($status)){
             return AccesRequest::count();
         }

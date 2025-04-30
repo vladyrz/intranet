@@ -51,7 +51,7 @@ class ListPropertyAssignments extends ListRecords
         ];
     }
 
-    public function orderByAssignmentStatus(string $status = null, $user_id = null){
+    public function orderByAssignmentStatus(?string $status = null, $user_id = null){
         $query = PropertyAssignment::where('user_id', $user_id);
         if(blank($status)){
             return $query->count();

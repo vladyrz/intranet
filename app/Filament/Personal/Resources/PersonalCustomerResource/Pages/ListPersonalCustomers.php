@@ -50,7 +50,7 @@ class ListPersonalCustomers extends ListRecords
         ];
     }
 
-    public function orderByCustomerType(string $type = null, $user_id = null) {
+    public function orderByCustomerType(?string $type = null, $user_id = null) {
         $query = PersonalCustomer::where('user_id', $user_id);
         if(blank($type)){
             return $query->count();

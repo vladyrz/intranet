@@ -44,6 +44,18 @@ return [
         'tab_tenant' => 'Tenants',
     ],
 
+    'customer_report' => [
+        'label' => 'Customer Report',
+        'plural' => 'Customer Reports',
+        'navigation' => 'Customer Reports',
+        'section_customer' => 'Customer Info',
+        'section_financial' => 'Financial Info',
+        'tab_total_reports' => 'Total reports',
+        'tab_pending' => 'Pending',
+        'tab_approved' => 'Approved',
+        'tab_rejected' => 'Rejected',
+    ],
+
     'personal_customer' => [
         'label' => 'Personal Customer',
         'plural' => 'Personal Customers',
@@ -80,20 +92,6 @@ return [
         'tab_adjudicated_assets' => 'Adjudicated assets',
         'tab_cotizations' => 'Cotizations',
         'tab_billing' => 'Billing',
-    ],
-
-    'sales' => [
-        'label' => 'Sale',
-        'plural' => 'Sales',
-        'navigation' => 'Sales',
-        'navigation_group' => 'Sales Management',
-        'sectionSale' => 'Sale Info',
-        'tab_total_sales' => 'Total Sales',
-        'tab_offers' => 'Offers',
-        'tab_in_process' => 'In Process',
-        'tab_approved' => 'Approved',
-        'tab_signed' => 'Signed',
-        'tab_rejected' => 'Rejected',
     ],
 
     'offer' => [
@@ -188,32 +186,5 @@ return [
         'tab_sent' => 'Sent',
         'tab_approved' => 'Approved',
         'tab_rejected' => 'Rejected',
-    ],
-
-    'vehicle' => [
-        'label' => 'Vehicle',
-        'plural' => 'Vehicles',
-        'navigation' => 'Vehicles',
-        'navigation_group' => 'Vehicles',
-        'sectionVehicle' => 'Vehicle Information',
-        'tab_total_vehicles' => 'Total vehicles',
-        'tab_active' => 'Active',
-        'tab_inactive' => 'Inactive',
-        'tab_sold' => 'Sold',
-        'tab_eliminated' => 'Eliminated',
-    ],
-
-    'movement' => [
-        'label' => 'Movement',
-        'plural' => 'Movements',
-        'navigation' => 'Movements',
-        'sectionMovement' => 'Movement Information',
-    ],
-
-    'maintenance' => [
-        'label' => 'Maintenance',
-        'plural' => 'Maintenances',
-        'navigation' => 'Maintenances',
-        'sectionMaintenance' => 'Maintenance Information',
     ],
 ];

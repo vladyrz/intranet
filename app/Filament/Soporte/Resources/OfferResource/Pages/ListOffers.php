@@ -49,7 +49,7 @@ class ListOffers extends ListRecords
         ];
     }
 
-    public function orderByOfferStatus(string $status = null){
+    public function orderByOfferStatus(?string $status = null){
         if(blank($status)){
             return Offer::count();
         }

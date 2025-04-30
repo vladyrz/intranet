@@ -64,7 +64,7 @@ class OfferResource extends Resource
         return $form
             ->schema([
                 Section::make(__('resources.offer.section_offer'))
-                    ->columns(3)
+                    ->columns(2)
                     ->schema([
                         TextInput::make('property_name')
                             ->label(__('translate.offer.property_name'))
@@ -103,7 +103,6 @@ class OfferResource extends Resource
                         FileUpload::make('offer_files')
                             ->label(__('translate.offer.offer_files'))
                             ->multiple()
-                            ->columnSpan(2)
                             ->downloadable()
                             ->directory('attachments/' .now()->format('Y/m/d'))
                             ->minFiles(1)

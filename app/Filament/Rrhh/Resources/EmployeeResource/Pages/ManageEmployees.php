@@ -50,7 +50,7 @@ class ManageEmployees extends ManageRecords
         ];
     }
 
-    private function orderByStatus(string $status = null){
+    private function orderByStatus(?string $status = null){
         if (blank($status)) {
             return Employee::count();
         }

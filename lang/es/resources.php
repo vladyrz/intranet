@@ -45,6 +45,18 @@ return [
         'tab_other' => 'Otros',
     ],
 
+    'customer_report' => [
+        'label' => 'Reporte de Cliente',
+        'plural' => 'Reportes de Clientes',
+        'navigation' => 'Reportes de Clientes',
+        'section_customer' => 'Información del Cliente',
+        'section_financial' => 'Información Financiera',
+        'tab_total_reports' => 'Total de reportes',
+        'tab_pending' => 'Pendientes',
+        'tab_approved' => 'Aprobados',
+        'tab_rejected' => 'Rechazados',
+    ],
+
     'personal_customer' => [
         'label' => 'Cliente Personal',
         'plural' => 'Clientes Personales',
@@ -81,20 +93,6 @@ return [
         'tab_adjudicated_assets' => 'Bienes Ajustados',
         'tab_cotizations' => 'Cotizaciones',
         'tab_billing' => 'Facturación',
-    ],
-
-    'sales' => [
-        'label' => 'Venta',
-        'plural' => 'Ventas',
-        'navigation' => 'Ventas',
-        'navigation_group' => 'Gestión de Ventas',
-        'sectionSale' => 'Información de la Venta',
-        'tab_total_sales' => 'Total de ventas',
-        'tab_offers' => 'Ofertadas',
-        'tab_in_process' => 'En proceso',
-        'tab_approved' => 'Aprobadas',
-        'tab_signed' => 'Firmadas',
-        'tab_rejected' => 'Rechazadas',
     ],
 
     'offer' => [
@@ -189,32 +187,5 @@ return [
         'tab_sent' => 'Enviadas',
         'tab_approved' => 'Aprobadas',
         'tab_rejected' => 'Rechazadas',
-    ],
-
-    'vehicle' => [
-        'label' => 'Vehículo',
-        'plural' => 'Vehículos',
-        'navigation' => 'Vehículos',
-        'navigation_group' => 'Gestión de Vehículos',
-        'sectionVehicle' => 'Información del Vehículo',
-        'tab_total_vehicles' => 'Total de vehículos',
-        'tab_active' => 'Activos',
-        'tab_inactive' => 'Inactivos',
-        'tab_sold' => 'Vendidos',
-        'tab_eliminated' => 'Eliminados',
-    ],
-
-    'movement' => [
-        'label' => 'Movimiento',
-        'plural' => 'Movimientos',
-        'navigation' => 'Movimientos',
-        'sectionMovement' => 'Información del Movimiento',
-    ],
-
-    'maintenance' => [
-        'label' => 'Mantenimiento',
-        'plural' => 'Mantenimientos',
-        'navigation' => 'Mantenimientos',
-        'sectionMaintenance' => 'Información del Mantenimiento',
     ],
 ];

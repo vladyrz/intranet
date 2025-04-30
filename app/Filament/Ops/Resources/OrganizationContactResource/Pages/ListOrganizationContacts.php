@@ -36,7 +36,7 @@ class ListOrganizationContacts extends ListRecords
         ];
     }
 
-    public function orderbyOrganizationType(string $type = null){
+    public function orderbyOrganizationType(?string $type = null){
         if (blank($type)) {
             return OrganizationContact::count();
         }

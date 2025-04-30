@@ -45,7 +45,7 @@ class ListAccesRequests extends ListRecords
         ];
     }
 
-    public function orderByAccesRequestStatus(string $status = null, $user_id = null) {
+    public function orderByAccesRequestStatus(?string $status = null, $user_id = null) {
         $query = AccesRequest::where('user_id', $user_id);
         if(blank($status)){
             return $query->count();

@@ -50,7 +50,7 @@ class ListOffers extends ListRecords
         ];
     }
 
-    public function orderByOfferStatus(string $status = null, $user_id = null) {
+    public function orderByOfferStatus(?string $status = null, $user_id = null) {
         $query = Offer::where('user_id', $user_id);
         if(blank($status)){
             return $query->count();

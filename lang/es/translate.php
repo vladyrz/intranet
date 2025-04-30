@@ -104,6 +104,29 @@ return [
         'updated_at' => 'Actualizado el',
     ],
 
+    'customer_report' => [
+        'user_id' => 'Asesor',
+        'customer_name' => 'Nombre del cliente',
+        'national_id' => 'Número de cédula',
+        'email' => 'Correo electrónico',
+        'phone_number' => 'Número de teléfono',
+        'property_name' => 'Nombre de la propiedad (o ID)',
+        'organization_id' => 'Banco/Financiera',
+        'budget_usd' => 'Presupuesto en $',
+        'budget_crc' => 'Presupuesto en ₡',
+        'financing' => '¿Requiere financiamiento?',
+        'expected_commission_usd' => 'Comisión esperada en $',
+        'expected_commission_crc' => 'Comisión esperada en ₡',
+        'options_report_status' => [
+            'Pendiente',
+            'Aprobado',
+            'Rechazado',
+        ],
+        'report_status' => 'Estado del reporte',
+        'created_at' => 'Creado el',
+        'updated_at' => 'Actualizado el',
+    ],
+
     'personal_customer' => [
         'options_prospect_status' => [
             'Caliente',
@@ -166,35 +189,6 @@ return [
             'Ambos',
         ],
         'contact_remarks' => 'Observaciones del contacto',
-        'created_at' => 'Creado el',
-        'updated_at' => 'Actualizado el',
-    ],
-
-    'sale' => [
-        'property_name' => 'Nombre de la propiedad',
-        'user_id' => 'Asesor',
-        'organization_id' => 'Banco/Financiera',
-        'offer_amount_usd' => 'Monto de oferta en $',
-        'offer_amount_crc' => 'Monto de oferta en ₡',
-        'status' => 'Estado',
-        'options_status' => [
-            'Ofertado',
-            'En proceso',
-            'Aprobado',
-            'Firmado',
-            'Rechazado',
-        ],
-        'client_name' => 'Nombre del cliente',
-        'client_email' => 'Correo electrónico del cliente',
-        'offer_date' => 'Fecha de oferta',
-        'comission_percentage' => 'Porcentaje de comisión',
-        'offer_currency' => 'Moneda de oferta',
-        'options_currency' => [
-            'Doláres',
-            'Colones',
-        ],
-        'commission_amount_usd' => 'Comisión en $',
-        'commission_amount_crc' => 'Comisión en ₡',
         'created_at' => 'Creado el',
         'updated_at' => 'Actualizado el',
     ],
@@ -295,52 +289,6 @@ return [
             'Rechazada',
         ],
         'created_at' => 'Enviado el',
-        'updated_at' => 'Actualizado el',
-    ],
-
-    'vehicle' => [
-        'license_plate' => 'Placa',
-        'brand' => 'Marca',
-        'style' => 'Estilo',
-        'year' => 'Año',
-        'vehicle_status' => 'Estado del vehículo',
-        'options_vehicle_status' => [
-            'Activo',
-            'Inactivo',
-            'Vendido',
-            'Eliminado',
-        ],
-        'created_at' => 'Creado el',
-        'updated_at' => 'Actualizado el',
-    ],
-
-    'movement' => [
-        'movement_type' => 'Tipo de movimiento',
-        'options_movement_type' => [
-            'Salida',
-            'Ingreso',
-        ],
-        'movement_date' => 'Fecha del movimiento',
-        'vehicle_id' => 'Vehículo',
-        'initial_mileage' => 'Kilometraje inicial',
-        'final_mileage' => 'Kilometraje final',
-        'attachments' => 'Adjuntar archivos',
-        'created_at' => 'Creado el',
-        'updated_at' => 'Actualizado el',
-    ],
-
-    'maintenance' => [
-        'maintenance_type' => 'Tipo de mantenimiento',
-        'options_maintenance_type' => [
-            'Limpieza',
-            'Reparación',
-            'Mantenimiento',
-            'Otro',
-        ],
-        'maintenance_date' => 'Fecha del mantenimiento',
-        'vehicle_id' => 'Vehículo',
-        'attachments' => 'Adjuntar archivos',
-        'created_at' => 'Creado el',
         'updated_at' => 'Actualizado el',
     ],
 ];

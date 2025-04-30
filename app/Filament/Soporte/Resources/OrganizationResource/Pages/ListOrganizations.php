@@ -64,7 +64,7 @@ class ListOrganizations extends ListRecords
         ];
     }
 
-    public function orderByOrganizationType(string $type = null) {
+    public function orderByOrganizationType(?string $type = null) {
         if(blank($type)){
             return Organization::count();
         }

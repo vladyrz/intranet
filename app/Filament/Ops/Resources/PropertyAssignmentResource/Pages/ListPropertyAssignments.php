@@ -50,7 +50,7 @@ class ListPropertyAssignments extends ListRecords
         ];
     }
 
-    public function orderByAssignmentStatus(string $status = null){
+    public function orderByAssignmentStatus(?string $status = null){
         if(blank($status)){
             return PropertyAssignment::count();
         }

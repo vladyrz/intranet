@@ -81,6 +81,10 @@ class User extends Authenticatable implements HasAvatar
         return $this->hasMany(Customer::class);
     }
 
+    public function customerreports(){
+        return $this->hasMany(CustomerReport::class);
+    }
+
     public function operations(){
         return $this->hasMany(Operation::class);
     }

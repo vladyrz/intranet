@@ -104,6 +104,29 @@ return [
         'updated_at' => 'Updated at',
     ],
 
+    'customer_report' => [
+        'user_id' => 'Agent',
+        'customer_name' => 'Customer name',
+        'national_id' => 'National id',
+        'email' => 'Email',
+        'phone_number' => 'Phone number',
+        'property_name' => 'Property name (or ID)',
+        'organization_id' => 'Organization',
+        'budget_usd' => 'Budget in $',
+        'budget_crc' => 'Budget in ₡',
+        'financing' => 'Does it require financing?',
+        'expected_commission_usd' => 'Expected commission in $',
+        'expected_commission_crc' => 'Expected commission in ₡',
+        'options_report_status' => [
+            'Pending',
+            'Approved',
+            'Rejected',
+        ],
+        'report_status' => 'Report status',
+        'created_at' => 'Created at',
+        'updated_at' => 'Updated at',
+    ],
+
     'personal_customer' => [
         'options_prospect_status' => [
             'Hot',
@@ -166,35 +189,6 @@ return [
             'Both',
         ],
         'contact_remarks' => 'Contact remarks',
-        'created_at' => 'Created at',
-        'updated_at' => 'Updated at',
-    ],
-
-    'sale' => [
-        'property_name' => 'Property name',
-        'user_id' => 'Agent',
-        'organization_id' => 'Organization',
-        'offer_amount_usd' => 'Offer amount in $',
-        'offer_amount_crc' => 'Offer amount in ₡',
-        'status' => 'Status',
-        'options_status' => [
-            'Offered',
-            'In process',
-            'Approved',
-            'Signed',
-            'Rejected',
-        ],
-        'client_name' => 'Client name',
-        'client_email' => 'Client email',
-        'offer_date' => 'Offer date',
-        'comission_percentage' => 'Commission percentage',
-        'offer_currency' => 'Offer currency',
-        'options_currency' => [
-            'Dollars',
-            'Colones',
-        ],
-        'commission_amount_usd' => 'Commission amount in $',
-        'commission_amount_crc' => 'Commission amount in ₡',
         'created_at' => 'Created at',
         'updated_at' => 'Updated at',
     ],
@@ -293,52 +287,6 @@ return [
             'Rejected',
         ],
         'created_at' => 'Sent at',
-        'updated_at' => 'Updated at',
-    ],
-
-    'vehicle' => [
-        'license_plate' => 'License Plate',
-        'brand' => 'Brand',
-        'style' => 'Style',
-        'year' => 'Year',
-        'vehicle_status' => 'Vehicle Status',
-        'options_vehicle_status' => [
-            'Active',
-            'Inactive',
-            'Sold',
-            'Eliminated',
-        ],
-        'created_at' => 'Created at',
-        'updated_at' => 'Updated at',
-    ],
-
-    'movement' => [
-        'movement_type' => 'Movement Type',
-        'options_movement_type' => [
-            'Out',
-            'In',
-        ],
-        'movement_date' => 'Movement Date',
-        'vehicle_id' => 'Vehicle',
-        'initial_mileage' => 'Initial Mileage',
-        'final_mileage' => 'Final Mileage',
-        'attachments' => 'Attach Files',
-        'created_at' => 'Created at',
-        'updated_at' => 'Updated at',
-    ],
-
-    'maintenance' => [
-        'maintenance_type' => 'Maintenance Type',
-        'options_maintenance_type' => [
-            'Cleaning',
-            'Repair',
-            'Maintenance',
-            'Other',
-        ],
-        'maintenance_date' => 'Maintenance Date',
-        'vehicle_id' => 'Vehicle',
-        'attachments' => 'Attach Files',
-        'created_at' => 'Created at',
         'updated_at' => 'Updated at',
     ],
 ];

@@ -25,12 +25,12 @@ class Organization extends Model
         return $this->hasMany(OrganizationContact::class);
     }
 
-    public function sales() {
-        return $this->hasMany(Sale::class);
-    }
-
     public function customers() {
         return $this->hasMany(Customer::class);
+    }
+
+    public function customerreports() {
+        return $this->hasMany(CustomerReport::class);
     }
 
     public function properties() {

@@ -1,0 +1,38 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Parallax\FilamentComments\Models\Traits\HasFilamentComments;
+
+class CustomerReport extends Model
+{
+    use HasFactory, HasFilamentComments;
+
+    protected $fillable = [
+        'user_id',
+        'customer_name',
+        'national_id',
+        'email',
+        'phone_number',
+        'property_name',
+        'organization_id',
+        'budget_usd',
+        'budget_crc',
+        'financing',
+        'expected_commission_usd',
+        'expected_commission_crc',
+        'report_status',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function organization()
+    {
+        return $this->belongsTo(Organization::class);
+    }
+}
