@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Contabilidad\Resources;
 
-use App\Filament\Resources\OfferResource\Pages;
-use App\Filament\Resources\OfferResource\RelationManagers;
+use App\Filament\Contabilidad\Resources\OfferResource\Pages;
+use App\Filament\Contabilidad\Resources\OfferResource\RelationManagers;
 use App\Models\Offer;
 use App\Models\PersonalCustomer;
-use Dom\Text;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
@@ -17,14 +16,12 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Collection;
-use Parallax\FilamentComments\Tables\Actions\CommentsAction;
 
 class OfferResource extends Resource
 {
@@ -50,10 +47,16 @@ class OfferResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('resources.employee.navigation_group');
+        return __('resources.employee_checklist.navigation_group');
     }
 
-    protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->where('offer_status', 'signed');
+    }
 
     public static function form(Form $form): Form
     {
@@ -64,8 +67,8 @@ class OfferResource extends Resource
                     ->schema([
                         TextInput::make('property_name')
                             ->label(__('translate.offer.property_name'))
-                            ->required()
-                            ->maxLength(255),
+                            ->maxLength(255)
+                            ->required(),
                         TextInput::make('property_value_usd')
                             ->label(__('translate.offer.property_value_usd'))
                             ->numeric(),
@@ -112,10 +115,6 @@ class OfferResource extends Resource
                         Select::make('offer_status')
                             ->label(__('translate.offer.offer_status'))
                             ->options([
-                                'pending' => __('translate.offer.options_offer_status.0'),
-                                'sent' => __('translate.offer.options_offer_status.1'),
-                                'approved' => __('translate.offer.options_offer_status.2'),
-                                'rejected' => __('translate.offer.options_offer_status.3'),
                                 'signed' => __('translate.offer.options_offer_status.4'),
                             ])
                             ->required(),
@@ -126,7 +125,7 @@ class OfferResource extends Resource
                             ->downloadable()
                             ->directory('attachments/' .now()->format('Y/m/d'))
                             ->maxFiles(5),
-                    ])
+                    ]),
             ]);
     }
 
@@ -190,18 +189,10 @@ class OfferResource extends Resource
                     ->badge()
                     ->formatStateUsing(function ($state){
                         return match ($state) {
-                            'pending' => __('translate.offer.options_offer_status.0'),
-                            'sent' => __('translate.offer.options_offer_status.1'),
-                            'approved' => __('translate.offer.options_offer_status.2'),
-                            'rejected' => __('translate.offer.options_offer_status.3'),
                             'signed' => __('translate.offer.options_offer_status.4'),
                         };
                     })
                     ->color(fn (string $state): string => match ($state) {
-                        'pending' => 'warning',
-                        'sent' => 'info',
-                        'approved' => 'success',
-                        'rejected' => 'danger',
                         'signed' => 'info',
                     }),
                 TextColumn::make('created_at')
@@ -219,14 +210,6 @@ class OfferResource extends Resource
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
-                SelectFilter::make('user_id')
-                    ->label(__('translate.offer.user_id'))
-                    ->relationship(
-                        name: 'user',
-                        titleAttribute: 'name',
-                    )
-                    ->searchable()
-                    ->preload(),
                 SelectFilter::make('organization_id')
                     ->label(__('translate.offer.organization_id'))
                     ->relationship(
@@ -235,23 +218,13 @@ class OfferResource extends Resource
                     )
                     ->searchable()
                     ->preload(),
-
             ])
             ->actions([
-                ActionGroup::make([
-                    CommentsAction::make()
-                        ->color('info'),
-                    Tables\Actions\ViewAction::make(),
-                    Tables\Actions\EditAction::make()
-                        ->color('warning'),
-                    Tables\Actions\DeleteAction::make()
-                ])
+                Tables\Actions\EditAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+            ->recordUrl(function ($record){
+                return static::getUrl('view', ['record' => $record]);
+            });
     }
 
     public static function getRelations(): array
@@ -265,8 +238,7 @@ class OfferResource extends Resource
     {
         return [
             'index' => Pages\ListOffers::route('/'),
-            'create' => Pages\CreateOffer::route('/create'),
-            'edit' => Pages\EditOffer::route('/{record}/edit'),
+            'view' => Pages\ViewOffer::route('/{record}'),
         ];
     }
 }

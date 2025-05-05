@@ -29,6 +29,13 @@ return [
         'tab_referred' => 'Referred',
     ],
 
+    'employee_checklist' => [
+        'label' => 'Employee Checklist',
+        'plural' => 'Employee Checklists',
+        'navigation' => 'Employee Checklists',
+        'navigation_group' => 'Accounting',
+    ],
+
     'customer' => [
         'label' => 'Report of Customer',
         'plural' => 'Report of Customers',
@@ -112,6 +119,13 @@ return [
             'Rejecteds',
             'Signeds',
         ],
+    ],
+
+    'billing_control' => [
+        'label' => 'Billing Control',
+        'plural' => 'Billing Controls',
+        'navigation' => 'Billing Controls',
+        'sectionBillingControl' => 'Billing Control Info',
     ],
 
     'timesheet' => [

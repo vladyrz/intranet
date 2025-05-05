@@ -52,6 +52,26 @@ return [
         'updated_at' => 'Actualizado el',
     ],
 
+    'employee_checklist' => [
+        'employee_id' => 'Asesor',
+        'task' => 'Tarea a realizar',
+        'options_task' => [
+            'included' => 'Inclusión de sistemas',
+            'excluded' => 'Exclusión de sistemas'
+        ],
+        'easypro_email' => 'Correo de Easypro',
+        'easyu_user' => 'Usuario de Easy-U',
+        'bienes_adjudicados_user' => 'Usuario de Bienes Adjudicados',
+        'intranet_user' => 'Usuario de Intranet',
+        'email_marketing_group' => 'Grupo de email marketing',
+        'phone_extension' => 'Extensión de teléfono',
+        'social_networks' => 'Redes sociales',
+        'nas_access' => 'Acceso NAS',
+        'email_signature_card' => 'Tarjeta y firma de correo',
+        'created_at' => 'Creado el',
+        'updated_at' => 'Actualizado el',
+    ],
+
     'customer' => [
         'options_cpreferences' => [
             'Correo electrónico',
@@ -216,6 +236,21 @@ return [
             'Rechazada',
             'Firmada'
         ],
+    ],
+
+    'billing_control' => [
+        'offer_id' => 'Oferta',
+        'invoice_status' => 'Estado de la factura',
+        'options_invoice_status' => [
+            'pending' => 'Pendiente de facturación',
+            'invoiced' => 'Facturado',
+            'paid' => 'Pagado',
+        ],
+        'payment_percentage' => 'Porcentaje de pago',
+        'billing_date' => 'Fecha de facturación',
+        'invoice_files' => 'Archivos de factura',
+        'created_at' => 'Creado el',
+        'updated_at' => 'Actualizado el',
     ],
 
     'departament' => [

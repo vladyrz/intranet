@@ -48,4 +48,8 @@ class Employee extends Model
     public function locationCity(){
         return $this->belongsTo(City::class, 'city_id');
     }
+
+    public function employeeChecklists(){
+        return $this->hasMany(EmployeeChecklist::class);
+    }
 }

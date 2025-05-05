@@ -29,6 +29,13 @@ return [
         'tab_referred' => 'Referidos',
     ],
 
+    'employee_checklist' => [
+        'label' => 'Checklist de Empleado',
+        'plural' => 'Checklists de Empleados',
+        'navigation' => 'Checklists de Empleados',
+        'navigation_group' => 'Contabilidad',
+    ],
+
     'customer' => [
         'label' => 'Reporte de Cliente',
         'plural' => 'Reporte de Clientes',
@@ -113,6 +120,13 @@ return [
             'Rechazadas',
             'Firmadas',
         ],
+    ],
+
+    'billing_control' => [
+        'label' => 'Factura',
+        'plural' => 'Facturaciones',
+        'navigation' => 'Control de facturación',
+        'sectionBillingControl' => 'Información de la facturación',
     ],
 
     'timesheet' => [

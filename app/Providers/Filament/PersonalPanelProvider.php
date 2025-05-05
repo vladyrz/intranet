@@ -141,7 +141,15 @@ class PersonalPanelProvider extends PanelProvider
                     ->visible(fn (): bool => auth()->user()?->hasAnyRole([
                         'servicio_al_cliente',
                     ])),
-                // ...
+
+
+                MenuItem::make()
+                    ->label('Panel de Contabilidad')
+                    ->url('/contabilidad')
+                    ->icon('heroicon-o-document-currency-dollar')
+                    ->visible(fn (): bool => auth()->user()?->hasAnyRole([
+                        'contabilidad',
+                    ])),
             ])
             ;
 

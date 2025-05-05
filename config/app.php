@@ -174,6 +174,7 @@ return [
         App\Providers\Filament\SalesPanelProvider::class,
         App\Providers\Filament\OpsPanelProvider::class,
         App\Providers\Filament\ServicesPanelProvider::class,
+        App\Providers\Filament\ContabilidadPanelProvider::class,
         App\Providers\RouteServiceProvider::class,
     ])->toArray(),
 

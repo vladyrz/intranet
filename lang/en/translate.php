@@ -52,6 +52,25 @@ return [
         'updated_at' => 'Updated at',
     ],
 
+    'employee_checklist' => [
+        'task' => 'Task to be done',
+        'options_task' => [
+            'included' => 'Inclusion of systems',
+            'excluded' => 'Exclusion of systems'
+        ],
+        'easypro_email' => 'Easypro email',
+        'easyu_user' => 'Easy-U user',
+        'bienes_adjudicados_user' => 'Bienes Adjudicados user',
+        'intranet_user' => 'Intranet user',
+        'email_marketing_group' => 'Email marketing group',
+        'phone_extension' => 'Phone extension',
+        'social_networks' => 'Social networks',
+        'nas_access' => 'NAS access',
+        'email_signature_card' => 'Email signature card',
+        'created_at' => 'Created at',
+        'updated_at' => 'Updated at',
+    ],
+
     'customer' => [
         'options_cpreferences' => [
             'Email',
@@ -216,6 +235,21 @@ return [
             'Rejected',
             'Signed'
         ],
+    ],
+
+    'billing_control' => [
+        'offer_id' => 'Offer',
+        'invoice_status' => 'Invoice status',
+        'options_invoice_status' => [
+            'pending' => 'Pending invoice',
+            'invoiced' => 'Invoiced',
+            'paid' => 'Paid',
+        ],
+        'payment_percentage' => 'Payment percentage',
+        'billing_date' => 'Billing date',
+        'invoice_files' => 'Invoice files',
+        'created_at' => 'Created at',
+        'updated_at' => 'Updated at',
     ],
 
     'departament' => [

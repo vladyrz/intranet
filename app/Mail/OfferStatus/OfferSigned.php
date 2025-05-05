@@ -25,7 +25,7 @@ class OfferSigned extends Mailable
         $this->data = $data;
 
         // Cargar los correos a CC en el constructor
-        $userRoles = User::role(['soporte', 'ventas', 'servicio_al_cliente'])
+        $userRoles = User::role(['soporte', 'ventas', 'servicio_al_cliente', 'contabilidad'])
             ->where('email', '!=', $this->data['email'])
             ->pluck('email')
             ->toArray();
