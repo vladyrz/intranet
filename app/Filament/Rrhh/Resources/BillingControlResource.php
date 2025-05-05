@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Contabilidad\Resources;
+namespace App\Filament\Rrhh\Resources;
 
-use App\Filament\Contabilidad\Resources\BillingControlResource\Pages;
-use App\Filament\Contabilidad\Resources\BillingControlResource\RelationManagers;
+use App\Filament\Rrhh\Resources\BillingControlResource\Pages;
+use App\Filament\Rrhh\Resources\BillingControlResource\RelationManagers;
 use App\Models\BillingControl;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -154,6 +154,13 @@ class BillingControlResource extends Resource
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make()
                         ->color('warning'),
+                    Tables\Actions\DeleteAction::make()
+                        ->color('danger'),
+                ]),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

@@ -6,10 +6,10 @@ use App\Filament\Rrhh\Resources\EmployeeResource;
 use App\Models\Employee;
 use Filament\Actions;
 use Filament\Resources\Components\Tab;
-use Filament\Resources\Pages\ManageRecords;
+use Filament\Resources\Pages\ListRecords;
 use Filament\Support\Colors\Color;
 
-class ManageEmployees extends ManageRecords
+class ListEmployees extends ListRecords
 {
     protected static string $resource = EmployeeResource::class;
 
@@ -50,8 +50,8 @@ class ManageEmployees extends ManageRecords
         ];
     }
 
-    private function orderByStatus(?string $status = null){
-        if (blank($status)) {
+    private function orderByStatus(?string $status =null){
+        if(blank($status)){
             return Employee::count();
         }
         return Employee::where('progress_status', $status)->count();

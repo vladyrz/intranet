@@ -72,7 +72,8 @@ class EmployeeResource extends Resource
                     Forms\Components\TextInput::make('email')
                         ->label(__('translate.employee.email'))
                         ->email()
-                        ->maxLength(255),
+                        ->maxLength(255)
+                        ->unique(),
                     Forms\Components\Select::make('job_position')
                         ->label(__('translate.employee.job_position'))
                         ->options([
@@ -101,7 +102,8 @@ class EmployeeResource extends Resource
                     Forms\Components\TextInput::make('personal_email')
                         ->label(__('translate.employee.personal_email'))
                         ->email()
-                        ->maxLength(255),
+                        ->maxLength(255)
+                        ->unique(),
                     Forms\Components\TextInput::make('national_id')
                         ->label(__('translate.employee.national_id'))
                         ->maxLength(15),
