@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Ops\Resources;
+namespace App\Filament\Services\Resources;
 
-use App\Filament\Ops\Resources\OfferResource\Pages;
-use App\Filament\Ops\Resources\OfferResource\RelationManagers;
+use App\Filament\Services\Resources\OfferResource\Pages;
+use App\Filament\Services\Resources\OfferResource\RelationManagers;
 use App\Models\Offer;
 use App\Models\PersonalCustomer;
 use Filament\Forms;
@@ -28,8 +28,6 @@ use Parallax\FilamentComments\Tables\Actions\CommentsAction;
 class OfferResource extends Resource
 {
     protected static ?string $model = Offer::class;
-
-    protected static ?int $navigationSort = 2;
 
     protected static ?string $navigationLabel = null;
     protected static ?string $navigationGroup = null;
@@ -110,14 +108,24 @@ class OfferResource extends Resource
                         TextInput::make('offer_amount_crc')
                             ->label(__('translate.offer.offer_amount_crc'))
                             ->numeric(),
+                        Select::make('offer_status')
+                            ->label(__('translate.offer.offer_status'))
+                            ->options([
+                                'sent' => __('translate.offer.options_offer_status.1'),
+                                'approved' => __('translate.offer.options_offer_status.2'),
+                                'rejected' => __('translate.offer.options_offer_status.3'),
+                                'signed' => __('translate.offer.options_offer_status.4'),
+                            ])
+                            ->required(),
                         FileUpload::make('offer_files')
                             ->label(__('translate.offer.offer_files'))
                             ->multiple()
                             ->columnSpanFull()
                             ->downloadable()
                             ->directory('attachments/' .now()->format('Y/m/d'))
+                            ->minFiles(1)
                             ->maxFiles(5),
-                    ])
+                    ]),
             ]);
     }
 
@@ -227,7 +235,7 @@ class OfferResource extends Resource
                     Tables\Actions\EditAction::make()
                         ->color('warning'),
                     Tables\Actions\DeleteAction::make()
-                ])
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

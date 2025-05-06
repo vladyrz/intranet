@@ -272,14 +272,6 @@ class PersonalCustomerResource extends Resource
                         'warm' => __('translate.personal_customer.options_prospect_status.1'),
                         'cold' => __('translate.personal_customer.options_prospect_status.2'),
                     ]),
-                SelectFilter::make('user_id')
-                    ->label(__('translate.customer.user_id'))
-                    ->relationship(
-                        name: 'user',
-                        titleAttribute: 'name',
-                    )
-                    ->searchable()
-                    ->preload(),
                 SelectFilter::make('contact_preferences')
                     ->label(__('translate.customer.contact_preferences'))
                     ->options([

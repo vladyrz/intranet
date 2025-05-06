@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Soporte\Resources;
+namespace App\Filament\Sales\Resources;
 
-use App\Filament\Soporte\Resources\CustomerReportResource\Pages;
-use App\Filament\Soporte\Resources\CustomerReportResource\RelationManagers;
+use App\Filament\Sales\Resources\CustomerReportResource\Pages;
+use App\Filament\Sales\Resources\CustomerReportResource\RelationManagers;
 use App\Models\CustomerReport;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
@@ -227,12 +227,6 @@ class CustomerReportResource extends Resource
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make()
                         ->color('warning'),
-                    Tables\Actions\DeleteAction::make()
-                ]),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

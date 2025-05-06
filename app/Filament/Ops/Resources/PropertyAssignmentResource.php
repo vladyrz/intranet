@@ -155,14 +155,6 @@ class PropertyAssignmentResource extends Resource
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
-                SelectFilter::make('user_id')
-                    ->label(__('translate.property_assignment.user_id'))
-                    ->searchable()
-                    ->relationship(
-                        name: 'user',
-                        titleAttribute: 'name',
-                    )
-                    ->preload(),
                 SelectFilter::make('organization_id')
                     ->label(__('translate.property_assignment.organization_id'))
                     ->searchable()

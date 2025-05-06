@@ -219,14 +219,6 @@ class OfferResource extends Resource
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
-                SelectFilter::make('user_id')
-                    ->label(__('translate.offer.user_id'))
-                    ->relationship(
-                        name: 'user',
-                        titleAttribute: 'name',
-                    )
-                    ->searchable()
-                    ->preload(),
                 SelectFilter::make('organization_id')
                     ->label(__('translate.offer.organization_id'))
                     ->relationship(

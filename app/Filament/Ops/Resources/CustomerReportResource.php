@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Soporte\Resources;
+namespace App\Filament\Ops\Resources;
 
-use App\Filament\Soporte\Resources\CustomerReportResource\Pages;
-use App\Filament\Soporte\Resources\CustomerReportResource\RelationManagers;
+use App\Filament\Ops\Resources\CustomerReportResource\Pages;
+use App\Filament\Ops\Resources\CustomerReportResource\RelationManagers;
 use App\Models\CustomerReport;
 use Filament\Forms;
 use Filament\Forms\Components\Section;

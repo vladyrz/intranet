@@ -199,14 +199,6 @@ class AccesRequestResource extends Resource
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
-                SelectFilter::make('user_id')
-                    ->label(__('translate.access_request.user_id'))
-                    ->relationship(
-                        name: 'user',
-                        titleAttribute:'name',
-                    )
-                    ->searchable()
-                    ->preload(),
                 SelectFilter::make('type_of_request')
                     ->label(__('translate.access_request.type_of_request'))
                     ->options(__('translate.access_request.options_type_of_request')),
