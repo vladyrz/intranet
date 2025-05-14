@@ -34,6 +34,7 @@ class PersonalPanelProvider extends PanelProvider
             ->id('personal')
             ->path('personal')
             ->login()
+            ->registration()
             ->maxContentWidth(MaxWidth::Full)
             ->default()
             ->colors([

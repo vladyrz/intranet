@@ -202,4 +202,11 @@ return [
         'tab_approved' => 'Aprobadas',
         'tab_rejected' => 'Rechazadas',
     ],
+
+    'project' => [
+        'label' => 'Proyecto',
+        'plural' => 'Proyectos',
+        'navigation' => 'Proyectos',
+        'sectionProject' => 'Información del Proyecto',
+    ],
 ];

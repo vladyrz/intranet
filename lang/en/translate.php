@@ -323,4 +323,28 @@ return [
         'created_at' => 'Sent at',
         'updated_at' => 'Updated at',
     ],
+
+    'project' => [
+        'name' => 'Project name/description',
+        'responsible' => 'Responsible',
+        'progress' => '% progress',
+        'project_status' => 'Project status',
+        'options_project_status' => [
+            'pending' => 'Pending',
+            'in_progress' => 'In progress',
+            'finished' => 'Finished',
+            'stopped' => 'Stopped',
+        ],
+        'priority' => 'Priority',
+        'options_priority' => [
+            'low' => 'Low',
+            'medium' => 'Medium',
+            'high' => 'High',
+        ],
+        'expected_benefit' => 'Expected benefit',
+        'last_updated_at' => 'Last updated at',
+        'attachments' => 'Attachments',
+        'created_at' => 'Created at',
+        'updated_at' => 'Updated at',
+    ],
 ];

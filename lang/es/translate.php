@@ -326,4 +326,28 @@ return [
         'created_at' => 'Enviado el',
         'updated_at' => 'Actualizado el',
     ],
+
+    'project' => [
+        'name' => 'Nombre/Descripción del proyecto',
+        'responsible' => 'Responsable',
+        'progress' => '% de avance',
+        'project_status' => 'Estado del proyecto',
+        'options_project_status' => [
+            'pending' => 'Pendiente',
+            'in_progress' => 'En progreso',
+            'finished' => 'Finalizado',
+            'stopped' => 'Detenido',
+        ],
+        'priority' => 'Prioridad',
+        'options_priority' => [
+            'low' => 'Baja',
+            'medium' => 'Media',
+            'high' => 'Alta',
+        ],
+        'expected_benefit' => 'Beneficio esperado',
+        'last_updated_at' => 'Última actualización',
+        'attachments' => 'Adjuntos',
+        'created_at' => 'Creado el',
+        'updated_at' => 'Actualizado el',
+    ],
 ];
