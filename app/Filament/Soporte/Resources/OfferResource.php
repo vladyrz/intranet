@@ -231,7 +231,6 @@ class OfferResource extends Resource
                 ActionGroup::make([
                     CommentsAction::make()
                         ->color('info'),
-                    Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make()
                         ->color('warning'),
                     Tables\Actions\DeleteAction::make()
@@ -241,7 +240,8 @@ class OfferResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->recordUrl(null);
     }
 
     public static function getRelations(): array

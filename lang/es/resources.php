@@ -209,4 +209,18 @@ return [
         'navigation' => 'Proyectos',
         'sectionProject' => 'Información del Proyecto',
     ],
+
+    'segment' => [
+        'label' => 'Segmento',
+        'plural' => 'Segmentos',
+        'navigation' => 'Segmentaciones',
+        'section_agent' => 'Información del asesor',
+        'section_performance' => 'Información del rendimiento (valores numéricos)',
+        'section_skills' => 'Habilidades',
+        'tab_all' => 'Todos',
+        'tab_new' => 'Nuevos',
+        'tab_intermediate' => 'Intermedios',
+        'tab_advanced' => 'Avanzados',
+        'tab_specialized' => 'Especializados',
+    ],
 ];

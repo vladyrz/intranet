@@ -52,4 +52,8 @@ class Employee extends Model
     public function employeeChecklists(){
         return $this->hasMany(EmployeeChecklist::class);
     }
+
+    public function segments(){
+        return $this->hasMany(Segment::class);
+    }
 }

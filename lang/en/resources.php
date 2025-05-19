@@ -201,4 +201,18 @@ return [
         'tab_approved' => 'Approved',
         'tab_rejected' => 'Rejected',
     ],
+
+    'segment' => [
+        'label' => 'Segment',
+        'plural' => 'Segments',
+        'navigation' => 'Segments',
+        'section_agent' => 'Agent Information',
+        'section_performance' => 'Performance Information (numeric values)',
+        'section_skills' => 'Skills',
+        'tab_all' => 'All',
+        'tab_new' => 'New',
+        'tab_intermediate' => 'Intermediate',
+        'tab_advanced' => 'Advanced',
+        'tab_specialized' => 'Specialized',
+    ],
 ];
