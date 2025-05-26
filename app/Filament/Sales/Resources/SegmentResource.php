@@ -61,6 +61,7 @@ class SegmentResource extends Resource
                             ->relationship(
                                 name: 'employee',
                                 titleAttribute: 'name',
+                                modifyQueryUsing: fn (Builder $query) => $query->where('progress_status', 'certified'),
                             )
                             ->searchable()
                             ->preload()

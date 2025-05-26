@@ -329,7 +329,7 @@ return [
 
     'project' => [
         'name' => 'Nombre/Descripción del proyecto',
-        'responsible' => 'Responsable',
+        'employee_id' => 'Responsable',
         'progress' => '% de avance',
         'project_status' => 'Estado del proyecto',
         'options_project_status' => [

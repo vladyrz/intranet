@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Ops\Resources;
+namespace App\Filament\Sales\Resources;
 
-use App\Filament\Ops\Resources\ProjectResource\Pages;
-use App\Filament\Ops\Resources\ProjectResource\RelationManagers;
+use App\Filament\Sales\Resources\ProjectResource\Pages;
+use App\Filament\Sales\Resources\ProjectResource\RelationManagers;
 use App\Models\Project;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -15,7 +15,6 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -173,19 +172,11 @@ class ProjectResource extends Resource
                     ->options(__('translate.project.options_priority')),
             ])
             ->actions([
-                ActionGroup::make([
-                    CommentsAction::make()
-                        ->color('info'),
-                    Tables\Actions\ViewAction::make(),
-                    Tables\Actions\EditAction::make()
-                        ->color('warning'),
-                    Tables\Actions\DeleteAction::make(),
-                ])
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                CommentsAction::make()
+                    ->color('info'),
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->color('warning'),
             ]);
     }
 

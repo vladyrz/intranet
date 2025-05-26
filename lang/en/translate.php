@@ -326,7 +326,7 @@ return [
 
     'project' => [
         'name' => 'Project name/description',
-        'responsible' => 'Responsible',
+        'employee_id' => 'Responsible',
         'progress' => '% progress',
         'project_status' => 'Project status',
         'options_project_status' => [

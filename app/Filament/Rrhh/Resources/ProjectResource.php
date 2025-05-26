@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Ops\Resources;
+namespace App\Filament\Rrhh\Resources;
 
-use App\Filament\Ops\Resources\ProjectResource\Pages;
-use App\Filament\Ops\Resources\ProjectResource\RelationManagers;
+use App\Filament\Rrhh\Resources\ProjectResource\Pages;
+use App\Filament\Rrhh\Resources\ProjectResource\RelationManagers;
 use App\Models\Project;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;

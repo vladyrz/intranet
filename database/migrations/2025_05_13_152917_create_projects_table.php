@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('responsible');
             $table->string('progress');
             $table->string('project_status')->default('pending');
             $table->string('priority');

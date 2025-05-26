@@ -63,10 +63,16 @@ class ProjectResource extends Resource
                             ->label(__('translate.project.name'))
                             ->required()
                             ->maxLength(255),
-                        TextInput::make('responsible')
-                            ->label(__('translate.project.responsible'))
-                            ->required()
-                            ->maxLength(255),
+                        Select::make('employee_id')
+                            ->label(__('translate.project.employee_id'))
+                            ->relationship(
+                                name: 'employee',
+                                titleAttribute: 'name',
+                                modifyQueryUsing: fn (Builder $query) => $query->where('progress_status', 'certified'),
+                            )
+                            ->searchable()
+                            ->preload()
+                            ->required(),
                         TextInput::make('progress')
                             ->label(__('translate.project.progress'))
                             ->required()
@@ -103,8 +109,8 @@ class ProjectResource extends Resource
                     ->label(__('translate.project.name'))
                     ->searchable()
                     ->alignCenter(),
-                TextColumn::make('responsible')
-                    ->label(__('translate.project.responsible'))
+                TextColumn::make('employee.name')
+                    ->label(__('translate.project.employee_id'))
                     ->searchable()
                     ->alignCenter(),
                 TextColumn::make('progress')

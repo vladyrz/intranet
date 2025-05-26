@@ -12,7 +12,7 @@ class Project extends Model
 
     protected $fillable = [
         'name',
-        'responsible',
+        'employee_id',
         'progress',
         'project_status',
         'priority',
@@ -24,4 +24,8 @@ class Project extends Model
     protected $casts = [
         'attachments' => 'array',
     ];
+
+    public function employee() {
+        return $this->belongsTo(Employee::class);
+    }
 }
