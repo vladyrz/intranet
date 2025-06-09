@@ -81,12 +81,13 @@ class PropertyAssignmentResource extends Resource
                         Select::make('property_assignment_status')
                             ->label(__('translate.property_assignment.property_assignment_status'))
                             ->options([
-                                'submitted' => __('translate.property_assignment.options_property_assignment_status.1'),
-                                'approved' => __('translate.property_assignment.options_property_assignment_status.2'),
-                                'rejected' => __('translate.property_assignment.options_property_assignment_status.3'),
-                                'published' => __('translate.property_assignment.options_property_assignment_status.4'),
-                                'assigned' => __('translate.property_assignment.options_property_assignment_status.5'),
-                                'finished' => __('translate.property_assignment.options_property_assignment_status.6'),
+                                'received' => __('translate.property_assignment.options_property_assignment_status.1'),
+                                'submitted' => __('translate.property_assignment.options_property_assignment_status.2'),
+                                'approved' => __('translate.property_assignment.options_property_assignment_status.3'),
+                                'rejected' => __('translate.property_assignment.options_property_assignment_status.4'),
+                                'published' => __('translate.property_assignment.options_property_assignment_status.5'),
+                                'assigned' => __('translate.property_assignment.options_property_assignment_status.6'),
+                                'finished' => __('translate.property_assignment.options_property_assignment_status.7'),
                             ]),
                         Textarea::make('property_observations')
                             ->label(__('translate.property_assignment.property_observations'))
@@ -134,13 +135,24 @@ class PropertyAssignmentResource extends Resource
                     ->formatStateUsing(function ($state){
                         return match ($state) {
                             'pending' => __('translate.property_assignment.options_property_assignment_status.0'),
-                            'submitted' => __('translate.property_assignment.options_property_assignment_status.1'),
-                            'approved' => __('translate.property_assignment.options_property_assignment_status.2'),
-                            'rejected' => __('translate.property_assignment.options_property_assignment_status.3'),
-                            'published' => __('translate.property_assignment.options_property_assignment_status.4'),
-                            'assigned' => __('translate.property_assignment.options_property_assignment_status.5'),
-                            'finished' => __('translate.property_assignment.options_property_assignment_status.6'),
+                            'received' => __('translate.property_assignment.options_property_assignment_status.1'),
+                            'submitted' => __('translate.property_assignment.options_property_assignment_status.2'),
+                            'approved' => __('translate.property_assignment.options_property_assignment_status.3'),
+                            'rejected' => __('translate.property_assignment.options_property_assignment_status.4'),
+                            'published' => __('translate.property_assignment.options_property_assignment_status.5'),
+                            'assigned' => __('translate.property_assignment.options_property_assignment_status.6'),
+                            'finished' => __('translate.property_assignment.options_property_assignment_status.7'),
                         };
+                    })
+                    ->color(fn (string $state): string => match ($state) {
+                        'pending' => 'warning',
+                        'received' => 'info',
+                        'submitted' => 'info',
+                        'approved' => 'success',
+                        'rejected' => 'danger',
+                        'published' => 'info',
+                        'assigned' => 'info',
+                        'finished' => 'info',
                     }),
                 TextColumn::make('created_at')
                     ->label(__('translate.property_assignment.created_at'))

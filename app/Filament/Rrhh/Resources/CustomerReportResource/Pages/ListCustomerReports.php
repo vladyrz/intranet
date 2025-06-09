@@ -30,6 +30,10 @@ class ListCustomerReports extends ListRecords
                 ->query(fn ($query) => $query->where('report_status', 'pending'))
                 ->badge($this->orderByStatus('pending') ?? 0)
                 ->badgeColor(Color::Amber),
+            Tab::make(__('resources.customer_report.tab_received'))
+                ->query(fn ($query) => $query->where('report_status', 'received'))
+                ->badge($this->orderByStatus('received') ?? 0)
+                ->badgeColor(Color::Indigo),
             Tab::make(__('resources.customer_report.tab_approved'))
                 ->query(fn ($query) => $query->where('report_status', 'approved'))
                 ->badge($this->orderByStatus('approved') ?? 0)

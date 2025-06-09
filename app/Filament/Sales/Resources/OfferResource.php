@@ -112,10 +112,11 @@ class OfferResource extends Resource
                             ->label(__('translate.offer.offer_status'))
                             ->options([
                                 'pending' => __('translate.offer.options_offer_status.0'),
-                                'sent' => __('translate.offer.options_offer_status.1'),
-                                'approved' => __('translate.offer.options_offer_status.2'),
-                                'rejected' => __('translate.offer.options_offer_status.3'),
-                                'signed' => __('translate.offer.options_offer_status.4'),
+                                'received' => __('translate.offer.options_offer_status.1'),
+                                'sent' => __('translate.offer.options_offer_status.2'),
+                                'approved' => __('translate.offer.options_offer_status.3'),
+                                'rejected' => __('translate.offer.options_offer_status.4'),
+                                'signed' => __('translate.offer.options_offer_status.5'),
                             ])
                             ->required(),
                         FileUpload::make('offer_files')
@@ -191,15 +192,17 @@ class OfferResource extends Resource
                     ->formatStateUsing(function ($state){
                         return match ($state) {
                             'pending' => __('translate.offer.options_offer_status.0'),
-                            'sent' => __('translate.offer.options_offer_status.1'),
-                            'approved' => __('translate.offer.options_offer_status.2'),
-                            'rejected' => __('translate.offer.options_offer_status.3'),
-                            'signed' => __('translate.offer.options_offer_status.4'),
+                            'received' => __('translate.offer.options_offer_status.1'),
+                            'sent' => __('translate.offer.options_offer_status.2'),
+                            'approved' => __('translate.offer.options_offer_status.3'),
+                            'rejected' => __('translate.offer.options_offer_status.4'),
+                            'signed' => __('translate.offer.options_offer_status.5'),
                         };
                     })
                     ->color(fn (string $state): string => match ($state) {
                         'pending' => 'warning',
-                        'sent' => 'info',
+                        'received' => 'info',
+                        'sent' => 'success',
                         'approved' => 'success',
                         'rejected' => 'danger',
                         'signed' => 'info',

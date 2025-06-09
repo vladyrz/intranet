@@ -30,6 +30,10 @@ class ListAccesRequests extends ListRecords
                 ->query(fn ($query) => $query->where('request_status', 'pending'))
                 ->badge($this->orderByAccesRequestStatus('pending', $user_id) ?? 0)
                 ->badgeColor(Color::Orange),
+            Tab::make(__('resources.acces_request.tab_received'))
+                ->query(fn ($query) => $query->where('request_status', 'received'))
+                ->badge($this->orderByAccesRequestStatus('received', $user_id) ?? 0)
+                ->badgeColor(Color::Gray),
             Tab::make(__('resources.acces_request.tab_sent'))
                 ->query(fn ($query) => $query->where('request_status', 'sent'))
                 ->badge($this->orderByAccesRequestStatus('sent', $user_id) ?? 0)

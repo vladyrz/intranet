@@ -25,7 +25,7 @@ class OfferPending extends Mailable
     {
         $this->data = $data;
 
-        $userRoles = User::role(['ventas', 'servicio_al_cliente'])->pluck('email')->toArray();
+        $userRoles = User::role(['soporte', 'ventas', 'servicio_al_cliente', 'gerente'])->pluck('email')->toArray();
 
         $this->ccEmails = array_unique(array_merge([$this->data['email']], $userRoles));
     }

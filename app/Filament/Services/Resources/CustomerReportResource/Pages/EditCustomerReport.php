@@ -4,6 +4,7 @@ namespace App\Filament\Services\Resources\CustomerReportResource\Pages;
 
 use App\Filament\Services\Resources\CustomerReportResource;
 use App\Mail\ReportStatus\Approved;
+use App\Mail\ReportStatus\Received;
 use App\Mail\ReportStatus\Rejected;
 use App\Models\User;
 use Filament\Actions;
@@ -44,6 +45,10 @@ class EditCustomerReport extends EditRecord
         ];
 
         switch ($record->report_status) {
+            case 'received':
+                Mail::to($user->email)->send(new Received($data));
+                break;
+
             case 'approved':
                 Mail::to($user->email)->send(new Approved($data));
                 break;

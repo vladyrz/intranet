@@ -6,6 +6,7 @@ use App\Filament\Services\Resources\PropertyAssignmentResource;
 use App\Mail\AssignmentStatus\PropertyApproved;
 use App\Mail\AssignmentStatus\PropertyFinished;
 use App\Mail\AssignmentStatus\PropertyPublished;
+use App\Mail\AssignmentStatus\PropertyReceived;
 use App\Mail\AssignmentStatus\PropertyRejected;
 use App\Mail\AssignmentStatus\PropertySubmitted;
 use App\Models\User;
@@ -41,6 +42,7 @@ class EditPropertyAssignment extends EditRecord
         ];
 
         match ($record->property_assignment_status) {
+            'received' => Mail::to($user->email)->send(new PropertyReceived($data)),
             'approved' => Mail::to($user->email)->send(new PropertyApproved($data)),
             'rejected' => Mail::to($user->email)->send(new PropertyRejected($data)),
             'published' => Mail::to($user->email)->send(new PropertyPublished($data)),

@@ -30,6 +30,9 @@ class ListPropertyAssignments extends ListRecords
             Tab::make(__('resources.property_assignment.tab_pending'))
                 ->badge($this->orderByAssignmentStatus('pending', $user_id) ?? 0)
                 ->badgeColor(Color::Orange),
+            Tab::make(__('resources.property_assignment.tab_received'))
+                ->badge($this->orderByAssignmentStatus('received', $user_id) ?? 0)
+                ->badgeColor(Color::Gray),
             Tab::make(__('resources.property_assignment.tab_submitted'))
                 ->badge($this->orderByAssignmentStatus('submitted', $user_id) ?? 0)
                 ->badgeColor(Color::Indigo),

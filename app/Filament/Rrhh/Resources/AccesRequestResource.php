@@ -103,9 +103,10 @@ class AccesRequestResource extends Resource
                         Select::make('request_status')
                             ->label(__('translate.access_request.request_status'))
                             ->options([
-                                'sent' => __('translate.access_request.options_request_status.1'),
-                                'approved' => __('translate.access_request.options_request_status.2'),
-                                'rejected' => __('translate.access_request.options_request_status.3'),
+                                'received' => __('translate.access_request.options_request_status.1'),
+                                'sent' => __('translate.access_request.options_request_status.2'),
+                                'approved' => __('translate.access_request.options_request_status.3'),
+                                'rejected' => __('translate.access_request.options_request_status.4'),
                             ])
                             ->required(),
                     ]),
@@ -173,13 +174,15 @@ class AccesRequestResource extends Resource
                     ->formatStateUsing(function ($state){
                         return match ($state) {
                             'pending' => __('translate.access_request.options_request_status.0'),
-                            'sent' => __('translate.access_request.options_request_status.1'),
-                            'approved' => __('translate.access_request.options_request_status.2'),
-                            'rejected' => __('translate.access_request.options_request_status.3'),
+                            'received' => __('translate.access_request.options_request_status.1'),
+                            'sent' => __('translate.access_request.options_request_status.2'),
+                            'approved' => __('translate.access_request.options_request_status.3'),
+                            'rejected' => __('translate.access_request.options_request_status.4'),
                         };
                     })
                     ->color(fn (string $state): string => match ($state) {
                         'pending' => 'warning',
+                        'received' => 'info',
                         'sent' => 'info',
                         'approved' => 'success',
                         'rejected' => 'danger',

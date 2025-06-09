@@ -97,8 +97,9 @@ class CustomerReportResource extends Resource
                             ->label(__('translate.customer_report.report_status'))
                             ->options([
                                 'pending' => __('translate.customer_report.options_report_status.0'),
-                                'approved' => __('translate.customer_report.options_report_status.1'),
-                                'rejected' => __('translate.customer_report.options_report_status.2'),
+                                'received' => __('translate.customer_report.options_report_status.1'),
+                                'approved' => __('translate.customer_report.options_report_status.2'),
+                                'rejected' => __('translate.customer_report.options_report_status.3'),
                             ])
                             ->required(),
                     ]),
@@ -188,12 +189,14 @@ class CustomerReportResource extends Resource
                     ->formatStateUsing(function ($state){
                         return match ($state) {
                             'pending' => __('translate.customer_report.options_report_status.0'),
-                            'approved' => __('translate.customer_report.options_report_status.1'),
-                            'rejected' => __('translate.customer_report.options_report_status.2'),
+                            'received' => __('translate.customer_report.options_report_status.1'),
+                            'approved' => __('translate.customer_report.options_report_status.2'),
+                            'rejected' => __('translate.customer_report.options_report_status.3'),
                         };
                     })
                     ->color(fn (string $state): string => match ($state) {
                         'pending' => 'warning',
+                        'received' => 'info',
                         'approved' => 'success',
                         'rejected' => 'danger',
                     }),

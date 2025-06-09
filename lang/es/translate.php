@@ -139,6 +139,7 @@ return [
         'expected_commission_crc' => 'Comisión esperada en ₡',
         'options_report_status' => [
             'Pendiente',
+            'Recibido',
             'Aprobado',
             'Rechazado',
         ],
@@ -231,6 +232,7 @@ return [
         'updated_at' => 'Actualizado el',
         'options_offer_status' => [
             'Pendiente',
+            'Recibida',
             'Enviada',
             'Aprobada',
             'Rechazada',
@@ -291,6 +293,7 @@ return [
         'updated_at' => 'Actualizado el',
         'options_property_assignment_status' => [
             'Pendiente',
+            'Recibido',
             'Tramitado',
             'Aprobado',
             'Rechazado',
@@ -319,6 +322,7 @@ return [
         'request_status' => 'Estado de la solicitud',
         'options_request_status' => [
             'Pendiente',
+            'Recibida',
             'Enviada',
             'Aprobada',
             'Rechazada',
@@ -345,7 +349,9 @@ return [
             'high' => 'Alta',
         ],
         'expected_benefit' => 'Beneficio esperado',
+        'request_date' => 'Fecha de solicitud',
         'last_updated_at' => 'Última actualización',
+        'observations' => 'Observaciones',
         'attachments' => 'Adjuntos',
         'created_at' => 'Creado el',
         'updated_at' => 'Actualizado el',

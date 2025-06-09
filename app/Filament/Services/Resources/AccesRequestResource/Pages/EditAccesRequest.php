@@ -4,6 +4,7 @@ namespace App\Filament\Services\Resources\AccesRequestResource\Pages;
 
 use App\Filament\Services\Resources\AccesRequestResource;
 use App\Mail\RequestStatus\AccesApproved;
+use App\Mail\RequestStatus\AccesReceived;
 use App\Mail\RequestStatus\AccesRejected;
 use App\Mail\RequestStatus\AccesSent;
 use App\Models\User;
@@ -39,6 +40,7 @@ class EditAccesRequest extends EditRecord
         ];
 
         match ($record->request_status) {
+            'received' => Mail::to($user->email)->send(new AccesReceived($data)),
             'sent' => Mail::to($user->email)->send(new AccesSent($data)),
             'approved' => Mail::to($user->email)->send(new AccesApproved($data)),
             'rejected' => Mail::to($user->email)->send(new AccesRejected($data)),

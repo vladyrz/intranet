@@ -87,8 +87,12 @@ class ProjectResource extends Resource
                             ->required(),
                         Textarea::make('expected_benefit')
                             ->label(__('translate.project.expected_benefit')),
+                        DatePicker::make('request_date')
+                            ->label(__('translate.project.request_date')),
                         DatePicker::make('last_updated_at')
                             ->label(__('translate.project.last_updated_at')),
+                        Textarea::make('observations')
+                            ->label(__('translate.project.observations')),
                         FileUpload::make('attachments')
                             ->label(__('translate.project.attachments'))
                             ->multiple()
@@ -144,10 +148,18 @@ class ProjectResource extends Resource
                 TextColumn::make('expected_benefit')
                     ->label(__('translate.project.expected_benefit'))
                     ->toggleable(isToggledHiddenByDefault: false),
+                TextColumn::make('request_date')
+                    ->label(__('translate.project.request_date'))
+                    ->date()
+                    ->alignCenter()
+                    ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('last_updated_at')
                     ->label(__('translate.project.last_updated_at'))
                     ->date()
                     ->alignCenter()
+                    ->toggleable(isToggledHiddenByDefault: false),
+                TextColumn::make('observations')
+                    ->label(__('translate.project.observations'))
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('created_at')
                     ->label(__('translate.project.created_at'))

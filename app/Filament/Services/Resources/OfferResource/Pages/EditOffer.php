@@ -4,6 +4,7 @@ namespace App\Filament\Services\Resources\OfferResource\Pages;
 
 use App\Filament\Services\Resources\OfferResource;
 use App\Mail\OfferStatus\OfferApproved;
+use App\Mail\OfferStatus\OfferReceived;
 use App\Mail\OfferStatus\OfferRejected;
 use App\Mail\OfferStatus\OfferSent;
 use App\Mail\OfferStatus\OfferSigned;
@@ -45,6 +46,10 @@ class EditOffer extends EditRecord
         ];
 
         switch ($record->offer_status) {
+            case 'received':
+                Mail::to($user->email)->send(new OfferReceived($data));
+                break;
+
             case 'approved':
                 Mail::to($user->email)->send(new OfferApproved($data));
                 break;

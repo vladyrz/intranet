@@ -138,6 +138,7 @@ return [
         'expected_commission_crc' => 'Expected commission in ₡',
         'options_report_status' => [
             'Pending',
+            'Received',
             'Approved',
             'Rejected',
         ],
@@ -230,6 +231,7 @@ return [
         'updated_at' => 'Updated at',
         'options_offer_status' => [
             'Pending',
+            'Received',
             'Sent',
             'Approved',
             'Rejected',
@@ -290,6 +292,7 @@ return [
         'updated_at' => 'Updated at',
         'options_property_assignment_status' => [
             'Pending',
+            'Received',
             'Submitted',
             'Approved',
             'Rejected',
@@ -316,6 +319,7 @@ return [
         'request_status' => 'Request status',
         'options_request_status' => [
             'Pending',
+            'Received',
             'Sent',
             'Approved',
             'Rejected',
@@ -342,7 +346,9 @@ return [
             'high' => 'High',
         ],
         'expected_benefit' => 'Expected benefit',
+        'request_date' => 'Request date',
         'last_updated_at' => 'Last updated at',
+        'observations' => 'Observations',
         'attachments' => 'Attachments',
         'created_at' => 'Created at',
         'updated_at' => 'Updated at',

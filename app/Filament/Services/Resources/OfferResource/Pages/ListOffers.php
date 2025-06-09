@@ -30,6 +30,10 @@ class ListOffers extends ListRecords
                 ->query(fn ($query) => $query->where('offer_status', 'pending'))
                 ->badge($this->orderByOfferStatus('pending') ?? 0)
                 ->badgeColor(Color::Orange),
+            Tab::make(__('resources.offer.tab_received'))
+                ->query(fn ($query) => $query->where('offer_status', 'received'))
+                ->badge($this->orderByOfferStatus('received') ?? 0)
+                ->badgeColor(Color::Gray),
             Tab::make(__('resources.offer.tab_sent'))
                 ->query(fn ($query) => $query->where('offer_status', 'sent'))
                 ->badge($this->orderByOfferStatus('sent') ?? 0)

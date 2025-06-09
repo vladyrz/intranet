@@ -17,7 +17,9 @@ class Project extends Model
         'project_status',
         'priority',
         'expected_benefit',
+        'request_date',
         'last_updated_at',
+        'observations',
         'attachments',
     ];
 

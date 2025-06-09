@@ -25,7 +25,7 @@ class OfferApproved extends Mailable
         $this->data = $data;
 
         // Preparamos todos los correos a CC en el constructor
-        $userRoles = User::role(['soporte', 'ventas', 'servicio_al_cliente'])
+        $userRoles = User::role(['soporte', 'ventas', 'servicio_al_cliente', 'gerente'])
             ->where('email', '!=', $this->data['email'])
             ->pluck('email')
             ->toArray();
