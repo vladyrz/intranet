@@ -227,6 +227,7 @@ return [
         'personal_customer_email' => 'Customer email',
         'offer_files' => 'Offer files',
         'offer_status' => 'Offer status',
+        'rejection_reason' => 'Rejection reason',
         'created_at' => 'Sent at',
         'updated_at' => 'Updated at',
         'options_offer_status' => [

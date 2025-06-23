@@ -11,6 +11,7 @@ use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
@@ -119,7 +120,12 @@ class OfferResource extends Resource
                                 'rejected' => __('translate.offer.options_offer_status.4'),
                                 'signed' => __('translate.offer.options_offer_status.5'),
                             ])
+                            ->reactive()
                             ->required(),
+                        Textarea::make('rejection_reason')
+                            ->label(__('translate.offer.rejection_reason'))
+                            ->visible(fn (Get $get): bool => $get('offer_status') == 'rejected')
+                            ->columnSpan(2),
                         FileUpload::make('offer_files')
                             ->label(__('translate.offer.offer_files'))
                             ->multiple()
@@ -138,51 +144,51 @@ class OfferResource extends Resource
                 TextColumn::make('property_name')
                     ->label(__('translate.offer.property_name'))
                     ->searchable()
-                    ->alignCenter(),
+                    ->alignLeft(),
                 TextColumn::make('property_value_usd')
                     ->label(__('translate.offer.property_value_usd'))
-                    ->alignCenter()
+                    ->alignRight()
                     ->numeric()
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('property_value_crc')
                     ->label(__('translate.offer.property_value_crc'))
-                    ->alignCenter()
+                    ->alignRight()
                     ->numeric()
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('organization.organization_name')
                     ->label(__('translate.offer.organization_id'))
                     ->searchable()
-                    ->alignCenter()
+                    ->alignLeft()
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('user.name')
                     ->label(__('translate.offer.user_id'))
                     ->searchable()
-                    ->alignCenter(),
+                    ->alignLeft(),
                 TextColumn::make('personal_customer.full_name')
                     ->label(__('translate.offer.personal_customer_id'))
                     ->searchable()
-                    ->alignCenter(),
+                    ->alignLeft(),
                 TextColumn::make('personal_customer.national_id')
                     ->label(__('translate.offer.personal_customer_national_id'))
                     ->searchable()
-                    ->alignCenter()
+                    ->alignRight()
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('personal_customer.phone_number')
                     ->label(__('translate.offer.personal_customer_phone_number'))
-                    ->alignCenter()
+                    ->alignRight()
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('personal_customer.email')
                     ->label(__('translate.offer.personal_customer_email'))
-                    ->alignCenter()
+                    ->alignLeft()
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('offer_amount_usd')
                     ->label(__('translate.offer.offer_amount_usd'))
-                    ->alignCenter()
+                    ->alignRight()
                     ->numeric()
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('offer_amount_crc')
                     ->label(__('translate.offer.offer_amount_crc'))
-                    ->alignCenter()
+                    ->alignRight()
                     ->numeric()
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('offer_status')
@@ -207,6 +213,10 @@ class OfferResource extends Resource
                         'rejected' => 'danger',
                         'signed' => 'info',
                     }),
+                TextColumn::make('rejection_reason')
+                    ->label(__('translate.offer.rejection_reason'))
+                    ->alignLeft()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->label(__('translate.offer.created_at'))
                     ->dateTime()

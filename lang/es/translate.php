@@ -228,6 +228,7 @@ return [
         'personal_customer_email' => 'Correo del cliente',
         'offer_files' => 'Archivos de oferta',
         'offer_status' => 'Estado de la oferta',
+        'rejection_reason' => 'Razón de rechazo',
         'created_at' => 'Enviado el',
         'updated_at' => 'Actualizado el',
         'options_offer_status' => [

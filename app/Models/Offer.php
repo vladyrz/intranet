@@ -22,6 +22,7 @@ class Offer extends Model
         'personal_customer_id',
         'offer_files',
         'offer_status',
+        'rejection_reason',
     ];
 
     protected $casts = [
