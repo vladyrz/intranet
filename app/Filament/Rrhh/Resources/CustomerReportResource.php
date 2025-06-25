@@ -8,9 +8,11 @@ use App\Models\CustomerReport;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\ActionGroup;
@@ -101,7 +103,11 @@ class CustomerReportResource extends Resource
                                 'approved' => __('translate.customer_report.options_report_status.2'),
                                 'rejected' => __('translate.customer_report.options_report_status.3'),
                             ])
+                            ->reactive()
                             ->required(),
+                        Textarea::make('rejection_reason')
+                            ->label(__('translate.offer.rejection_reason'))
+                            ->visible(fn (Get $get): bool => $get('report_status') == 'rejected'),
                     ]),
 
                 Section::make(__('resources.customer_report.section_financial'))
@@ -132,50 +138,50 @@ class CustomerReportResource extends Resource
                 TextColumn::make('user.name')
                     ->label(__('translate.customer_report.user_id'))
                     ->searchable()
-                    ->alignCenter(),
+                    ->alignLeft(),
                 TextColumn::make('customer_name')
                     ->label(__('translate.customer_report.customer_name'))
                     ->searchable()
-                    ->alignCenter(),
+                    ->alignLeft(),
                 TextColumn::make('national_id')
                     ->label(__('translate.customer_report.national_id'))
                     ->searchable()
-                    ->alignCenter()
+                    ->alignRight()
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('email')
                     ->label(__('translate.customer_report.email'))
-                    ->alignCenter()
+                    ->alignLeft()
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('phone_number')
                     ->label(__('translate.customer_report.phone_number'))
-                    ->alignCenter()
+                    ->alignRight()
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('property_name')
                     ->label(__('translate.customer_report.property_name'))
-                    ->alignCenter()
+                    ->alignRight()
                     ->searchable(),
                 TextColumn::make('organization.organization_name')
                     ->label(__('translate.customer_report.organization_id'))
-                    ->alignCenter()
+                    ->alignLeft()
                     ->searchable(),
                 TextColumn::make('budget_usd')
                     ->label(__('translate.customer_report.budget_usd'))
-                    ->alignCenter()
+                    ->alignRight()
                     ->numeric()
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('budget_crc')
                     ->label(__('translate.customer_report.budget_crc'))
-                    ->alignCenter()
+                    ->alignRight()
                     ->numeric()
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('expected_commission_usd')
                     ->label(__('translate.customer_report.expected_commission_usd'))
-                    ->alignCenter()
+                    ->alignRight()
                     ->numeric()
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('expected_commission_crc')
                     ->label(__('translate.customer_report.expected_commission_crc'))
-                    ->alignCenter()
+                    ->alignRight()
                     ->numeric()
                     ->toggleable(isToggledHiddenByDefault: false),
                 IconColumn::make('financing')
@@ -200,6 +206,10 @@ class CustomerReportResource extends Resource
                         'approved' => 'success',
                         'rejected' => 'danger',
                     }),
+                TextColumn::make('rejection_reason')
+                    ->label(__('translate.offer.rejection_reason'))
+                    ->alignLeft()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->label(__('translate.customer_report.created_at'))
                     ->dateTime()

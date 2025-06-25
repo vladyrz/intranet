@@ -24,6 +24,7 @@ class CustomerReport extends Model
         'expected_commission_usd',
         'expected_commission_crc',
         'report_status',
+        'rejection_reason',
     ];
 
     public function user()

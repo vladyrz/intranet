@@ -131,6 +131,7 @@ class UserResource extends Resource
                         'gerente' => 'info',
                         'servicio_al_cliente' => 'danger',
                         'contabilidad' => 'success',
+                        'referido' => 'warning',
                     })
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email_verified_at')

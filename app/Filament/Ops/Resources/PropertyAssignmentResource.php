@@ -14,6 +14,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\ActionGroup;
@@ -80,9 +81,11 @@ class PropertyAssignmentResource extends Resource
                                 Organization::all()
                                 ->pluck('organization_name', 'id')
                             ),
+                        Textarea::make('rejection_reason')
+                            ->label(__('translate.offer.rejection_reason'))
+                            ->visible(fn (Get $get): bool => $get('property_assignment_status') == 'rejected'),
                         Textarea::make('property_observations')
-                            ->label(__('translate.property_assignment.property_observations'))
-                            ->columnSpanFull(),
+                            ->label(__('translate.property_assignment.property_observations')),
                     ]),
 
                 Section::make(__('resources.property_assignment.sectionImages'))
@@ -106,17 +109,19 @@ class PropertyAssignmentResource extends Resource
                 TextColumn::make('user.name')
                     ->label(__('translate.property_assignment.user_id'))
                     ->searchable()
-                    ->alignCenter(),
+                    ->alignLeft(),
                 TextColumn::make('property_info')
                     ->label(__('translate.property_assignment.property_info'))
                     ->searchable()
+                    ->alignLeft()
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('organization.organization_name')
                     ->label(__('translate.property_assignment.organization_id'))
                     ->searchable()
-                    ->alignCenter(),
+                    ->alignLeft(),
                 TextColumn::make('property_observations')
                     ->label(__('translate.property_assignment.property_observations'))
+                    ->alignLeft()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('property_assignment_status')
                     ->label(__('translate.property_assignment.property_assignment_status'))
@@ -144,6 +149,10 @@ class PropertyAssignmentResource extends Resource
                         'assigned' => 'info',
                         'finished' => 'info',
                     }),
+                TextColumn::make('rejection_reason')
+                    ->label(__('translate.offer.rejection_reason'))
+                    ->alignLeft()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->label(__('translate.property_assignment.created_at'))
                     ->dateTime()

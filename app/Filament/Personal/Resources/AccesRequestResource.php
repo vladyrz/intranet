@@ -10,6 +10,7 @@ use Filament\Forms;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
@@ -96,6 +97,9 @@ class AccesRequestResource extends Resource
                             )
                             ->searchable()
                             ->preload(),
+                        Textarea::make('rejection_reason')
+                            ->label(__('translate.offer.rejection_reason'))
+                            ->visible(fn (Get $get): bool => $get('request_status') == 'rejected'),
                     ]),
             ]);
     }
@@ -111,12 +115,12 @@ class AccesRequestResource extends Resource
                     ->searchable(),
                 TextColumn::make('property')
                     ->label(__('translate.access_request.property'))
-                    ->alignCenter()
+                    ->alignRight()
                     ->searchable(),
                 TextColumn::make('organization.organization_name')
                     ->label(__('translate.access_request.organization_id'))
                     ->searchable()
-                    ->alignCenter()
+                    ->alignLeft()
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('visit_datetime')
                     ->label(__('translate.access_request.visit_datetime'))
@@ -131,12 +135,12 @@ class AccesRequestResource extends Resource
                 TextColumn::make('personal_customer.full_name')
                     ->label(__('translate.access_request.personal_customer_id'))
                     ->searchable()
-                    ->alignCenter()
+                    ->alignLeft()
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('personal_customer.national_id')
                     ->label(__('translate.access_request.personal_customer_national_id'))
                     ->searchable()
-                    ->alignCenter()
+                    ->alignRight()
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('personal_customer.license_plate')
                     ->label(__('translate.access_request.personal_customer_license_plate'))
@@ -163,6 +167,10 @@ class AccesRequestResource extends Resource
                         'approved' => 'success',
                         'rejected' => 'danger',
                     }),
+                TextColumn::make('rejection_reason')
+                    ->label(__('translate.offer.rejection_reason'))
+                    ->alignLeft()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->label(__('translate.access_request.created_at'))
                     ->dateTime()

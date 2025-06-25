@@ -10,6 +10,7 @@ use Filament\Forms;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
@@ -108,7 +109,11 @@ class AccesRequestResource extends Resource
                                 'approved' => __('translate.access_request.options_request_status.3'),
                                 'rejected' => __('translate.access_request.options_request_status.4'),
                             ])
+                            ->reactive()
                             ->required(),
+                        Textarea::make('rejection_reason')
+                            ->label(__('translate.offer.rejection_reason'))
+                            ->visible(fn (Get $get): bool => $get('request_status') == 'rejected'),
                     ]),
             ]);
     }
@@ -120,7 +125,7 @@ class AccesRequestResource extends Resource
                 TextColumn::make('user.name')
                     ->label(__('translate.access_request.user_id'))
                     ->searchable()
-                    ->alignCenter(),
+                    ->alignLeft(),
                 TextColumn::make('type_of_request')
                     ->label(__('translate.access_request.type_of_request'))
                     ->alignCenter()
@@ -129,18 +134,18 @@ class AccesRequestResource extends Resource
                 TextColumn::make('user.employee.national_id')
                     ->label(__('translate.access_request.user_national_id'))
                     ->searchable()
-                    ->alignCenter()
+                    ->alignRight()
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('property')
                     ->label(__('translate.access_request.property'))
-                    ->alignCenter()
+                    ->alignRight()
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('organization.organization_name')
                     ->label(__('translate.access_request.organization_id'))
                     ->searchable()
-                    ->alignCenter()
+                    ->alignLeft()
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('visit_datetime')
                     ->label(__('translate.access_request.visit_datetime'))
@@ -155,12 +160,12 @@ class AccesRequestResource extends Resource
                 TextColumn::make('personal_customer.full_name')
                     ->label(__('translate.access_request.personal_customer_id'))
                     ->searchable()
-                    ->alignCenter()
+                    ->alignLeft()
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('personal_customer.national_id')
                     ->label(__('translate.access_request.personal_customer_national_id'))
                     ->searchable()
-                    ->alignCenter()
+                    ->alignRight()
                     ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('personal_customer.license_plate')
                     ->label(__('translate.access_request.personal_customer_license_plate'))
@@ -187,6 +192,10 @@ class AccesRequestResource extends Resource
                         'approved' => 'success',
                         'rejected' => 'danger',
                     }),
+                TextColumn::make('rejection_reason')
+                    ->label(__('translate.offer.rejection_reason'))
+                    ->alignLeft()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->label(__('translate.access_request.created_at'))
                     ->dateTime()

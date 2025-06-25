@@ -18,6 +18,7 @@ class PropertyAssignment extends Model
         'property_observations',
         'property_images',
         'property_assignment_status',
+        'rejection_reason',
     ];
 
     protected $casts = [

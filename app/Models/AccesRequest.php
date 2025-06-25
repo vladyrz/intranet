@@ -20,6 +20,7 @@ class AccesRequest extends Model
         'visit_datetime',
         'personal_customer_id',
         'request_status',
+        'rejection_reason',
     ];
 
     public function user(){
