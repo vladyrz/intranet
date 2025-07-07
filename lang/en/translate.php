@@ -125,7 +125,7 @@ return [
 
     'customer_report' => [
         'user_id' => 'Agent',
-        'customer_name' => 'Customer name',
+        'personal_customer_id' => 'Customer name',
         'national_id' => 'National id',
         'email' => 'Email',
         'phone_number' => 'Phone number',

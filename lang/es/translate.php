@@ -126,7 +126,7 @@ return [
 
     'customer_report' => [
         'user_id' => 'Asesor',
-        'customer_name' => 'Nombre del cliente',
+        'personal_customer_id' => 'Nombre del cliente',
         'national_id' => 'Número de cédula',
         'email' => 'Correo electrónico',
         'phone_number' => 'Número de teléfono',

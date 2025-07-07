@@ -72,8 +72,7 @@ class AccesRequestResource extends Resource
                         Select::make('type_of_request')
                             ->label(__('translate.access_request.type_of_request'))
                             ->options(__('translate.access_request.options_type_of_request'))
-                            ->required()
-                            ->reactive(),
+                            ->required(),
                         TextInput::make('property')
                             ->label(__('translate.access_request.property'))
                             ->required(),
@@ -84,11 +83,9 @@ class AccesRequestResource extends Resource
                             ->preload()
                             ->required(),
                         DateTimePicker::make('pickup_datetime')
-                            ->label(__('translate.access_request.pickup_datetime'))
-                            ->visible(fn (Get $get): bool => in_array($get('type_of_request'), ['access', 'both'])),
+                            ->label(__('translate.access_request.pickup_datetime')),
                         DateTimePicker::make('visit_datetime')
-                            ->label(__('translate.access_request.visit_datetime'))
-                            ->visible(fn (Get $get): bool => in_array($get('type_of_request'), ['keys', 'both'])),
+                            ->label(__('translate.access_request.visit_datetime')),
                         Select::make('personal_customer_id')
                             ->label(__('translate.access_request.personal_customer_id'))
                             ->options(PersonalCustomer::query()

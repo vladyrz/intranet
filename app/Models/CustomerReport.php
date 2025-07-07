@@ -12,6 +12,7 @@ class CustomerReport extends Model
 
     protected $fillable = [
         'user_id',
+        'personal_customer_id',
         'customer_name',
         'national_id',
         'email',
@@ -30,6 +31,11 @@ class CustomerReport extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function personal_customer()
+    {
+        return $this->belongsTo(PersonalCustomer::class);
     }
 
     public function organization()

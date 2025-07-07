@@ -5,6 +5,7 @@ namespace App\Filament\Services\Resources;
 use App\Filament\Services\Resources\CustomerReportResource\Pages;
 use App\Filament\Services\Resources\CustomerReportResource\RelationManagers;
 use App\Models\CustomerReport;
+use App\Models\PersonalCustomer;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -13,6 +14,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\ActionGroup;
@@ -22,6 +24,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Collection;
 use Parallax\FilamentComments\Tables\Actions\CommentsAction;
 
 class CustomerReportResource extends Resource
@@ -68,21 +71,17 @@ class CustomerReportResource extends Resource
                             )
                             ->preload()
                             ->searchable()
-                            ->required(),
-                        TextInput::make('customer_name')
-                            ->label(__('translate.customer_report.customer_name'))
-                            ->maxLength(255)
-                            ->required(),
-                        TextInput::make('national_id')
-                            ->label(__('translate.customer_report.national_id'))
-                            ->maxLength(20),
-                        TextInput::make('email')
-                            ->label(__('translate.customer_report.email'))
-                            ->maxLength(255)
-                            ->email(),
-                        TextInput::make('phone_number')
-                            ->label(__('translate.customer_report.phone_number'))
-                            ->maxLength(40),
+                            ->required()
+                            ->live()
+                            ->afterStateUpdated(function (Set $set){
+                                $set('personal_customer_id', null);
+                            }),
+                        Select::make('personal_customer_id')
+                            ->label(__('translate.customer_report.personal_customer_id'))
+                            ->options(fn (Get $get): Collection => PersonalCustomer::query()
+                                ->where('user_id', $get('user_id'))
+                                ->pluck('full_name', 'id')
+                            ),
                         TextInput::make('property_name')
                             ->label(__('translate.customer_report.property_name'))
                             ->maxLength(255),
@@ -139,20 +138,20 @@ class CustomerReportResource extends Resource
                     ->label(__('translate.customer_report.user_id'))
                     ->searchable()
                     ->alignLeft(),
-                TextColumn::make('customer_name')
+                TextColumn::make('personal_customer.full_name')
                     ->label(__('translate.customer_report.customer_name'))
                     ->searchable()
                     ->alignLeft(),
-                TextColumn::make('national_id')
+                TextColumn::make('personal_customer.national_id')
                     ->label(__('translate.customer_report.national_id'))
                     ->searchable()
                     ->alignRight()
                     ->toggleable(isToggledHiddenByDefault: false),
-                TextColumn::make('email')
+                TextColumn::make('personal_customer.email')
                     ->label(__('translate.customer_report.email'))
                     ->alignLeft()
                     ->toggleable(isToggledHiddenByDefault: false),
-                TextColumn::make('phone_number')
+                TextColumn::make('personal_customer.phone_number')
                     ->label(__('translate.customer_report.phone_number'))
                     ->alignRight()
                     ->toggleable(isToggledHiddenByDefault: false),

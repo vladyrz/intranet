@@ -5,6 +5,7 @@ namespace App\Filament\Personal\Resources;
 use App\Filament\Personal\Resources\CustomerReportResource\Pages;
 use App\Filament\Personal\Resources\CustomerReportResource\RelationManagers;
 use App\Models\CustomerReport;
+use App\Models\PersonalCustomer;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -67,20 +68,15 @@ class CustomerReportResource extends Resource
                 Section::make(__('resources.customer_report.section_customer'))
                     ->columns(2)
                     ->schema([
-                        TextInput::make('customer_name')
-                            ->label(__('translate.customer_report.customer_name'))
-                            ->maxLength(255)
+                        Select::make('persoanl_customer_id')
+                            ->label(__('translate.customer_report.personal_customer_id'))
+                            ->options(PersonalCustomer::query()
+                                ->where('user_id', Auth::user()->id)
+                                ->pluck('full_name', 'id')
+                            )
+                            ->searchable()
+                            ->preload()
                             ->required(),
-                        TextInput::make('national_id')
-                            ->label(__('translate.customer_report.national_id'))
-                            ->maxLength(20),
-                        TextInput::make('email')
-                            ->label(__('translate.customer_report.email'))
-                            ->maxLength(255)
-                            ->email(),
-                        TextInput::make('phone_number')
-                            ->label(__('translate.customer_report.phone_number'))
-                            ->maxLength(40),
                         TextInput::make('property_name')
                             ->label(__('translate.customer_report.property_name'))
                             ->maxLength(255)
@@ -124,20 +120,20 @@ class CustomerReportResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('customer_name')
-                    ->label(__('translate.customer_report.customer_name'))
+                TextColumn::make('personal_customer.full_name')
+                    ->label(__('translate.customer_report.personal_customer_id'))
                     ->searchable()
                     ->alignLeft(),
-                TextColumn::make('national_id')
+                TextColumn::make('personal_customer.national_id')
                     ->label(__('translate.customer_report.national_id'))
                     ->searchable()
                     ->alignRight()
                     ->toggleable(isToggledHiddenByDefault: false),
-                TextColumn::make('email')
+                TextColumn::make('personal_customer.email')
                     ->label(__('translate.customer_report.email'))
                     ->alignLeft()
                     ->toggleable(isToggledHiddenByDefault: false),
-                TextColumn::make('phone_number')
+                TextColumn::make('personal_customer.phone_number')
                     ->label(__('translate.customer_report.phone_number'))
                     ->alignRight()
                     ->toggleable(isToggledHiddenByDefault: false),
