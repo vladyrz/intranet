@@ -22,40 +22,40 @@ class EditCustomerReport extends EditRecord
         ];
     }
 
-    protected function mutateFormDataBeforeSave(array $data): array
-    {
-        return $data;
-    }
+    // protected function mutateFormDataBeforeSave(array $data): array
+    // {
+    //     return $data;
+    // }
 
-    protected function afterSave(): void
-    {
-        $record = $this->record;
+    // protected function afterSave(): void
+    // {
+    //     $record = $this->record;
 
-        $user = User::find($record->user_id);
+    //     $user = User::find($record->user_id);
 
-        if (!$user) {
-            return; // Evitar errores si no se encuentra el usuario
-        }
+    //     if (!$user) {
+    //         return; // Evitar errores si no se encuentra el usuario
+    //     }
 
-        $data = [
-            'name' => $user->name,
-            'email' => $user->email,
-            'property_name' => $record->property_name,
-            'customer_name' => $record->customer_name,
-        ];
+    //     $data = [
+    //         'name' => $user->name,
+    //         'email' => $user->email,
+    //         'property_name' => $record->property_name,
+    //         'customer_name' => $record->customer_name,
+    //     ];
 
-        switch ($record->report_status) {
-            case 'received':
-                Mail::to($user->email)->send(new Received($data));
-                break;
+    //     switch ($record->report_status) {
+    //         case 'received':
+    //             Mail::to($user->email)->send(new Received($data));
+    //             break;
 
-            case 'approved':
-                Mail::to($user->email)->send(new Approved($data));
-                break;
+    //         case 'approved':
+    //             Mail::to($user->email)->send(new Approved($data));
+    //             break;
 
-            case 'rejected':
-                Mail::to($user->email)->send(new Rejected($data));
-                break;
-        }
-    }
+    //         case 'rejected':
+    //             Mail::to($user->email)->send(new Rejected($data));
+    //             break;
+    //     }
+    // }
 }
