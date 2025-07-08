@@ -68,7 +68,7 @@ class CustomerReportResource extends Resource
                 Section::make(__('resources.customer_report.section_customer'))
                     ->columns(2)
                     ->schema([
-                        Select::make('persoanl_customer_id')
+                        Select::make('personal_customer_id')
                             ->label(__('translate.customer_report.personal_customer_id'))
                             ->options(PersonalCustomer::query()
                                 ->where('user_id', Auth::user()->id)
