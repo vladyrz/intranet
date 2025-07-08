@@ -2,6 +2,7 @@
 
 namespace App\Filament\Sales\Resources\OfferResource\Pages;
 
+use App\Exports\offers;
 use App\Exports\OffersPerUserExport;
 use App\Filament\Sales\Resources\OfferResource;
 use App\Models\Offer;
@@ -23,7 +24,7 @@ class ListOffers extends ListRecords
     {
         return [
             Action::make('exportar_reporte')
-                ->label('Exportar reporte')
+                ->label('Exportar reporte por usuario')
                 ->color('success')
                 ->icon('heroicon-m-arrow-down-tray')
                 ->form([
@@ -67,7 +68,15 @@ class ListOffers extends ListRecords
                         new OffersPerUserExport($data['month'], $data['year'], $data['week']),
                         'reporte-ofertas-por-usuario.xlsx'
                     );
-                })
+                }),
+
+            Action::make('export')
+                ->label('Exportar todas las ofertas')
+                ->color('success')
+                ->icon('heroicon-m-cloud-arrow-down')
+                ->action(function () {
+                    return Excel::download(new offers(), 'ofertas.xlsx');
+                }),
         ];
     }
 
