@@ -35,7 +35,7 @@ class SendBirthdayEmailJob implements ShouldQueue
             ->get();
 
         foreach ($employees as $employee) {
-            Mail::to($employee->email)->queue(new HappyBirthdayMail($employee));
+            Mail::to('rrhh@g-easypro.com')->queue(new HappyBirthdayMail($employee));
         }
     }
 }
