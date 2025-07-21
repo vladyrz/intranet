@@ -227,4 +227,31 @@ return [
         'tab_advanced' => 'Avanzados',
         'tab_specialized' => 'Especializados',
     ],
+
+    'campaign' => [
+        'label' => 'Campaña',
+        'plural' => 'Campañas',
+        'navigation' => 'Campañas',
+        'navigation_group' => 'Gestión de Publicidad',
+        'section_campaign' => 'Información de la Campaña',
+        'tab_total_campaigns' => 'Total de campañas',
+        'tab_pending' => 'Pendientes',
+        'tab_active' => 'Activas',
+        'tab_inactive' => 'Inactivas',
+        'tab_finished' => 'Finalizadas',
+    ],
+
+    'campaign_social' => [
+        'label' => 'Red social de campaña',
+        'plural' => 'Red social de campañas',
+        'navigation' => 'Red social de campañas',
+        'navigation_group' => 'Gestión de Publicidad',
+        'section_campaign_social' => 'Información de la Red social',
+        'tab_total_campaign_socials' => 'Redes sociales de campañas',
+        'tab_facebook' => 'Facebook',
+        'tab_instagram' => 'Instagram',
+        'tab_linkedin' => 'LinkedIn',
+        'tab_youtube' => 'YouTube',
+        'tab_tiktok' => 'TikTok',
+    ],
 ];

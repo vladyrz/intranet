@@ -219,4 +219,31 @@ return [
         'tab_advanced' => 'Advanced',
         'tab_specialized' => 'Specialized',
     ],
+
+    'campaign' => [
+        'label' => 'Campaign',
+        'plural' => 'Campaigns',
+        'navigation' => 'Campaigns',
+        'navigation_group' => 'Marketing Management',
+        'section_campaign' => 'Campaign Info',
+        'tab_total_campaigns' => 'Total campaigns',
+        'tab_pending' => 'Pending',
+        'tab_active' => 'Active',
+        'tab_inactive' => 'Inactive',
+        'tab_finished' => 'Finished',
+    ],
+
+    'campaign_social' => [
+        'label' => 'Campaign Social',
+        'plural' => 'Campaign Socials',
+        'navigation' => 'Campaign Socials',
+        'navigation_group' => 'Marketing Management',
+        'section_campaign_social' => 'Campaign Social Info',
+        'tab_total_campaign_socials' => 'Total campaign socials',
+        'tab_facebook' => 'Facebook',
+        'tab_instagram' => 'Instagram',
+        'tab_linkedin' => 'LinkedIn',
+        'tab_youtube' => 'YouTube',
+        'tab_tiktok' => 'TikTok',
+    ],
 ];

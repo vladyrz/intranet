@@ -398,4 +398,39 @@ return [
         'created_at' => 'Created at',
         'updated_at' => 'Updated at',
     ],
+
+    'campaign' => [
+        'title' => 'Title',
+        'campaign_status' => 'Campaign status',
+        'options_campaign_status' => [
+            'pending' => 'Pending',
+            'active' => 'Active',
+            'inactive' => 'Inactive',
+            'finished' => 'Finished',
+        ],
+        'user_id' => 'Agent',
+        'post_date' => 'Post date',
+        'marketplace_link' => 'Marketplace link',
+        'results_observations' => 'Results and observations',
+        'created_at' => 'Created at',
+        'updated_at' => 'Updated at',
+    ],
+
+    'campaign_social' => [
+        'campaign_id' => 'Campaign',
+        'platform' => 'Platform',
+        'options_platform' => [
+            'facebook' => 'Facebook',
+            'instagram' => 'Instagram',
+            'linkedin' => 'LinkedIn',
+            'youtube' => 'YouTube',
+            'tiktok' => 'TikTok',
+        ],
+        'link' => 'Link',
+        'reactions' => 'Reactions',
+        'comments' => 'Comments',
+        'shares' => 'Shares',
+        'created_at' => 'Created at',
+        'updated_at' => 'Updated at',
+    ],
 ];

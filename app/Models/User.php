@@ -104,4 +104,8 @@ class User extends Authenticatable implements HasAvatar
     public function accesRequests(){
         return $this->hasMany(AccesRequest::class);
     }
+
+    public function campaigns(){
+        return $this->hasMany(Campaign::class);
+    }
 }

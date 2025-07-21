@@ -401,4 +401,39 @@ return [
         'created_at' => 'Creado el',
         'updated_at' => 'Actualizado el',
     ],
+
+    'campaign' => [
+        'title' => 'Título',
+        'campaign_status' => 'Estado de la campaña',
+        'options_campaign_status' => [
+            'pending' => 'Pendiente',
+            'active' => 'Activa',
+            'inactive' => 'Inactiva',
+            'finished' => 'Finalizada',
+        ],
+        'user_id' => 'Asesor',
+        'post_date' => 'Fecha de publicación',
+        'marketplace_link' => 'Link de Marketplace',
+        'results_observations' => 'Resultados y observaciones',
+        'created_at' => 'Creado el',
+        'updated_at' => 'Actualizado el',
+    ],
+
+    'campaign_social' => [
+        'campaign_id' => 'Campaña',
+        'platform' => 'Plataforma',
+        'options_platform' => [
+            'facebook' => 'Facebook',
+            'instagram' => 'Instagram',
+            'linkedin' => 'LinkedIn',
+            'youtube' => 'YouTube',
+            'tiktok' => 'TikTok',
+        ],
+        'link' => 'Enlace',
+        'reactions' => 'Reacciones',
+        'comments' => 'Comentarios',
+        'shares' => 'Compartidos',
+        'created_at' => 'Creado el',
+        'updated_at' => 'Actualizado el',
+    ],
 ];
