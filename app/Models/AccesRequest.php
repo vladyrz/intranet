@@ -21,6 +21,7 @@ class AccesRequest extends Model
         'personal_customer_id',
         'request_status',
         'rejection_reason',
+        'user_comments',
     ];
 
     public function user(){

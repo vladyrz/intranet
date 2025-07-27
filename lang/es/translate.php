@@ -328,6 +328,7 @@ return [
             'Aprobada',
             'Rechazada',
         ],
+        'user_comments' => 'Comentarios del asesor',
         'created_at' => 'Enviado el',
         'updated_at' => 'Actualizado el',
     ],

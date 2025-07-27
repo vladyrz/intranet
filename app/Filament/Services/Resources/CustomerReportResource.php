@@ -104,6 +104,8 @@ class CustomerReportResource extends Resource
                             ])
                             ->reactive()
                             ->required(),
+                        Textarea::make('user_comments')
+                            ->label(__('translate.access_request.user_comments')),
                         Textarea::make('rejection_reason')
                             ->label(__('translate.offer.rejection_reason'))
                             ->visible(fn (Get $get): bool => $get('report_status') == 'rejected'),

@@ -325,6 +325,7 @@ return [
             'Approved',
             'Rejected',
         ],
+        'user_comments' => 'Agent comments',
         'created_at' => 'Sent at',
         'updated_at' => 'Updated at',
     ],

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('property_observations')->nullable();
             $table->json('property_images')->nullable();
             $table->string('property_assignment_status')->default('pending');
+            $table->text('rejection_reason')->nullable();
             $table->timestamps();
         });
     }

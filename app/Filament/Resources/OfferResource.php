@@ -122,10 +122,11 @@ class OfferResource extends Resource
                             ])
                             ->reactive()
                             ->required(),
+                        Textarea::make('user_comments')
+                            ->label(__('translate.access_request.user_comments')),
                         Textarea::make('rejection_reason')
                             ->label(__('translate.offer.rejection_reason'))
-                            ->visible(fn (Get $get): bool => $get('offer_status') == 'rejected')
-                            ->columnSpan(2),
+                            ->visible(fn (Get $get): bool => $get('offer_status') == 'rejected'),
                         FileUpload::make('offer_files')
                             ->label(__('translate.offer.offer_files'))
                             ->multiple()

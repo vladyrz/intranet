@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('customer_reports', function (Blueprint $table) {
-            $table->foreignId('personal_customer_id')->after('user_id')->nullable();
+        Schema::table('acces_requests', function (Blueprint $table) {
+            $table->text('user_comments')->after('rejection_reason')->nullable();
         });
     }
 
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('customer_reports', function (Blueprint $table) {
+        Schema::table('acces_requests', function (Blueprint $table) {
             //
         });
     }

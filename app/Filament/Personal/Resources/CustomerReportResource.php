@@ -66,7 +66,7 @@ class CustomerReportResource extends Resource
         return $form
             ->schema([
                 Section::make(__('resources.customer_report.section_customer'))
-                    ->columns(2)
+                    ->columns(3)
                     ->schema([
                         Select::make('personal_customer_id')
                             ->label(__('translate.customer_report.personal_customer_id'))
@@ -90,6 +90,8 @@ class CustomerReportResource extends Resource
                             ->preload()
                             ->searchable()
                             ->required(),
+                        Textarea::make('user_comments')
+                            ->label(__('translate.access_request.user_comments')),
                         Textarea::make('rejection_reason')
                             ->label(__('translate.offer.rejection_reason'))
                             ->visible(fn (Get $get): bool => $get('report_status') == 'rejected'),

@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('property_assignments', function (Blueprint $table) {
-            $table->text('rejection_reason')->after('property_assignment_status')->nullable();
+        Schema::table('customer_reports', function (Blueprint $table) {
+            $table->text('user_comments')->after('rejection_reason')->nullable();
         });
     }
 
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('property_assignments', function (Blueprint $table) {
+        Schema::table('customer_reports', function (Blueprint $table) {
             //
         });
     }

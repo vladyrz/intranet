@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('customer_reports', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('personal_customer_id')->nullable();
             $table->string('customer_name', 255);
             $table->string('national_id', 20)->nullable();
             $table->string('email', 255)->nullable();
