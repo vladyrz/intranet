@@ -261,4 +261,17 @@ return [
         'section_permissions' => 'Permissions',
         'section_vacations' => 'Vacations',
     ],
+
+    'credit_study' => [
+        'label' => 'Credit Study Request',
+        'plural' => 'Credit Study Requests',
+        'navigation' => 'Credit Study Requests',
+        'customer_section' => 'Customer Info',
+        'request_section' => 'Request Info',
+        'sales_section' => 'Sales Department Review',
+        'tab_total_requests' => 'Total requests',
+        'tab_pending' => 'Pending',
+        'tab_approved' => 'Approved',
+        'tab_rejected' => 'Rejected',
+    ],
 ];

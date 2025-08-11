@@ -456,4 +456,25 @@ return [
         'created_at' => 'Sent at',
         'updated_at' => 'Updated at',
     ],
+
+    'credit_request' => [
+        'user_id' => 'Agent',
+        'personal_customer_id' => 'Customer name',
+        'national_id' => 'National id',
+        'phone_number' => 'Customer phone number',
+        'email' => 'Customer email',
+        'property' => 'Property (ID)',
+        'request_reason' => 'Request reason',
+        'request_status' => 'Request status',
+        'options_request_status' => [
+            'pending' => 'Pending',
+            'approved' => 'Approved',
+            'rejected' => 'Rejected',
+        ],
+        'sales_comments' => 'Sales comments',
+        'rejection_reason' => 'Rejection reason',
+        'documents' => 'Documents',
+        'created_at' => 'Sent at',
+        'updated_at' => 'Updated at',
+    ],
 ];

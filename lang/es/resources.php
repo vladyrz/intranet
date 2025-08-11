@@ -269,4 +269,17 @@ return [
         'section_permissions' => 'Permisos',
         'section_vacations' => 'Vacaciones',
     ],
+
+    'credit_request' => [
+        'label' => 'Solicitud de estudio crediticio',
+        'plural' => 'Solicitudes de estudio crediticio',
+        'navigation' => 'Solicitudes de estudio crediticio',
+        'customer_section' => 'Información del cliente',
+        'request_section' => 'Información de la solicitud',
+        'sales_section' => 'Revisión del Departamento de Ventas',
+        'tab_total_requests' => 'Total de solicitudes',
+        'tab_pending' => 'Pendientes',
+        'tab_approved' => 'Aprobadas',
+        'tab_rejected' => 'Rechazadas',
+    ],
 ];

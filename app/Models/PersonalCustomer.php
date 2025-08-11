@@ -48,4 +48,8 @@ class PersonalCustomer extends Model
     public function customer_reports(){
         return $this->hasMany(CustomerReport::class);
     }
+
+    public function credit_study_requests(){
+        return $this->hasMany(CreditStudyRequest::class);
+    }
 }

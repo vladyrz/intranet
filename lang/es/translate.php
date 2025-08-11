@@ -468,4 +468,25 @@ return [
         'created_at' => 'Enviado el',
         'updated_at' => 'Actualizado el',
     ],
+
+    'credit_request' => [
+        'user_id' => 'Asesor',
+        'personal_customer_id' => 'Nombre del cliente',
+        'national_id' => 'Número de cédula',
+        'phone_number' => 'Teléfono del cliente',
+        'email' => 'Correo del cliente',
+        'property' => 'Propiedad (ID)',
+        'request_reason' => 'Razón de la solicitud',
+        'request_status' => 'Estado de la solicitud',
+        'options_request_status' => [
+            'pending' => 'Pendiente',
+            'approved' => 'Aprobada',
+            'rejected' => 'Rechazada',
+        ],
+        'sales_comments' => 'Comentarios de ventas',
+        'rejection_reason' => 'Razón de rechazo',
+        'documents' => 'Archivos',
+        'created_at' => 'Enviado el',
+        'updated_at' => 'Actualizado el',
+    ],
 ];

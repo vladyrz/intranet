@@ -11,17 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('acces_requests', function (Blueprint $table) {
+        Schema::create('credit_study_requests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('type_of_request');
+            $table->foreignId('personal_customer_id')->constrained()->onDelete('cascade');
             $table->string('property');
-            $table->foreignId('organization_id')->constrained()->onDelete('cascade');
-            $table->timestamp('pickup_datetime')->nullable();
-            $table->timestamp('visit_datetime')->nullable();
-            $table->foreignId('personal_customer_id')->nullable()->constrained()->nullOnDelete('cascade');
+            $table->text('request_reason');
             $table->string('request_status')->default('pending');
+            $table->text('sales_comments')->nullable();
             $table->text('rejection_reason')->nullable();
+            $table->json('documents')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('acces_requests');
+        Schema::dropIfExists('credit_study_requests');
     }
 };

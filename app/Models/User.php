@@ -108,4 +108,8 @@ class User extends Authenticatable implements HasAvatar
     public function campaigns(){
         return $this->hasMany(Campaign::class);
     }
+
+    public function creditStudyRequests(){
+        return $this->hasMany(CreditStudyRequest::class);
+    }
 }
