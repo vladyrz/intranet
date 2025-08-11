@@ -254,4 +254,19 @@ return [
         'tab_youtube' => 'YouTube',
         'tab_tiktok' => 'TikTok',
     ],
+
+    'leave_request' => [
+        'label' => 'Solicitud de ausencia',
+        'plural' => 'Solicitudes de ausencia',
+        'navigation' => 'Solicitudes de ausencia',
+        'section_request' => 'Información de la solicitud',
+        'tab_total_leave_requests' => 'Total de solicitudes',
+        'tab_pending' => 'Pendientes',
+        'tab_approved' => 'Aprobadas',
+        'tab_denied' => 'Denegadas',
+        'tab_vacations' => 'Vacaciones',
+        'tab_permissions' => 'Permisos',
+        'section_permissions' => 'Permisos',
+        'section_vacations' => 'Vacaciones',
+    ],
 ];

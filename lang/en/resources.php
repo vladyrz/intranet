@@ -246,4 +246,19 @@ return [
         'tab_youtube' => 'YouTube',
         'tab_tiktok' => 'TikTok',
     ],
+
+    'leave_request' => [
+        'label' => 'Leave Request',
+        'plural' => 'Leave Requests',
+        'navigation' => 'Leave Requests',
+        'section_request' => 'Request Info',
+        'tab_total_leave_requests' => 'Total leave requests',
+        'tab_pending' => 'Pending',
+        'tab_approved' => 'Approved',
+        'tab_denied' => 'Denied',
+        'tab_vacations' => 'Vacations',
+        'tab_permissions' => 'Permissions',
+        'section_permissions' => 'Permissions',
+        'section_vacations' => 'Vacations',
+    ],
 ];

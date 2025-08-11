@@ -434,4 +434,26 @@ return [
         'created_at' => 'Created at',
         'updated_at' => 'Updated at',
     ],
+
+    'leave_request' => [
+        'user_id' => 'Agent',
+        'request_type' => 'Request type',
+        'observations' => 'Observations',
+        'request_status' => 'Request status',
+        'options_request_status' => [
+            'pending' => 'Pending',
+            'approved' => 'Approved',
+            'denied' => 'Denied',
+        ],
+        'vacation_balance' => 'Vacation balance',
+        'permission_date' => 'Permission date',
+        'permission_options' => 'Permission options',
+        'start_time' => 'Start time',
+        'end_time' => 'End time',
+        'start_date' => 'Start date',
+        'end_date' => 'End date',
+        'total_days' => 'Total days',
+        'created_at' => 'Sent at',
+        'updated_at' => 'Updated at',
+    ],
 ];

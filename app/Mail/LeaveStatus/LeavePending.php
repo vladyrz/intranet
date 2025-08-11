@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mail\LeaveStatus;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -9,17 +9,16 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class HolidayDecline extends Mailable
+class LeavePending extends Mailable
 {
     use Queueable, SerializesModels;
-    public $data;
 
+    public $data;
     /**
      * Create a new message instance.
      */
     public function __construct($data)
     {
-        //
         $this->data = $data;
     }
 
@@ -29,7 +28,7 @@ class HolidayDecline extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Holiday Decline',
+            subject: 'Solicitud de ausencia pendiente',
         );
     }
 
@@ -39,7 +38,7 @@ class HolidayDecline extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mails.holidayDecline',
+            view: 'mails.leave_request.pending',
         );
     }
 

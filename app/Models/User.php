@@ -69,8 +69,8 @@ class User extends Authenticatable implements HasAvatar
         return $this->belongsToMany(Departament::class);
     }
 
-    public function holidays(){
-        return $this->hasMany(Holiday::class);
+    public function leaves(){
+        return $this->hasMany(LeaveRequest::class);
     }
 
     public function timesheets(){

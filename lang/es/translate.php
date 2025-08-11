@@ -437,4 +437,35 @@ return [
         'created_at' => 'Creado el',
         'updated_at' => 'Actualizado el',
     ],
+
+    'leave_request' => [
+        'user_id' => 'Asesor',
+        'request_type' => 'Tipo de solicitud',
+        'options_request_types' => [
+            'permission' => 'Permiso',
+            'vacations' => 'Vacaciones',
+        ],
+        'observations' => 'Observaciones',
+        'request_status' => 'Estado de la solicitud',
+        'options_request_status' => [
+            'pending' => 'Pendiente',
+            'approved' => 'Aprobado',
+            'denied' => 'Denegado',
+        ],
+        'vacation_balance' => 'Saldo de vacaciones',
+        'permission_date' => 'Fecha de permiso',
+        'permission_options' => 'Opciones de permiso',
+        'options_permissions' => [
+            'halfday' => 'Medio día',
+            'fullday' => 'Día completo',
+            'hours_range' => 'Rango de horas',
+        ],
+        'start_time' => 'Hora de inicio',
+        'end_time' => 'Hora de fin',
+        'start_date' => 'Fecha de inicio',
+        'end_date' => 'Fecha de fin',
+        'total_days' => 'Total de días',
+        'created_at' => 'Enviado el',
+        'updated_at' => 'Actualizado el',
+    ],
 ];
