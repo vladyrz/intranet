@@ -212,6 +212,11 @@ return [
         'plural' => 'Proyectos',
         'navigation' => 'Proyectos',
         'sectionProject' => 'Información del Proyecto',
+        'tab_all' => 'Todos',
+        'tab_pending' => 'Pendientes',
+        'tab_in_progress' => 'En progreso',
+        'tab_finished' => 'Finalizados',
+        'tab_stopped' => 'Detenidos',
     ],
 
     'segment' => [

@@ -206,6 +206,18 @@ return [
         'tab_rejected' => 'Rejected',
     ],
 
+    'project' => [
+        'label' => 'Project',
+        'plural' => 'Projects',
+        'navigation' => 'Projects',
+        'sectionProject' => 'Project Info',
+        'tab_all' => 'All',
+        'tab_pending' => 'Pending',
+        'tab_in_progress' => 'In progress',
+        'tab_finished' => 'Finished',
+        'tab_stopped' => 'Stopped',
+    ],
+
     'segment' => [
         'label' => 'Segment',
         'plural' => 'Segments',

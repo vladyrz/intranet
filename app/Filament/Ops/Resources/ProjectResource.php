@@ -177,9 +177,6 @@ class ProjectResource extends Resource
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
-                SelectFilter::make('project_status')
-                    ->label(__('translate.project.project_status'))
-                    ->options(__('translate.project.options_project_status')),
                 SelectFilter::make('priority')
                     ->label(__('translate.project.priority'))
                     ->options(__('translate.project.options_priority')),
