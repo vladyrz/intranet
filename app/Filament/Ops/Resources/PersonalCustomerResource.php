@@ -67,6 +67,7 @@ class PersonalCustomerResource extends Resource
                             ->relationship(
                                 name: 'user',
                                 titleAttribute: 'name',
+                                modifyQueryUsing: fn (Builder $query) => $query->where('state', true),
                             )
                             ->searchable()
                             ->preload()

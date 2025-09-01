@@ -62,6 +62,7 @@ class OperationResource extends Resource
                         ->relationship(
                             name: 'user',
                             titleAttribute: 'name',
+                            modifyQueryUsing: fn (Builder $query) => $query->where('state', true),
                         ),
                     Select::make('document_id')
                         ->label(__('translate.operation.document_id'))

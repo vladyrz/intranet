@@ -20,6 +20,7 @@ use Filament\Tables;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Parallax\FilamentComments\Tables\Actions\CommentsAction;
 
@@ -61,7 +62,7 @@ class CreditStudyRequestResource extends Resource
                     ->schema([
                         Select::make('user_id')
                             ->label(__('translate.credit_request.user_id'))
-                            ->relationship(name: 'user', titleAttribute:'name')
+                            ->relationship(name: 'user', titleAttribute:'name', modifyQueryUsing: fn (Builder $query) => $query->where('state', true))
                             ->searchable()
                             ->preload()
                             ->required()

@@ -65,7 +65,7 @@ class AccesRequestResource extends Resource
                     ->schema([
                         Select::make('user_id')
                             ->label(__('translate.access_request.user_id'))
-                            ->relationship(name: 'user', titleAttribute:'name')
+                            ->relationship(name: 'user', titleAttribute:'name', modifyQueryUsing: fn (Builder $query) => $query->where('state', true))
                             ->searchable()
                             ->preload()
                             ->required()

@@ -67,7 +67,8 @@ class LeaveRequestResource extends Resource
                             ->label(__('translate.leave_request.user_id'))
                             ->relationship(
                                 name: 'user',
-                                titleAttribute: 'name'
+                                titleAttribute: 'name',
+                                modifyQueryUsing: fn (Builder $query) => $query->where('state', true),
                             )
                             ->searchable()
                             ->preload()
