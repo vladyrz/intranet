@@ -72,7 +72,7 @@ class PersonalPanelProvider extends PanelProvider
             ->plugins([
                 PanelRoles::make()
                 ->roleToAssign('panel_user')
-                ->restrictedRoles(['panel_user', 'super_admin']),
+                ->restrictedRoles(['panel_user', 'super_admin', 'soporte', 'ventas', 'servicio_al_cliente', 'rrhh', 'contabilidad', 'gerente']),
                 FilamentApexChartsPlugin::make(),
                 FilamentEditProfilePlugin::make()
                     ->setIcon('heroicon-o-user')

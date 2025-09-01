@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Mail\RequestStatus;
+namespace App\Mail;
 
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -10,26 +9,23 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class AccesReceived extends Mailable
+class AccesStatusMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $data;
-    protected $ccEmails;
+    protected string $status; // pending, received, sent, approved, rejected
 
     /**
      * Create a new message instance.
+     *
+     * @param array $data
+     * @param string $status
      */
-    public function __construct($data)
+    public function __construct(array $data, string $status)
     {
         $this->data = $data;
-
-        $userRoles = User::role(['soporte', 'ventas', 'servicio_al_cliente', 'rrhh'])
-            ->where('email', '!=', $this->data['email'])
-            ->pluck('email')
-            ->toArray();
-
-        $this->ccEmails = array_unique($userRoles);
+        $this->status = $status;
     }
 
     /**
@@ -37,9 +33,16 @@ class AccesReceived extends Mailable
      */
     public function envelope(): Envelope
     {
+        $subjects = [
+            'pending'  => 'Solicitud de Permiso Pendiente',
+            'received' => 'Solicitud de Permiso Recibida',
+            'sent'     => 'Solicitud de Permiso Enviada',
+            'approved' => 'Solicitud de Permiso Aprobada',
+            'rejected' => 'Solicitud de Permiso Rechazada',
+        ];
+
         return new Envelope(
-            subject: 'Solicitud de Permiso Recibida',
-            cc: $this->ccEmails,
+            subject: $subjects[$this->status] ?? 'Actualización de Solicitud de Permiso',
         );
     }
 
@@ -49,7 +52,10 @@ class AccesReceived extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mails.accesRequest.received',
+            view: 'mails.accesStatus',
+            with: [
+                'status' => $this->status
+            ]
         );
     }
 

@@ -3,10 +3,8 @@
 namespace App\Filament\Soporte\Resources\AccesRequestResource\Pages;
 
 use App\Filament\Soporte\Resources\AccesRequestResource;
-use App\Mail\RequestStatus\AccesApproved;
-use App\Mail\RequestStatus\AccesReceived;
-use App\Mail\RequestStatus\AccesRejected;
-use App\Mail\RequestStatus\AccesSent;
+use App\Helpers\FilamentUrlHelper;
+use App\Mail\AccesStatusMail;
 use App\Models\User;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
@@ -27,24 +25,48 @@ class EditAccesRequest extends EditRecord
     {
         $record = $this->record;
 
-        $user = User::find($record->user_id);
+        // Get the requester
+        $solicitante = User::find($record->user_id);
+        if (!$solicitante) return; // Avoid errors if the user doesn't exist
 
-        if (!$user) {
-            return; // Evitamos errores si no existe el usuario
-        }
-
-        $data = [
-            'name' => $user->name,
-            'email' => $user->email,
+        // Send the mail to the requester
+        $dataSolicitante = [
+            'name'     => $solicitante->name,
+            'email'    => $solicitante->email,
             'property' => $record->property,
+            'url'      => FilamentUrlHelper::getResourceUrl(
+                $solicitante,
+                AccesRequestResource::class,
+                $record,
+            ),
         ];
 
-        match ($record->request_status) {
-            'received' => Mail::to($user->email)->send(new AccesReceived($data)),
-            'sent' => Mail::to($user->email)->send(new AccesSent($data)),
-            'approved' => Mail::to($user->email)->send(new AccesApproved($data)),
-            'rejected' => Mail::to($user->email)->send(new AccesRejected($data)),
-            default => null,
-        };
+        if (in_array($record->request_status, ['received', 'sent', 'approved', 'rejected'])) {
+            Mail::to($solicitante->email)->send(
+                new AccesStatusMail($dataSolicitante, $record->request_status)
+            );
+        }
+
+        // Send the email to administrative users
+        $admins = User::role(['soporte', 'ventas', 'servicio_al_cliente', 'rrhh'])
+            ->where('email', '!=', $solicitante->email)
+            ->get();
+
+        foreach ($admins as $admin) {
+            $dataToAdmin = [
+                'name'     => $solicitante->name,
+                'email'    => $solicitante->email,
+                'property' => $record->property,
+                'url'      => FilamentUrlHelper::getResourceUrl(
+                    $admin,
+                    AccesRequestResource::class,
+                    $record,
+                ),
+            ];
+
+            Mail::to($admin->email)->send(
+                new AccesStatusMail($dataToAdmin, $record->request_status)
+            );
+        }
     }
 }
