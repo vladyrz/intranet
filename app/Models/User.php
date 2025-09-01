@@ -73,10 +73,6 @@ class User extends Authenticatable implements HasAvatar
         return $this->hasMany(LeaveRequest::class);
     }
 
-    public function timesheets(){
-        return $this->hasMany(Timesheet::class);
-    }
-
     public function customers(){
         return $this->hasMany(Customer::class);
     }
@@ -111,5 +107,9 @@ class User extends Authenticatable implements HasAvatar
 
     public function creditStudyRequests(){
         return $this->hasMany(CreditStudyRequest::class);
+    }
+
+    public function adminReminders(){
+        return $this->hasMany(AdminReminder::class);
     }
 }

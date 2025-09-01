@@ -477,4 +477,26 @@ return [
         'created_at' => 'Sent at',
         'updated_at' => 'Updated at',
     ],
+
+    'admin_reminder' => [
+        'user_id' => 'Employee',
+        'reminder_type' => 'Reminder type',
+        'options_reminder_type' => [
+            'administrative' => 'Administrative',
+            'financial' => 'Financial',
+        ],
+        'follow_up_date' => 'Follow up date',
+        'frequency' => 'Frequency',
+        'options_frequency' => [
+            'weekly' => 'Weekly',
+            'biweekly' => 'Biweekly',
+            'monthly' => 'Monthly',
+            'quarterly' => 'Quarterly',
+            'semiannual' => 'Semiannual',
+            'annual' => 'Annual',
+        ],
+        'task_details' => 'Task details',
+        'created_at' => 'Sent at',
+        'updated_at' => 'Updated at',
+    ],
 ];

@@ -131,12 +131,6 @@ return [
         'sectionBillingControl' => 'Información de la facturación',
     ],
 
-    'timesheet' => [
-        'label' => 'Registro de hora',
-        'plural' => 'Registros de horas',
-        'navigation' => 'Registros de horas'
-    ],
-
     'holiday' => [
         'label' => 'Vacación',
         'plural' => 'Vacaciones',
@@ -276,9 +270,9 @@ return [
     ],
 
     'credit_request' => [
-        'label' => 'Solicitud de estudio crediticio',
-        'plural' => 'Solicitudes de estudio crediticio',
-        'navigation' => 'Solicitudes de estudio crediticio',
+        'label' => 'Solicitud de estudio credid',
+        'plural' => 'Solicitudes de estudio credid',
+        'navigation' => 'Estudio credid',
         'customer_section' => 'Información del cliente',
         'request_section' => 'Información de la solicitud',
         'sales_section' => 'Revisión del Departamento de Ventas',
@@ -286,5 +280,12 @@ return [
         'tab_pending' => 'Pendientes',
         'tab_approved' => 'Aprobadas',
         'tab_rejected' => 'Rechazadas',
+    ],
+
+    'admin_reminder' => [
+        'label' => 'Recordatorio administrativo',
+        'plural' => 'Recordatorios administrativos',
+        'navigation' => 'Recordatorios administrativos',
+        'reminder_section' => 'Información del recordatorio',
     ],
 ];

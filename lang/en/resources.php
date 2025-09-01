@@ -130,12 +130,6 @@ return [
         'sectionBillingControl' => 'Billing Control Info',
     ],
 
-    'timesheet' => [
-        'label' => 'Timesheet',
-        'plural' => 'Timesheets',
-        'navigation' => 'Timesheets'
-    ],
-
     'holiday' => [
         'label' => 'Holiday',
         'plural' => 'Holidays',
@@ -275,9 +269,9 @@ return [
     ],
 
     'credit_study' => [
-        'label' => 'Credit Study Request',
-        'plural' => 'Credit Study Requests',
-        'navigation' => 'Credit Study Requests',
+        'label' => 'Credid Study Request',
+        'plural' => 'Credid Study Requests',
+        'navigation' => 'Credid Study Requests',
         'customer_section' => 'Customer Info',
         'request_section' => 'Request Info',
         'sales_section' => 'Sales Department Review',
@@ -285,5 +279,12 @@ return [
         'tab_pending' => 'Pending',
         'tab_approved' => 'Approved',
         'tab_rejected' => 'Rejected',
+    ],
+
+    'admin_reminder' => [
+        'label' => 'Administrative Reminder',
+        'plural' => 'Administrative Reminders',
+        'navigation' => 'Administrative Reminders',
+        'reminder_section' => 'Reminder Info',
     ],
 ];
