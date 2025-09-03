@@ -241,17 +241,7 @@ return [
     ],
 
     'campaign_social' => [
-        'label' => 'Red social de campaña',
-        'plural' => 'Red social de campañas',
-        'navigation' => 'Red social de campañas',
-        'navigation_group' => 'Gestión de Publicidad',
-        'section_campaign_social' => 'Información de la Red social',
-        'tab_total_campaign_socials' => 'Redes sociales de campañas',
-        'tab_facebook' => 'Facebook',
-        'tab_instagram' => 'Instagram',
-        'tab_linkedin' => 'LinkedIn',
-        'tab_youtube' => 'YouTube',
-        'tab_tiktok' => 'TikTok',
+        'label' => 'Crear red social',
     ],
 
     'leave_request' => [

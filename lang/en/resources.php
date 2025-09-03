@@ -240,17 +240,7 @@ return [
     ],
 
     'campaign_social' => [
-        'label' => 'Campaign Social',
-        'plural' => 'Campaign Socials',
-        'navigation' => 'Campaign Socials',
-        'navigation_group' => 'Marketing Management',
-        'section_campaign_social' => 'Campaign Social Info',
-        'tab_total_campaign_socials' => 'Total campaign socials',
-        'tab_facebook' => 'Facebook',
-        'tab_instagram' => 'Instagram',
-        'tab_linkedin' => 'LinkedIn',
-        'tab_youtube' => 'YouTube',
-        'tab_tiktok' => 'TikTok',
+        'label' => 'Create Social Network',
     ],
 
     'leave_request' => [

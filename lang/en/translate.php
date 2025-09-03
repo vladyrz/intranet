@@ -420,6 +420,7 @@ return [
     'campaign_social' => [
         'campaign_id' => 'Campaign',
         'platform' => 'Platform',
+        'language' => 'Language',
         'options_platform' => [
             'facebook' => 'Facebook',
             'instagram' => 'Instagram',
@@ -427,10 +428,15 @@ return [
             'youtube' => 'YouTube',
             'tiktok' => 'TikTok',
         ],
+        'options_language' => [
+            'es' => 'Spanish',
+            'en' => 'English',
+        ],
         'link' => 'Link',
         'reactions' => 'Reactions',
         'comments' => 'Comments',
         'shares' => 'Shares',
+        'views' => 'Views',
         'created_at' => 'Created at',
         'updated_at' => 'Updated at',
     ],

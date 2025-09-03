@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('departaments', function (Blueprint $table) {
-            $table->text('description')->nullable();
+        Schema::table('campaign_socials', function (Blueprint $table) {
+            $table->integer('views')->after('shares')->default(0);
+            $table->string('language')->after('platform')->default('es');
         });
     }
 
@@ -21,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('departaments', function (Blueprint $table) {
+        Schema::table('campaign_socials', function (Blueprint $table) {
             //
         });
     }

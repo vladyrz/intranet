@@ -13,10 +13,12 @@ class CampaignSocial extends Model
     protected $fillable = [
         'campaign_id',
         'platform',
+        'language',
         'link',
         'reactions',
         'comments',
         'shares',
+        'views',
     ];
 
     public function campaign()

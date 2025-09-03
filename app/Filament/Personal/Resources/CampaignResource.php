@@ -4,6 +4,7 @@ namespace App\Filament\Personal\Resources;
 
 use App\Filament\Personal\Resources\CampaignResource\Pages;
 use App\Filament\Personal\Resources\CampaignResource\RelationManagers;
+use App\Filament\Personal\Resources\CampaignResource\RelationManagers\CampaignSocialsRelationManager;
 use App\Models\Campaign;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -156,7 +157,7 @@ class CampaignResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            CampaignSocialsRelationManager::class,
         ];
     }
 

@@ -167,7 +167,7 @@ class CampaignResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\CampaignSocialsRelationManager::class,
         ];
     }
 

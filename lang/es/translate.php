@@ -423,6 +423,7 @@ return [
     'campaign_social' => [
         'campaign_id' => 'Campaña',
         'platform' => 'Plataforma',
+        'language' => 'Idioma',
         'options_platform' => [
             'facebook' => 'Facebook',
             'instagram' => 'Instagram',
@@ -430,10 +431,15 @@ return [
             'youtube' => 'YouTube',
             'tiktok' => 'TikTok',
         ],
+        'options_language' => [
+            'es' => 'Español',
+            'en' => 'Inglés',
+        ],
         'link' => 'Enlace',
         'reactions' => 'Reacciones',
         'comments' => 'Comentarios',
         'shares' => 'Compartidos',
+        'views' => 'Vistas',
         'created_at' => 'Creado el',
         'updated_at' => 'Actualizado el',
     ],

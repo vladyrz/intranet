@@ -2,6 +2,7 @@
 
 namespace App\Filament\Rrhh\Resources;
 
+use App\Filament\Resources\CampaignResource\RelationManagers\CampaignSocialsRelationManager;
 use App\Filament\Rrhh\Resources\CampaignResource\Pages;
 use App\Filament\Rrhh\Resources\CampaignResource\RelationManagers;
 use App\Models\Campaign;
@@ -167,7 +168,7 @@ class CampaignResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            CampaignSocialsRelationManager::class,
         ];
     }
 
