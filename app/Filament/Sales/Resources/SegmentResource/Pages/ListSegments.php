@@ -12,6 +12,13 @@ class ListSegments extends ListRecords
 {
     protected static string $resource = SegmentResource::class;
 
+    protected function getHeaderActions(): array
+    {
+        return [
+            Actions\CreateAction::make(),
+        ];
+    }
+
     public function getTabs(): array {
         return [
             null => Tab::make(__('resources.segment.tab_all'))

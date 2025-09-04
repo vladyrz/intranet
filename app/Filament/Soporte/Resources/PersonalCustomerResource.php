@@ -57,7 +57,7 @@ class PersonalCustomerResource extends Resource
     {
         return $form
             ->schema([
-                Section::make(__('resources.personal_customer.sectionCustomer'))
+                Section::make(__('resources.personal_customer.section_customer'))
                 ->columns(3)
                 ->schema([
                     Select::make('user_id')

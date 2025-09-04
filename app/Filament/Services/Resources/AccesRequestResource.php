@@ -71,7 +71,7 @@ class AccesRequestResource extends Resource
                             ->required()
                             ->live()
                             ->afterStateUpdated(function (Set $set){
-                                $set('peronal_customer_id', null);
+                                $set('personal_customer_id', null);
                             }),
                         Select::make('type_of_request')
                             ->label(__('translate.access_request.type_of_request'))

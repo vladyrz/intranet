@@ -141,7 +141,7 @@ class CustomerReportResource extends Resource
                     ->label(__('translate.customer_report.user_id'))
                     ->searchable()
                     ->alignLeft(),
-                TextColumn::make('peronal_customer.full_name')
+                TextColumn::make('personal_customer.full_name')
                     ->label(__('translate.customer_report.personal_customer_id'))
                     ->searchable()
                     ->alignLeft(),

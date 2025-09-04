@@ -63,6 +63,11 @@ class LeaveRequestResource extends Resource
             ->orderBy('created_at', 'desc');
     }
 
+    public static function canViewAny(): bool
+    {
+        return false;
+    }
+
     public static function form(Form $form): Form
     {
         return $form
