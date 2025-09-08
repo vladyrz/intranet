@@ -28,6 +28,8 @@ class FilamentUrlHelper
             $user->hasRole('rrhh')                => 'rrhh',
             $user->hasRole('contabilidad')        => 'contabilidad',
             $user->hasRole('gerente')             => 'ops',
+            $user->hasRole('super_admin')         => 'admin',
+            default                               => 'admin',
         };
 
         // Make sure to have the ID.

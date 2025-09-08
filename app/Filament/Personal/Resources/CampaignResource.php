@@ -67,15 +67,12 @@ class CampaignResource extends Resource
                     ->columns(2)
                     ->schema([
                         TextInput::make('title')
-                            ->label(__('translate.campaign.title'))
-                            ->disabled(),
+                            ->label(__('translate.campaign.title')),
                         Select::make('campaign_status')
                             ->label(__('translate.campaign.campaign_status'))
-                            ->options(__('translate.campaign.options_campaign_status'))
-                            ->disabled(),
+                            ->options(__('translate.campaign.options_campaign_status')),
                         DatePicker::make('post_date')
-                            ->label(__('translate.campaign.post_date'))
-                            ->disabled(),
+                            ->label(__('translate.campaign.post_date')),
                         TextInput::make('marketplace_link')
                             ->label(__('translate.campaign.marketplace_link'))
                             ->url(),

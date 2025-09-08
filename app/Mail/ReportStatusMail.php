@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Mail\ReportStatus;
+namespace App\Mail;
 
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -10,26 +9,22 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class Approved extends Mailable
+class ReportStatusMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $data;
-    protected $ccEmails;
+    protected string $status; // pending, received, approved, rejected
 
     /**
      * Create a new message instance.
+     * @param array $data
+     * @param string $status
      */
-    public function __construct($data)
+    public function __construct(array $data, string $status)
     {
         $this->data = $data;
-
-        $userRoles = User::role(['soporte', 'ventas'])
-            ->where('email', '!=', $this->data['email'])
-            ->pluck('email')
-            ->toArray();
-
-        $this->ccEmails = array_unique($userRoles);
+        $this->status = $status;
     }
 
     /**
@@ -37,9 +32,15 @@ class Approved extends Mailable
      */
     public function envelope(): Envelope
     {
+        $subjects = [
+            'pending' => 'Reporte de cliente pendiente',
+            'received' => 'Reporte de cliente recibido',
+            'approved' => 'Reporte de cliente aprobado',
+            'rejected' => 'Reporte de cliente rechazado',
+        ];
+
         return new Envelope(
-            subject: 'Reporte de Cliente Aprobado',
-            cc: $this->ccEmails,
+            subject: $subjects[$this->status] ?? 'Actualización de reporte de cliente',
         );
     }
 
@@ -49,7 +50,10 @@ class Approved extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mails.report.approved',
+            view: 'mails.reportStatus',
+            with: [
+                'status' => $this->status
+            ]
         );
     }
 

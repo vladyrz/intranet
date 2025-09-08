@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Mail\ReportStatus;
+namespace App\Mail;
 
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -10,26 +9,22 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class Rejected extends Mailable
+class OfferStatusMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $data;
-    protected $ccEmails;
+    protected string $status; // pending, received, sent, approved, rejected, signed
 
     /**
      * Create a new message instance.
+     * @param array $data
+     * @param string $status
      */
-    public function __construct($data)
+    public function __construct(array $data, string $status)
     {
         $this->data = $data;
-
-        $userRoles = User::role(['soporte', 'ventas'])
-            ->where('email', '!=', $this->data['email'])
-            ->pluck('email')
-            ->toArray();
-
-        $this->ccEmails = array_unique($userRoles);
+        $this->status = $status;
     }
 
     /**
@@ -37,9 +32,17 @@ class Rejected extends Mailable
      */
     public function envelope(): Envelope
     {
+        $subjects = [
+            'pending' => 'Oferta Pendiente',
+            'received' => 'Oferta Recibida',
+            'sent' => 'Oferta Enviada',
+            'approved' => 'Oferta Aprobada',
+            'rejected' => 'Oferta Rechazada',
+            'signed' => 'Oferta Firmada',
+        ];
+
         return new Envelope(
-            subject: 'Reporte de Cliente Rechazado',
-            cc: $this->ccEmails,
+            subject: $subjects[$this->status] ?? 'Actualización de Oferta',
         );
     }
 
@@ -49,7 +52,10 @@ class Rejected extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mails.report.rejected',
+            view: 'mails.offerStatus',
+            with: [
+                'status' => $this->status
+            ]
         );
     }
 

@@ -3,9 +3,9 @@
 namespace App\Filament\Soporte\Resources\CustomerReportResource\Pages;
 
 use App\Filament\Soporte\Resources\CustomerReportResource;
-use App\Mail\ReportStatus\Approved;
-use App\Mail\ReportStatus\Received;
-use App\Mail\ReportStatus\Rejected;
+use App\Helpers\FilamentUrlHelper;
+use App\Mail\ReportStatusMail;
+use App\Models\PersonalCustomer;
 use App\Models\User;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
@@ -22,40 +22,56 @@ class EditCustomerReport extends EditRecord
         ];
     }
 
-    protected function mutateFormDataBeforeSave(array $data): array
-    {
-        return $data;
-    }
-
     protected function afterSave(): void
     {
         $record = $this->record;
 
-        $user = User::find($record->user_id);
+        $customer = PersonalCustomer::find($record->personal_customer_id);
 
-        if (!$user) {
-            return; // Evitar errores si no se encuentra el usuario
-        }
+        // Get the requester
+        $solicitante = User::find($record->user_id);
+        if (!$solicitante) return; // Avoid errors if the user doesn't exist
 
-        $data = [
-            'name' => $user->name,
-            'email' => $user->email,
+        // Send the mail to the requester
+        $dataSolicitante = [
+            'name'          => $solicitante->name,
+            'email'         => $solicitante->email,
             'property_name' => $record->property_name,
-            'customer_name' => $record->customer_name,
+            'customer_name' => $customer?->full_name,
+            'url'           => FilamentUrlHelper::getResourceUrl(
+                $solicitante,
+                CustomerReportResource::class,
+                $record,
+            ),
         ];
 
-        switch ($record->report_status) {
-            case 'received':
-                Mail::to($user->email)->send(new Received($data));
-                break;
+        if (in_array($record->report_status, ['received', 'approved', 'rejected'])) {
+            Mail::to($solicitante->email)->send(
+                new ReportStatusMail($dataSolicitante, $record->report_status)
+            );
+        }
 
-            case 'approved':
-                Mail::to($user->email)->send(new Approved($data));
-                break;
+        // Send the email to administrative users
+        $admins = User::role(['soporte', 'ventas'])
+            ->where('email', '!=', $solicitante->email)
+            ->get();
 
-            case 'rejected':
-                Mail::to($user->email)->send(new Rejected($data));
-                break;
+        foreach ($admins as $admin) {
+            $dataToAdmin = [
+                'name'          => $solicitante->name,
+                'email'         => $solicitante->email,
+                'property_name' => $record->property_name,
+                'customer_name' => $customer?->full_name,
+                'url'           => FilamentUrlHelper::getResourceUrl(
+                    $admin,
+                    CustomerReportResource::class,
+                    $record,
+                ),
+            ];
+
+            Mail::to($admin->email)->send(
+                new ReportStatusMail($dataToAdmin, $record->report_status)
+            );
         }
     }
 }
