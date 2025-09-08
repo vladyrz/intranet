@@ -411,6 +411,7 @@ return [
             'active' => 'Activa',
             'inactive' => 'Inactiva',
             'finished' => 'Finalizada',
+            'scheduled' => 'Pautada',
         ],
         'user_id' => 'Asesor',
         'post_date' => 'Fecha de publicación',

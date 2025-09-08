@@ -3,11 +3,8 @@
 namespace App\Filament\Services\Resources\OfferResource\Pages;
 
 use App\Filament\Services\Resources\OfferResource;
-use App\Mail\OfferStatus\OfferApproved;
-use App\Mail\OfferStatus\OfferReceived;
-use App\Mail\OfferStatus\OfferRejected;
-use App\Mail\OfferStatus\OfferSent;
-use App\Mail\OfferStatus\OfferSigned;
+use App\Helpers\FilamentUrlHelper;
+use App\Mail\OfferStatusMail;
 use App\Models\User;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
@@ -24,47 +21,70 @@ class EditOffer extends EditRecord
         ];
     }
 
-    protected function mutateFormDataBeforeSave(array $data): array
-    {
-        return $data;
-    }
-
     protected function afterSave(): void
     {
         $record = $this->record;
 
-        $user = User::find($record->user_id);
+        // Get the requester
+        $solicitante = User::find($record->user_id);
+        if (!$solicitante) return; // Avoid errors if the user doesn't exist
 
-        if (!$user) {
-            return; // Evitar errores si no se encuentra el usuario
-        }
-
-        $data = [
-            'name' => $user->name,
-            'email' => $user->email,
-            'property_name' => $record->property_name,
+        // Send the mail to the requester
+        $dataSolicitante = [
+            'name'     => $solicitante->name,
+            'email'    => $solicitante->email,
+            'property' => $record->property_name,
+            'url'      => FilamentUrlHelper::getResourceUrl(
+                $solicitante,
+                OfferResource::class,
+                $record,
+            ),
         ];
 
-        switch ($record->offer_status) {
-            case 'received':
-                Mail::to($user->email)->send(new OfferReceived($data));
-                break;
+        if (in_array($record->offer_status, ['received', 'sent', 'approved', 'rejected', 'signed'])) {
+            Mail::to($solicitante->email)->send(
+                new OfferStatusMail($dataSolicitante, $record->offer_status)
+            );
+        }
 
-            case 'approved':
-                Mail::to($user->email)->send(new OfferApproved($data));
-                break;
+        // Send the email to administrative users
+        $admins = User::role(['soporte', 'ventas', 'servicio_al_cliente', 'gerente'])
+            ->where('email', '!=', $solicitante->email)
+            ->get();
 
-            case 'rejected':
-                Mail::to($user->email)->send(new OfferRejected($data));
-                break;
+        foreach ($admins as $admin) {
+            $dataToAdmin = [
+                'name'     => $solicitante->name,
+                'email'    => $solicitante->email,
+                'property' => $record->property_name,
+                'url'      => FilamentUrlHelper::getResourceUrl(
+                    $admin,
+                    OfferResource::class,
+                    $record,
+                ),
+            ];
 
-            case 'sent':
-                Mail::to($user->email)->send(new OfferSent($data));
-                break;
+            Mail::to($admin->email)->send(
+                new OfferStatusMail($dataToAdmin, $record->offer_status)
+            );
+        }
 
-            case 'signed':
-                Mail::to($user->email)->send(new OfferSigned($data));
-                break;
+        // Extra: Send email to external account when signed
+        if ($record->offer_status === 'signed') {
+            $dataToExternal = [
+                'name'     => $solicitante->name,
+                'email'    => $solicitante->email,
+                'property' => $record->property_name,
+                'url'      => FilamentUrlHelper::getResourceUrlForPanel(
+                    'contabilidad',
+                    OfferResource::class,
+                    $record,
+                ),
+            ];
+
+            Mail::to('contabilidad@g-easypro.com')->send(
+                new OfferStatusMail($dataToExternal, $record->offer_status)
+            );
         }
     }
 }

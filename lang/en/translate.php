@@ -408,6 +408,7 @@ return [
             'active' => 'Active',
             'inactive' => 'Inactive',
             'finished' => 'Finished',
+            'scheduled' => 'Scheduled',
         ],
         'user_id' => 'Agent',
         'post_date' => 'Post date',

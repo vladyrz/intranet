@@ -39,4 +39,23 @@ class FilamentUrlHelper
             'record' => $recordId,
         ], panel: $panel);
     }
+
+    /**
+     * Generate the URL to a filament resource forcing a specific panel.
+     *
+     * @param string $panel Panel ID (e.g. contabilidad)
+     * @param string $resoourceClass
+     * @param int|\Illuminate\Database\Eloquent\Model $record
+     * @param string $action (view, edit, etc.)
+     * @return string
+     */
+
+    public static function getResourceUrlForPanel(string $panel, string $resourceClass, $record, string $action = 'view'): string
+    {
+        $recordId = $record instanceof \Illuminate\Database\Eloquent\Model ? $record->getKey() : $record;
+
+        return $resourceClass::getUrl($action, [
+            'record' => $recordId,
+        ], panel: $panel);
+    }
 }

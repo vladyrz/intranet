@@ -3,11 +3,13 @@
 namespace App\Filament\Personal\Resources\OfferResource\Pages;
 
 use App\Filament\Personal\Resources\OfferResource;
-use App\Mail\OfferStatus\OfferPending;
+use App\Helpers\FilamentUrlHelper;
+use App\Mail\OfferStatusMail;
 use App\Models\Organization;
 use App\Models\PersonalCustomer;
 use App\Models\User;
 use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -24,7 +26,11 @@ class CreateOffer extends CreateRecord
 
     protected function afterCreate(): void
     {
-        $userRol = User::role('soporte')->get('email');
+        $record = $this->record;
+
+        $organization = Organization::find($record->organization_id);
+        $customer = PersonalCustomer::find($record->personal_customer_id);
+        $solicitante = $record->user;
 
         $amount = $this->record->offer_amount_usd
             ? '$' . number_format($this->record->offer_amount_usd, 2)
@@ -37,18 +43,48 @@ class CreateOffer extends CreateRecord
             }
         }
 
-        $dataToSend = [
-            'property_name' => $this->record->property_name,
-            'organization' => Organization::find($this->record->organization_id)?->organization_name,
-            'email' => $this->record->user->email,
-            'customer_name' => PersonalCustomer::find($this->record->personal_customer_id)?->full_name,
-            'customer_national_id' => PersonalCustomer::find($this->record->personal_customer_id)?->national_id,
-            'offer_amount' => $amount,
-            'attachments' => $attachments,
-        ];
+        // administrative users (primary recipients)
+        $userRol = User::role(['soporte', 'ventas', 'servicio_al_cliente', 'gerente'])->get();
 
-        foreach ($userRol as $user) {
-            Mail::to($user->email)->send(new OfferPending($dataToSend));
+        foreach ($userRol as $destinatario) {
+            $dataToSend = [
+                'property'              => $record->property_name,
+                'organization'          => $organization?->organization_name,
+                'email'                 => $solicitante?->email,
+                'customer_name'         => $customer?->full_name,
+                'customer_national_id'  => $customer?->national_id,
+                'offer_amount'          => $amount,
+                'attachments'           => $attachments,
+                'url'                   => FilamentUrlHelper::getResourceUrl(
+                    $destinatario, // the recipient
+                    OfferResource::class,
+                    $record,
+                ),
+            ];
+
+            Mail::to(new Address($destinatario->email))
+                ->send(new OfferStatusMail($dataToSend, 'pending'));
+        }
+
+        // Also send to the requester (if they are a panel_user)
+        if ($solicitante && $solicitante->hasRole('panel_user')) {
+            $dataToSend = [
+                'property'              => $record->property_name,
+                'organization'          => $organization?->organization_name,
+                'email'                 => $solicitante?->full_name,
+                'customer_name'         => $customer?->full_name,
+                'customer_national_id'  => $customer?->national_id,
+                'offer_amount'          => $amount,
+                'attachments'           => $attachments,
+                'url'                   => FilamentUrlHelper::getResourceUrl(
+                    $solicitante,
+                    OfferResource::class,
+                    $record,
+                ),
+            ];
+
+            Mail::to(new Address($solicitante->email))
+                ->send(new OfferStatusMail($dataToSend, 'pending'));
         }
     }
 }
