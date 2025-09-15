@@ -233,6 +233,7 @@ return [
         'navigation' => 'Campañas',
         'navigation_group' => 'Gestión de Publicidad',
         'section_campaign' => 'Información de la Campaña',
+        'section_scheduled' => 'Estatus de Pauta Easypro',
         'tab_total_campaigns' => 'Total de campañas',
         'tab_pending' => 'Pendientes',
         'tab_active' => 'Activas',

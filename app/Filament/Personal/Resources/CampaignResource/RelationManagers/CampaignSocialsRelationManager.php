@@ -40,16 +40,20 @@ class CampaignSocialsRelationManager extends RelationManager
                     ->required(),
                 TextInput::make('reactions')
                     ->label(__('translate.campaign_social.reactions'))
-                    ->integer(),
+                    ->integer()
+                    ->default(0),
                 TextInput::make('comments')
                     ->label(__('translate.campaign_social.comments'))
-                    ->integer(),
+                    ->integer()
+                    ->default(0),
                 TextInput::make('shares')
                     ->label(__('translate.campaign_social.shares'))
-                    ->integer(),
+                    ->integer()
+                    ->default(0),
                 TextInput::make('views')
                     ->label(__('translate.campaign_social.views'))
-                    ->integer(),
+                    ->integer()
+                    ->default(0),
             ]);
     }
 

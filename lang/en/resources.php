@@ -232,6 +232,7 @@ return [
         'navigation' => 'Campaigns',
         'navigation_group' => 'Marketing Management',
         'section_campaign' => 'Campaign Info',
+        'section_scheduled' => 'Easypro Schedule Status',
         'tab_total_campaigns' => 'Total campaigns',
         'tab_pending' => 'Pending',
         'tab_active' => 'Active',

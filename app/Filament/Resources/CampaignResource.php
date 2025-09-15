@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\CampaignResource\Pages;
 use App\Filament\Resources\CampaignResource\RelationManagers;
 use App\Models\Campaign;
+use App\Models\CampaignSocial;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Section;
@@ -12,6 +13,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\ActionGroup;
@@ -64,7 +66,8 @@ class CampaignResource extends Resource
                         Select::make('campaign_status')
                             ->label(__('translate.campaign.campaign_status'))
                             ->options(__('translate.campaign.options_campaign_status'))
-                            ->required(),
+                            ->required()
+                            ->reactive(),
                         Select::make('user_id')
                             ->label(__('translate.campaign.user_id'))
                             ->relationship(
@@ -81,8 +84,23 @@ class CampaignResource extends Resource
                             ->label(__('translate.campaign.marketplace_link'))
                             ->url(),
                         Textarea::make('results_observations')
-                            ->label(__('translate.campaign.results_observations'))
-                            ->columnSpanFull(),
+                            ->label(__('translate.campaign.results_observations')),
+                    ]),
+
+                Section::make(__('resources.campaign.section_scheduled'))
+                    ->columns(3)
+                    ->visible(fn (Get $get): bool => $get('campaign_status') == 'scheduled')
+                    ->schema([
+                        DatePicker::make('start_date')
+                            ->label(__('translate.campaign.start_date'))
+                            ->visible(fn (Get $get): bool => $get('campaign_status') == 'scheduled'),
+                        DatePicker::make('end_date')
+                            ->label(__('translate.campaign.end_date'))
+                            ->visible(fn (Get $get): bool => $get('campaign_status') == 'scheduled'),
+                        Select::make('social_network')
+                            ->label(__('translate.campaign.social_network'))
+                            ->options(__('translate.campaign_social.options_platform'))
+                            ->visible(fn (Get $get): bool => $get('campaign_status') == 'scheduled'),
                     ])
             ]);
     }
@@ -129,6 +147,21 @@ class CampaignResource extends Resource
                 TextColumn::make('results_observations')
                     ->label(__('translate.campaign.results_observations'))
                     ->alignLeft()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('start_date')
+                    ->label(__('translate.campaign.start_date'))
+                    ->date()
+                    ->alignCenter()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('end_date')
+                    ->label(__('translate.campaign.end_date'))
+                    ->date()
+                    ->alignCenter()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('social_network')
+                    ->label(__('translate.campaign.social_network'))
+                    ->formatStateUsing(fn($state) => __('translate.campaign_social.options_platform.' . $state))
+                    ->badge()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->label(__('translate.campaign.created_at'))

@@ -26,7 +26,6 @@ class FilamentUrlHelper
             $user->hasRole('ventas')              => 'sales',
             $user->hasRole('servicio_al_cliente') => 'services',
             $user->hasRole('rrhh')                => 'rrhh',
-            $user->hasRole('contabilidad')        => 'contabilidad',
             $user->hasRole('gerente')             => 'ops',
             $user->hasRole('super_admin')         => 'admin',
             default                               => 'admin',

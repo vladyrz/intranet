@@ -13,6 +13,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\ActionGroup;
@@ -82,8 +83,26 @@ class CampaignResource extends Resource
                             ->label(__('translate.campaign.marketplace_link'))
                             ->url(),
                         Textarea::make('results_observations')
-                            ->label(__('translate.campaign.results_observations'))
-                            ->columnSpanFull(),
+                            ->label(__('translate.campaign.results_observations')),
+                    ]),
+
+                Section::make(__('resources.campaign.section_scheduled'))
+                    ->columns(3)
+                    ->visible(fn (Get $get): bool => $get('campaign_status') == 'scheduled')
+                    ->schema([
+                        DatePicker::make('start_date')
+                            ->label(__('translate.campaign.start_date'))
+                            ->visible(fn (Get $get): bool => $get('campaign_status') == 'scheduled')
+                            ->disabled(),
+                        DatePicker::make('end_date')
+                            ->label(__('translate.campaign.end_date'))
+                            ->visible(fn (Get $get): bool => $get('campaign_status') == 'scheduled')
+                            ->disabled(),
+                        Select::make('social_network')
+                            ->label(__('translate.campaign.social_network'))
+                            ->options(__('translate.campaign_social.options_platform'))
+                            ->visible(fn (Get $get): bool => $get('campaign_status') == 'scheduled')
+                            ->disabled(),
                     ])
             ]);
     }

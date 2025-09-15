@@ -17,6 +17,9 @@ class Campaign extends Model
         'post_date',
         'marketplace_link',
         'results_observations',
+        'start_date',
+        'end_date',
+        'social_network',
     ];
 
     public function user()
