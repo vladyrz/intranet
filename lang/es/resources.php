@@ -279,4 +279,14 @@ return [
         'navigation' => 'Recordatorios administrativos',
         'reminder_section' => 'Información del recordatorio',
     ],
+
+    'ad_request' => [
+        'label' => 'Solicitud de pauta',
+        'plural' => 'Solicitudes de pauta',
+        'navigation' => 'Pautas',
+        'section_request' => 'Información de la solicitud',
+        'section_description' => 'Nota: Número de SINPE móvil 7146-3897',
+        'section_scheduled' => 'Estatus de Pauta',
+        'section_description2' => 'Estar atento al WhatsApp',
+    ],
 ];

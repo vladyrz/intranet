@@ -112,4 +112,8 @@ class User extends Authenticatable implements HasAvatar
     public function adminReminders(){
         return $this->hasMany(AdminReminder::class);
     }
+
+    public function adRequests(){
+        return $this->hasMany(AdRequest::class);
+    }
 }

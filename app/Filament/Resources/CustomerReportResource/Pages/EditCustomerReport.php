@@ -30,7 +30,7 @@ class EditCustomerReport extends EditRecord
 
         // Get the requester
         $solicitante = User::find($record->user_id);
-        if (!$solicitante) return; // Avoid errors if the user doesn't exist
+        if (!$solicitante) return;
 
         // Send the mail to the requester
         $dataSolicitante = [

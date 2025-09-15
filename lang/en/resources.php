@@ -278,4 +278,14 @@ return [
         'navigation' => 'Administrative Reminders',
         'reminder_section' => 'Reminder Info',
     ],
+
+    'ad_request' => [
+        'label' => 'Advertising Request',
+        'plural' => 'Advertising Requests',
+        'navigation' => 'Advertising Requests',
+        'section_request' => 'Request Info',
+        'section_description' => 'Note: Mobile SINPE number 7146-3897',
+        'section_scheduled' => 'Status of Advertising',
+        'section_description2' => 'Be aware of WhatsApp',
+    ],
 ];
