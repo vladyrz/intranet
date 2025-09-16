@@ -22,7 +22,7 @@ class CampaignObserver
     public function updated(Campaign $campaign): void
     {
         if ($campaign->isDirty('campaign_status') && $campaign->campaign_status === 'scheduled') {
-            Mail::to('luffysv600@gmail.com')->send(new CampaignScheduled($campaign));
+            Mail::to('rrhh@g-easypro.com')->send(new CampaignScheduled($campaign));
         }
     }
 

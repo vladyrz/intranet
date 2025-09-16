@@ -121,12 +121,14 @@ class CampaignResource extends Resource
                         'active' => 'success',
                         'inactive' => 'danger',
                         'finished' => 'info',
+                        'scheduled' => 'info',
                     })
                     ->icon(fn (string $state): string => match ($state) {
                         'pending' => 'heroicon-o-clock',
                         'active' => 'heroicon-o-check-circle',
                         'inactive' => 'heroicon-o-minus-circle',
                         'finished' => 'heroicon-o-check-circle',
+                        'scheduled' => 'heroicon-o-calendar-date-range',
                     }),
                 TextColumn::make('post_date')
                     ->label(__('translate.campaign.post_date'))
