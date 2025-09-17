@@ -28,7 +28,7 @@ class CampaignSocialsRelationManager extends RelationManager
             ->schema([
                 Radio::make('language')
                     ->label(__('translate.campaign_social.language'))
-                    ->options(__('translate.campaign_social.options_platform'))
+                    ->options(__('translate.campaign_social.options_language'))
                     ->required(),
                 Select::make('platform')
                     ->label(__('translate.campaign_social.platform'))
