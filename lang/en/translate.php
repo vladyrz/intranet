@@ -520,7 +520,7 @@ return [
             'youtube' => 'YouTube',
         ],
         'ad_url' => 'Link to advertise',
-        'target_age' => 'Age',
+        'target_age' => 'Target age',
         'target_location' => 'Location',
         'start_date' => 'Start date',
         'end_date' => 'End date',

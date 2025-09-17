@@ -532,7 +532,7 @@ return [
             'youtube' => 'YouTube',
         ],
         'ad_url' => 'Link de información a pautar',
-        'target_age' => 'Edad',
+        'target_age' => 'Rango de edad a pautar',
         'target_location' => 'Ubicación',
         'start_date' => 'Fecha de inicio',
         'end_date' => 'Fecha de finalización',
