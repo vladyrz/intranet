@@ -140,7 +140,7 @@ class AdminReminderResource extends Resource
             ->actions([
                 CommentsAction::make()
                     ->color('info'),
-                Action::make()
+                Action::make('sendNow')
                     ->label(__('Enviar ahora'))
                     ->icon('heroicon-m-paper-airplane')
                     ->color('success')

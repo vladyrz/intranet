@@ -71,7 +71,9 @@ class CampaignResource extends Resource
                             ->label(__('translate.campaign.title')),
                         Select::make('campaign_status')
                             ->label(__('translate.campaign.campaign_status'))
-                            ->options(__('translate.campaign.options_campaign_status')),
+                            ->options(__('translate.campaign.options_campaign_status'))
+                            ->disabled()
+                            ->default('pending'),
                         DatePicker::make('post_date')
                             ->label(__('translate.campaign.post_date')),
                         TextInput::make('marketplace_link')
