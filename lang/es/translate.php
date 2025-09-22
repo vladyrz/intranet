@@ -411,6 +411,7 @@ return [
             'active' => 'Activa',
             'inactive' => 'Inactiva',
             'finished' => 'Finalizada',
+            'to_schedule' => 'A pautar',
             'scheduled' => 'Pautada',
         ],
         'user_id' => 'Asesor',

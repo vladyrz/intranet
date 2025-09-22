@@ -4,6 +4,7 @@ namespace App\Filament\Ops\Resources;
 
 use App\Filament\Ops\Resources\AdminReminderResource\Pages;
 use App\Filament\Ops\Resources\AdminReminderResource\RelationManagers;
+use App\Mail\AdminReminderDueMail;
 use App\Models\AdminReminder;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -13,11 +14,13 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Mail;
 use Parallax\FilamentComments\Tables\Actions\CommentsAction;
 
 class AdminReminderResource extends Resource
@@ -137,6 +140,19 @@ class AdminReminderResource extends Resource
             ->actions([
                 CommentsAction::make()
                     ->color('info'),
+                Action::make()
+                    ->label(__('Enviar ahora'))
+                    ->icon('heroicon-m-paper-airplane')
+                    ->color('success')
+                    ->requiresConfirmation()
+                    ->action(function (AdminReminder $record) {
+                        if ($record->user && $record->user->email) {
+                            Mail::to($record->user->email)->send(new AdminReminderDueMail($record));
+                            $record->last_sent_at = now();
+                            $record->saveQuietly();
+                            $record->bumpToNextDue();
+                        }
+                    }),
                 Tables\Actions\EditAction::make()
                     ->color('warning'),
                 Tables\Actions\DeleteAction::make(),

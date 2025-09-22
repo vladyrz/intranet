@@ -1,1 +1,1 @@
-<p>La campaña <b>{{ $campaignName }}</b> ha cambiado de estado a <b>pautada</b>.</p>
+<p>La campaña <b>{{ $campaignName }}</b> ha alcanzado el requerimiento para ser <b>pautada</b></p>

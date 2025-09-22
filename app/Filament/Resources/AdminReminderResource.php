@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\AdminReminderResource\Pages;
 use App\Filament\Resources\AdminReminderResource\RelationManagers;
+use App\Mail\AdminReminderDueMail;
 use App\Models\AdminReminder;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -13,11 +14,13 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Mail;
 use Parallax\FilamentComments\Tables\Actions\CommentsAction;
 
 class AdminReminderResource extends Resource
@@ -112,6 +115,11 @@ class AdminReminderResource extends Resource
                 TextColumn::make('task_details')
                     ->label(__('translate.admin_reminder.task_details'))
                     ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('next_due_at')
+                    ->label('Próximo envío')
+                    ->dateTime('Y-m-d H:i')
+                    ->sortable()
+                    ->alignCenter(),
                 TextColumn::make('created_at')
                     ->label(__('translate.admin_reminder.created_at'))
                     ->dateTime()
@@ -137,6 +145,19 @@ class AdminReminderResource extends Resource
             ->actions([
                 CommentsAction::make()
                     ->color('info'),
+                Action::make('sendNow')
+                    ->label(__('Enviar ahora'))
+                    ->icon('heroicon-m-paper-airplane')
+                    ->color('success')
+                    ->requiresConfirmation()
+                    ->action(function (AdminReminder $record) {
+                        if ($record->user && $record->user->email) {
+                            Mail::to($record->user->email)->send(new AdminReminderDueMail($record));
+                            $record->last_sent_at = now();
+                            $record->saveQuietly();
+                            $record->bumpToNextDue();
+                        }
+                    }),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])

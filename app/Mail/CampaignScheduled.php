@@ -26,7 +26,7 @@ class CampaignScheduled extends Mailable
      */
     public function build()
     {
-        return $this->subject('Notificación de campaña pautada')
+        return $this->subject('Campaña a pautar')
                     ->view('mails.campaign_scheduled')
                     ->with([
                         'campaignName' => $this->campaign->title,

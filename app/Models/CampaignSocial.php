@@ -35,7 +35,7 @@ class CampaignSocial extends Model
                 return;
             }
 
-            if ($campaign->campaign_status === 'scheduled') {
+            if ($campaign->campaign_status === 'to_schedule') {
                 return;
             }
 
@@ -43,7 +43,7 @@ class CampaignSocial extends Model
 
             foreach ($campaign->campaign_socials as $socialRecord) {
                 if ($socialRecord->reactions >= 10 && $socialRecord->comments >= 2) {
-                    $campaign->update(['campaign_status' => 'scheduled']);
+                    $campaign->update(['campaign_status' => 'to_schedule']);
                     break;
                 }
             }

@@ -32,13 +32,13 @@ class SyncCampaignStatus extends Command
         $updatedCount = 0;
 
         foreach ($campaigns as $campaign) {
-            if ($campaign->campaign_status === 'scheduled') {
+            if ($campaign->campaign_status === 'to_schedule') {
                 continue;
             }
 
             foreach ($campaign->campaign_socials as $social) {
                 if ($social->reactions >= 10 && $social->comments >= 2) {
-                    $campaign->update(['campaign_status' => 'scheduled']);
+                    $campaign->update(['campaign_status' => 'to_schedule']);
                     $this->info('Campaign #' . $campaign->id . ' updated to scheduled for '. $social->platform.'.');
                     $updatedCount++;
                     break;
