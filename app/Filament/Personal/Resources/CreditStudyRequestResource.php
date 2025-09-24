@@ -120,7 +120,8 @@ class CreditStudyRequestResource extends Resource
                             ->label(__('translate.credit_request.property'))
                             ->required(),
                         Textarea::make('request_reason')
-                            ->label(__('translate.credit_request.request_reason')),
+                            ->label(__('translate.credit_request.request_reason'))
+                            ->required(),
                     ]),
 
                 Section::make(__('resources.credit_request.sales_section'))

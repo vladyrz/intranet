@@ -123,6 +123,7 @@ class CampaignResource extends Resource
                         'active' => 'success',
                         'inactive' => 'danger',
                         'finished' => 'info',
+                        'to_schedule' => 'gray',
                         'scheduled' => 'info',
                     })
                     ->icon(fn (string $state): string => match ($state) {
@@ -130,6 +131,7 @@ class CampaignResource extends Resource
                         'active' => 'heroicon-o-check-circle',
                         'inactive' => 'heroicon-o-minus-circle',
                         'finished' => 'heroicon-o-check-circle',
+                        'to_schedule' => 'heroicon-o-calendar',
                         'scheduled' => 'heroicon-o-calendar-date-range',
                     }),
                 TextColumn::make('post_date')
