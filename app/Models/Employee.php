@@ -56,8 +56,4 @@ class Employee extends Model
     public function segments(){
         return $this->hasMany(Segment::class);
     }
-
-    public function projects(){
-        return $this->hasMany(Project::class);
-    }
 }

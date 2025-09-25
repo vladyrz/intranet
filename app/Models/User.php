@@ -116,4 +116,8 @@ class User extends Authenticatable implements HasAvatar
     public function adRequests(){
         return $this->hasMany(AdRequest::class);
     }
+
+    public function projects(){
+        return $this->hasMany(Project::class);
+    }
 }

@@ -62,12 +62,12 @@ class ProjectResource extends Resource
                             ->label(__('translate.project.name'))
                             ->required()
                             ->maxLength(255),
-                        Select::make('employee_id')
+                        Select::make('user_id')
                             ->label(__('translate.project.employee_id'))
                             ->relationship(
-                                name: 'employee',
+                                name: 'user',
                                 titleAttribute: 'name',
-                                modifyQueryUsing: fn (Builder $query) => $query->where('progress_status', 'certified'),
+                                modifyQueryUsing: fn (Builder $query) => $query->where('state', true),
                             )
                             ->searchable()
                             ->preload()
@@ -110,12 +110,10 @@ class ProjectResource extends Resource
             ->columns([
                 TextColumn::make('name')
                     ->label(__('translate.project.name'))
-                    ->searchable()
-                    ->alignCenter(),
-                TextColumn::make('employee.name')
+                    ->searchable(),
+                TextColumn::make('user.name')
                     ->label(__('translate.project.employee_id'))
-                    ->searchable()
-                    ->alignCenter(),
+                    ->searchable(),
                 TextColumn::make('progress')
                     ->label(__('translate.project.progress'))
                     ->alignCenter()

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Ops\Resources;
+namespace App\Filament\Personal\Resources;
 
-use App\Filament\Ops\Resources\ProjectResource\Pages;
-use App\Filament\Ops\Resources\ProjectResource\RelationManagers;
+use App\Filament\Personal\Resources\ProjectResource\Pages;
+use App\Filament\Personal\Resources\ProjectResource\RelationManagers;
 use App\Models\Project;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -21,6 +21,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 use Parallax\FilamentComments\Tables\Actions\CommentsAction;
 
 class ProjectResource extends Resource
@@ -47,10 +48,16 @@ class ProjectResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('resources.operation.navigation_group');
+        return __('resources.customer.navigation_group');
     }
 
     protected static ?string $navigationIcon = 'heroicon-o-circle-stack';
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->where('user_id', Auth::user()->id);
+    }
 
     public static function form(Form $form): Form
     {
@@ -63,16 +70,6 @@ class ProjectResource extends Resource
                             ->label(__('translate.project.name'))
                             ->required()
                             ->maxLength(255),
-                        Select::make('user_id')
-                            ->label(__('translate.project.employee_id'))
-                            ->relationship(
-                                name: 'user',
-                                titleAttribute: 'name',
-                                modifyQueryUsing: fn (Builder $query) => $query->where('state', true),
-                            )
-                            ->searchable()
-                            ->preload()
-                            ->required(),
                         TextInput::make('progress')
                             ->label(__('translate.project.progress'))
                             ->required()
@@ -97,7 +94,6 @@ class ProjectResource extends Resource
                         FileUpload::make('attachments')
                             ->label(__('translate.project.attachments'))
                             ->multiple()
-                            ->columnSpan(2)
                             ->downloadable()
                             ->directory('proyectos/' .now()->format('Y/m/d'))
                             ->maxFiles(5),
@@ -111,9 +107,6 @@ class ProjectResource extends Resource
             ->columns([
                 TextColumn::make('name')
                     ->label(__('translate.project.name'))
-                    ->searchable(),
-                TextColumn::make('user.name')
-                    ->label(__('translate.project.employee_id'))
                     ->searchable(),
                 TextColumn::make('progress')
                     ->label(__('translate.project.progress'))
@@ -183,16 +176,10 @@ class ProjectResource extends Resource
                 ActionGroup::make([
                     CommentsAction::make()
                         ->color('info'),
-                    Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make()
                         ->color('warning'),
                     Tables\Actions\DeleteAction::make(),
                 ])
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
             ]);
     }
 

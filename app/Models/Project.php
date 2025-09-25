@@ -12,7 +12,7 @@ class Project extends Model
 
     protected $fillable = [
         'name',
-        'employee_id',
+        'user_id',
         'progress',
         'project_status',
         'priority',
@@ -27,7 +27,7 @@ class Project extends Model
         'attachments' => 'array',
     ];
 
-    public function employee() {
-        return $this->belongsTo(Employee::class);
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }
