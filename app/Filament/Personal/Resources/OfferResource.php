@@ -21,6 +21,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 use Parallax\FilamentComments\Tables\Actions\CommentsAction;
@@ -63,56 +64,57 @@ class OfferResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $lockedStatuses = ['received', 'sent', 'approved', 'rejected', 'signed'];
+
+        $isLocked = function (Get $get, ?Model $record) use ($lockedStatuses): bool {
+            $status = $get('offer_status') ?? $record->offer_status;
+
+            return in_array($status, $lockedStatuses, true);
+        };
+
+        $lock = fn($component) => $component
+            ->disabled($isLocked)
+            ->dehydrated(fn(Get $get, ?Model $record) => ! $isLocked($get, $record));
+
         return $form
             ->schema([
                 Section::make(__('resources.offer.section_offer'))
                     ->columns(2)
                     ->schema([
-                        TextInput::make('property_name')
-                            ->label(__('translate.offer.property_name'))
-                            ->required()
-                            ->maxLength(255),
-                        TextInput::make('property_value_usd')
-                            ->label(__('translate.offer.property_value_usd'))
-                            ->numeric(),
-                        TextInput::make('property_value_crc')
-                            ->label(__('translate.offer.property_value_crc'))
-                            ->numeric(),
-                        Select::make('organization_id')
-                            ->label(__('translate.offer.organization_id'))
-                            ->relationship(
-                                name: 'organization',
-                                titleAttribute: 'organization_name',
-                            )
-                            ->searchable()
-                            ->preload()
-                            ->required(),
-                        Select::make('personal_customer_id')
-                            ->label(__('translate.offer.personal_customer_id'))
-                            ->options(PersonalCustomer::query()
+                        $lock(TextInput::make('property_name')->label(__('translate.offer.property_name'))->required()->maxLength(255)),
+                        $lock(TextInput::make('property_value_usd')->label(__('translate.offer.property_value_usd'))->numeric()),
+                        $lock(TextInput::make('property_value_crc')->label(__('translate.offer.property_value_crc'))->numeric()),
+                        $lock(Select::make('organization_id')->label(__('translate.offer.organization_id'))->relationship(
+                            name: 'organization',
+                            titleAttribute: 'organization_name',
+                        )->searchable()->preload()->required()),
+                        $lock(Select::make('personal_customer_id')->label(__('translate.offer.personal_customer_id'))->options(
+                            PersonalCustomer::query()
                                 ->where('user_id', Auth::user()->id)
                                 ->pluck('full_name', 'id')
-                            )
-                            ->searchable()
-                            ->preload()
-                            ->required(),
-                        TextInput::make('offer_amount_usd')
-                            ->label(__('translate.offer.offer_amount_usd'))
-                            ->numeric(),
-                        TextInput::make('offer_amount_crc')
-                            ->label(__('translate.offer.offer_amount_crc'))
-                            ->numeric(),
-                        Textarea::make('user_comments')
-                            ->label(__('translate.access_request.user_comments')),
+                        )->searchable()->preload()->required()),
+                        $lock(TextInput::make('offer_amount_usd')->label(__('translate.offer.offer_amount_usd'))->numeric()),
+                        $lock(TextInput::make('offer_amount_crc')->label(__('translate.offer.offer_amount_crc'))->numeric()),
+                        $lock(Textarea::make('user_comments')->label(__('translate.access_request.user_comments'))),
+                        Select::make('offer_status')
+                            ->label(__('translate.offer.offer_status'))
+                            ->options([
+                                'pending' => __('translate.offer.options_offer_status.0'),
+                                'received' => __('translate.offer.options_offer_status.1'),
+                                'sent' => __('translate.offer.options_offer_status.2'),
+                                'approved' => __('translate.offer.options_offer_status.3'),
+                                'rejected' => __('translate.offer.options_offer_status.4'),
+                                'signed' => __('translate.offer.options_offer_status.5'),
+                            ])
+                            ->live()
+                            ->required()
+                            ->disabled()
+                            ->default('pending'),
                         Textarea::make('rejection_reason')
                             ->label(__('translate.offer.rejection_reason'))
-                            ->visible(fn (Get $get): bool => $get('offer_status') == 'rejected'),
-                        FileUpload::make('offer_files')
-                            ->label(__('translate.offer.offer_files'))
-                            ->multiple()
-                            ->downloadable()
-                            ->directory('attachments/' .now()->format('Y/m/d'))
-                            ->maxFiles(5),
+                            ->visible(fn(Get $get): bool => $get('offer_status') == 'rejected')
+                            ->disabled(),
+                        $lock(FileUpload::make('offer_files')->label(__('translate.offer.offer_files'))->multiple()->downloadable()->directory('attachments/' . now()->format('Y/m/d'))->maxFiles(5)),
                     ]),
             ]);
     }
@@ -171,7 +173,7 @@ class OfferResource extends Resource
                     ->label(__('translate.offer.offer_status'))
                     ->alignCenter()
                     ->badge()
-                    ->formatStateUsing(function ($state){
+                    ->formatStateUsing(function ($state) {
                         return match ($state) {
                             'pending' => __('translate.offer.options_offer_status.0'),
                             'received' => __('translate.offer.options_offer_status.1'),
@@ -181,7 +183,7 @@ class OfferResource extends Resource
                             'signed' => __('translate.offer.options_offer_status.5'),
                         };
                     })
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'pending' => 'warning',
                         'received' => 'info',
                         'sent' => 'success',
@@ -217,9 +219,10 @@ class OfferResource extends Resource
                     ->preload(),
                 SelectFilter::make('personal_customer_id')
                     ->label(__('translate.offer.personal_customer_id'))
-                    ->options(PersonalCustomer::query()
-                        ->where('user_id', Auth::user()->id)
-                        ->pluck('full_name', 'id')
+                    ->options(
+                        PersonalCustomer::query()
+                            ->where('user_id', Auth::user()->id)
+                            ->pluck('full_name', 'id')
                     )
                     ->searchable()
                     ->preload(),
@@ -238,7 +241,7 @@ class OfferResource extends Resource
             //         Tables\Actions\DeleteBulkAction::make(),
             //     ]),
             // ])
-            ;
+        ;
     }
 
     public static function getRelations(): array

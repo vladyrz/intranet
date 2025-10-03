@@ -22,6 +22,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 use Parallax\FilamentComments\Tables\Actions\CommentsAction;
@@ -63,57 +64,60 @@ class CustomerReportResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $lockedStatuses = ['received', 'approved', 'rejected'];
+
+        $isLocked = function (Get $get, ?Model $record) use ($lockedStatuses): bool {
+            $status = $get('report_status') ?? $record->report_status;
+
+            return in_array($status, $lockedStatuses, true);
+        };
+
+        $lock = fn($component) => $component
+            ->disabled($isLocked)
+            ->dehydrated(fn(Get $get, ?Model $record) => ! $isLocked($get, $record));
+
         return $form
             ->schema([
                 Section::make(__('resources.customer_report.section_customer'))
                     ->columns(3)
                     ->schema([
-                        Select::make('personal_customer_id')
-                            ->label(__('translate.customer_report.personal_customer_id'))
-                            ->options(PersonalCustomer::query()
+                        $lock(Select::make('personal_customer_id')->label(__('translate.customer_report.personal_customer_id'))->options(
+                            PersonalCustomer::query()
                                 ->where('user_id', Auth::user()->id)
                                 ->pluck('full_name', 'id')
-                            )
-                            ->searchable()
-                            ->preload()
-                            ->required(),
-                        TextInput::make('property_name')
-                            ->label(__('translate.customer_report.property_name'))
-                            ->maxLength(255)
-                            ->required(),
-                        Select::make('organization_id')
-                            ->label(__('translate.customer_report.organization_id'))
-                            ->relationship(
-                                name: 'organization',
-                                titleAttribute: 'organization_name',
-                            )
-                            ->preload()
-                            ->searchable()
-                            ->required(),
-                        Textarea::make('user_comments')
-                            ->label(__('translate.access_request.user_comments')),
+                        )->searchable()->preload()->required()),
+                        $lock(TextInput::make('property_name')->label(__('translate.customer_report.property_name'))->maxLength(255)->required()),
+                        $lock(Select::make('organization_id')->label(__('translate.customer_report.organization_id'))->relationship(
+                            name: 'organization',
+                            titleAttribute: 'organization_name',
+                        )->preload()->searchable()->required()),
+                        $lock(Textarea::make('user_comments')->label(__('translate.access_request.user_comments'))),
+                        Select::make('report_status')
+                            ->label(__('translate.customer_report.report_status'))
+                            ->options([
+                                'pending' => __('translate.customer_report.options_report_status.0'),
+                                'received' => __('translate.customer_report.options_report_status.1'),
+                                'approved' => __('translate.customer_report.options_report_status.2'),
+                                'rejected' => __('translate.customer_report.options_report_status.3'),
+                            ])
+                            ->live()
+                            ->required()
+                            ->disabled()
+                            ->default('pending'),
                         Textarea::make('rejection_reason')
                             ->label(__('translate.offer.rejection_reason'))
-                            ->visible(fn (Get $get): bool => $get('report_status') == 'rejected'),
+                            ->visible(fn(Get $get): bool => $get('report_status') == 'rejected')
+                            ->disabled(),
                     ]),
 
                 Section::make(__('resources.customer_report.section_financial'))
                     ->columns(2)
                     ->schema([
-                        TextInput::make('budget_usd')
-                            ->label(__('translate.customer_report.budget_usd'))
-                            ->numeric(),
-                        TextInput::make('budget_crc')
-                            ->label(__('translate.customer_report.budget_crc'))
-                            ->numeric(),
-                        TextInput::make('expected_commission_usd')
-                            ->label(__('translate.customer_report.expected_commission_usd'))
-                            ->numeric(),
-                        TextInput::make('expected_commission_crc')
-                            ->label(__('translate.customer_report.expected_commission_crc'))
-                            ->numeric(),
-                        Toggle::make('financing')
-                            ->label(__('translate.customer_report.financing')),
+                        $lock(TextInput::make('budget_usd')->label(__('translate.customer_report.budget_usd'))->numeric()),
+                        $lock(TextInput::make('budget_crc')->label(__('translate.customer_report.budget_crc'))->numeric()),
+                        $lock(TextInput::make('expected_commission_usd')->label(__('translate.customer_report.expected_commission_usd'))->numeric()),
+                        $lock(TextInput::make('expected_commission_crc')->label(__('translate.customer_report.expected_commission_crc'))->numeric()),
+                        $lock(Toggle::make('financing')->label(__('translate.customer_report.financing'))),
                     ]),
             ]);
     }
@@ -175,7 +179,7 @@ class CustomerReportResource extends Resource
                     ->label(__('translate.customer_report.report_status'))
                     ->alignCenter()
                     ->badge()
-                    ->formatStateUsing(function ($state){
+                    ->formatStateUsing(function ($state) {
                         return match ($state) {
                             'pending' => __('translate.customer_report.options_report_status.0'),
                             'received' => __('translate.customer_report.options_report_status.1'),
@@ -183,7 +187,7 @@ class CustomerReportResource extends Resource
                             'rejected' => __('translate.customer_report.options_report_status.3'),
                         };
                     })
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'pending' => 'warning',
                         'received' => 'info',
                         'approved' => 'success',

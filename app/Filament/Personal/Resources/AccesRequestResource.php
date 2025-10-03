@@ -21,6 +21,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 use Parallax\FilamentComments\Tables\Actions\CommentsAction;
@@ -63,42 +64,52 @@ class AccesRequestResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $lockedStatuses = ['received', 'sent', 'approved', 'rejected'];
+
+        $isLocked = function (Get $get, ?Model $record) use ($lockedStatuses): bool {
+            $status = $get('request_status') ?? $record->request_status;
+
+            return in_array($status, $lockedStatuses, true);
+        };
+
+        $lock = fn($component) => $component
+            ->disabled($isLocked)
+            ->dehydrated(fn(Get $get, ?Model $record) => ! $isLocked($get, $record));
+
         return $form
             ->schema([
                 Section::make(__('resources.acces_request.sectionRequest'))
                     ->description(__('resources.acces_request.section_description'))
                     ->columns(2)
                     ->schema([
-                        Select::make('type_of_request')
-                            ->label(__('translate.access_request.type_of_request'))
-                            ->options(__('translate.access_request.options_type_of_request'))
-                            ->required(),
-                        TextInput::make('property')
-                            ->label(__('translate.access_request.property'))
-                            ->required(),
-                        Select::make('organization_id')
-                            ->label(__('translate.access_request.organization_id'))
-                            ->relationship(name: 'organization', titleAttribute:'organization_name')
-                            ->searchable()
-                            ->preload()
-                            ->required(),
-                        DateTimePicker::make('pickup_datetime')
-                            ->label(__('translate.access_request.pickup_datetime')),
-                        DateTimePicker::make('visit_datetime')
-                            ->label(__('translate.access_request.visit_datetime')),
-                        Select::make('personal_customer_id')
-                            ->label(__('translate.access_request.personal_customer_id'))
-                            ->options(PersonalCustomer::query()
-                                ->where('user_id', Auth::user()->id)
-                                ->pluck('full_name', 'id')
-                            )
-                            ->searchable()
-                            ->preload(),
-                        Textarea::make('user_comments')
-                            ->label(__('translate.access_request.user_comments')),
+                        $lock(Select::make('type_of_request')->label(__('translate.access_request.type_of_request'))->options(__('translate.access_request.options_type_of_request'))->required()),
+                        $lock(TextInput::make('property')->label(__('translate.access_request.property'))->required()),
+                        $lock(Select::make('organization_id')->label(__('translate.access_request.organization_id'))->relationship(name: 'organization', titleAttribute: 'organization_name')->searchable()->preload()->required()),
+                        $lock(DateTimePicker::make('pickup_datetime')->label(__('translate.access_request.pickup_datetime'))),
+                        $lock(DateTimePicker::make('visit_datetime')->label(__('translate.access_request.visit_datetime'))),
+                        $lock(
+                            Select::make('personal_customer_id')->label(__('translate.access_request.personal_customer_id'))->options(
+                                PersonalCustomer::query()->where('user_id', Auth::user()->id)->pluck('full_name', 'id')
+                            )->searchable()->preload()
+                        ),
+                        $lock(Textarea::make('user_comments')->label(__('translate.access_request.user_comments'))),
+                        Select::make('request_status')
+                            ->label(__('translate.access_request.request_status'))
+                            ->options([
+                                'pending' => __('translate.access_request.options_request_status.0'),
+                                'received' => __('translate.access_request.options_request_status.1'),
+                                'sent' => __('translate.access_request.options_request_status.2'),
+                                'approved' => __('translate.access_request.options_request_status.3'),
+                                'rejected' => __('translate.access_request.options_request_status.4'),
+                            ])
+                            ->live()
+                            ->required()
+                            ->disabled()
+                            ->default('pending'),
                         Textarea::make('rejection_reason')
                             ->label(__('translate.offer.rejection_reason'))
-                            ->visible(fn (Get $get): bool => $get('request_status') == 'rejected'),
+                            ->visible(fn(Get $get): bool => $get('request_status') == 'rejected')
+                            ->disabled(),
                     ]),
             ]);
     }
@@ -150,7 +161,7 @@ class AccesRequestResource extends Resource
                     ->label(__('translate.access_request.request_status'))
                     ->alignCenter()
                     ->badge()
-                    ->formatStateUsing(function ($state){
+                    ->formatStateUsing(function ($state) {
                         return match ($state) {
                             'pending' => __('translate.access_request.options_request_status.0'),
                             'received' => __('translate.access_request.options_request_status.1'),
@@ -159,7 +170,7 @@ class AccesRequestResource extends Resource
                             'rejected' => __('translate.access_request.options_request_status.4'),
                         };
                     })
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'pending' => 'warning',
                         'received' => 'info',
                         'sent' => 'info',
@@ -190,7 +201,7 @@ class AccesRequestResource extends Resource
                     ->options(__('translate.access_request.options_type_of_request')),
                 SelectFilter::make('organization_id')
                     ->label(__('translate.access_request.organization_id'))
-                    ->relationship(name: 'organization', titleAttribute:'organization_name')
+                    ->relationship(name: 'organization', titleAttribute: 'organization_name')
                     ->searchable()
                     ->preload(),
             ])
@@ -208,7 +219,7 @@ class AccesRequestResource extends Resource
             //         Tables\Actions\DeleteBulkAction::make(),
             //     ]),
             // ])
-            ;
+        ;
     }
 
     public static function getRelations(): array
