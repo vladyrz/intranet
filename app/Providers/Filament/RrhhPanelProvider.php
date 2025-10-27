@@ -33,6 +33,7 @@ class RrhhPanelProvider extends PanelProvider
             ->id('rrhh')
             ->path('rrhh')
             ->login()
+            ->sidebarCollapsibleOnDesktop()
             ->maxContentWidth(MaxWidth::Full)
             ->colors([
                 'primary' => Color::Amber,

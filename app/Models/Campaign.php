@@ -20,6 +20,7 @@ class Campaign extends Model
         'start_date',
         'end_date',
         'social_network',
+        'rejection_reason',
     ];
 
     public function user()

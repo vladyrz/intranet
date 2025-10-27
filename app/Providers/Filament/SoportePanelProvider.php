@@ -34,6 +34,7 @@ class SoportePanelProvider extends PanelProvider
             ->path('soporte')
             ->login()
             ->maxContentWidth(MaxWidth::Full)
+            ->sidebarCollapsibleOnDesktop()
             ->colors([
                 'primary' => Color::Indigo,
             ])

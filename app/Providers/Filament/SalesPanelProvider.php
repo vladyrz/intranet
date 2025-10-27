@@ -34,6 +34,7 @@ class SalesPanelProvider extends PanelProvider
             ->path('sales')
             ->login()
             ->maxContentWidth(MaxWidth::Full)
+            ->sidebarCollapsibleOnDesktop()
             ->profile()
             ->colors([
                 'primary' => Color::Green,

@@ -34,6 +34,7 @@ class ServicesPanelProvider extends PanelProvider
             ->path('services')
             ->login()
             ->maxContentWidth(MaxWidth::Full)
+            ->sidebarCollapsibleOnDesktop()
             ->colors([
                 'primary' => Color::Emerald,
             ])

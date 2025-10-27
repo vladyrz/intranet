@@ -102,6 +102,9 @@ class CampaignResource extends Resource
                             ->options(__('translate.campaign_social.options_platform'))
                             ->visible(fn (Get $get): bool => $get('campaign_status') == 'scheduled')
                             ->disabled(),
+                        Textarea::make('rejection_reason')
+                            ->label(__('translate.campaign.rejection_reason'))
+                            ->visible(fn (Get $get): bool => $get('campaign_status') == 'rejected'),
                     ])
             ]);
     }

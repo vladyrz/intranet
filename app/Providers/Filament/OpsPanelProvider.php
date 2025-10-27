@@ -33,6 +33,7 @@ class OpsPanelProvider extends PanelProvider
             ->id('ops')
             ->path('ops')
             ->login()
+            ->sidebarCollapsibleOnDesktop()
             ->maxContentWidth(MaxWidth::Full)
             ->colors([
                 'primary' => Color::Red,

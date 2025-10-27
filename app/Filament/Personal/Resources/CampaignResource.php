@@ -82,6 +82,10 @@ class CampaignResource extends Resource
                         Textarea::make('results_observations')
                             ->label(__('translate.campaign.results_observations'))
                             ->columnSpanFull(),
+                        Textarea::make('rejection_reason')
+                            ->label(__('translate.campaign.rejection_reason'))
+                            ->visible(fn (Get $get): bool => $get('campaign_status') == 'rejected')
+                            ->disabled(),
                     ]),
 
                 Section::make(__('resources.campaign.section_scheduled'))

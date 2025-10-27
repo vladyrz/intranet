@@ -33,6 +33,7 @@ class ContabilidadPanelProvider extends PanelProvider
             ->id('contabilidad')
             ->path('contabilidad')
             ->login()
+            ->sidebarCollapsibleOnDesktop()
             ->maxContentWidth(MaxWidth::Full)
             ->colors([
                 'primary' => Color::Green,

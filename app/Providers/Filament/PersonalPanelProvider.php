@@ -37,6 +37,7 @@ class PersonalPanelProvider extends PanelProvider
             ->registration()
             ->maxContentWidth(MaxWidth::Full)
             ->default()
+            ->sidebarCollapsibleOnDesktop()
             ->colors([
                 'danger' => Color::Rose,
                 'gray' => Color::Gray,

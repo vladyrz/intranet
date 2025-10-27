@@ -86,6 +86,9 @@ class CampaignResource extends Resource
                             ->url(),
                         Textarea::make('results_observations')
                             ->label(__('translate.campaign.results_observations')),
+                        Textarea::make('rejection_reason')
+                            ->label(__('translate.campaign.rejection_reason'))
+                            ->visible(fn (Get $get): bool => $get('campaign_status') == 'rejected'),
                     ]),
 
                 Section::make(__('resources.campaign.section_scheduled'))
