@@ -289,4 +289,10 @@ return [
         'section_scheduled' => 'Estatus de Pauta',
         'section_description2' => 'Estar atento al WhatsApp',
     ],
+
+    'third_party_property' => [
+        'label' => 'Propiedad de terceros',
+        'plural' => 'Propiedades de terceros',
+        'navigation' => 'Propiedades de terceros',
+    ],
 ];

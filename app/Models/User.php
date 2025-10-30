@@ -120,4 +120,8 @@ class User extends Authenticatable implements HasAvatar
     public function projects(){
         return $this->hasMany(Project::class);
     }
+
+    public function thirdPartyProperties(){
+        return $this->hasMany(ThirdPartyProperty::class);
+    }
 }
