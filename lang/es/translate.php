@@ -247,10 +247,12 @@ return [
         'options_invoice_status' => [
             'pending' => 'Pendiente de facturación',
             'invoiced' => 'Facturado',
-            'paid' => 'Pagado',
+            'paid_to_EasyPro' => 'Pagado a EasyPro',
+            'paid_to_user' => 'Pagado al asesor',
         ],
         'payment_percentage' => 'Porcentaje de pago',
         'billing_date' => 'Fecha de facturación',
+        'funds_received_date' => 'Fecha de recepción de fondos',
         'invoice_files' => 'Archivos de factura',
         'created_at' => 'Creado el',
         'updated_at' => 'Actualizado el',

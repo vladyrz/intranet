@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Ops\Resources;
+namespace App\Filament\Resources;
 
-use App\Filament\Ops\Resources\BillingControlResource\Pages;
-use App\Filament\Ops\Resources\BillingControlResource\RelationManagers;
+use App\Filament\Resources\BillingControlResource\Pages;
+use App\Filament\Resources\BillingControlResource\RelationManagers;
 use App\Models\BillingControl;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;

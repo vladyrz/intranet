@@ -15,6 +15,7 @@ class BillingControl extends Model
         'invoice_status',
         'payment_percentage',
         'billing_date',
+        'funds_received_date',
         'invoice_files',
     ];
 

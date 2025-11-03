@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Ops\Resources;
+namespace App\Filament\Personal\Resources;
 
-use App\Filament\Ops\Resources\BillingControlResource\Pages;
-use App\Filament\Ops\Resources\BillingControlResource\RelationManagers;
+use App\Filament\Personal\Resources\BillingControlResource\Pages;
+use App\Filament\Personal\Resources\BillingControlResource\RelationManagers;
 use App\Models\BillingControl;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -47,7 +47,7 @@ class BillingControlResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('resources.employee_checklist.navigation_group');
+        return __('resources.customer.navigation_group');
     }
 
     protected static ?string $navigationIcon = 'heroicon-o-document-currency-dollar';
@@ -68,29 +68,35 @@ class BillingControlResource extends Resource
                             )
                             ->searchable()
                             ->preload()
-                            ->required(),
+                            ->required()
+                            ->disabled(),
                         Select::make('invoice_status')
                             ->label(__('translate.billing_control.invoice_status'))
                             ->options(__('translate.billing_control.options_invoice_status'))
-                            ->required(),
+                            ->required()
+                            ->disabled(),
                         TextInput::make('payment_percentage')
                             ->label(__('translate.billing_control.payment_percentage'))
                             ->maxLength(5)
                             ->suffix('%')
-                            ->required(),
+                            ->required()
+                            ->disabled(),
                         DatePicker::make('billing_date')
                             ->label(__('translate.billing_control.billing_date'))
                             ->required()
-                            ->native(false),
+                            ->native(false)
+                            ->disabled(),
                         DatePicker::make('funds_received_date')
                             ->label(__('translate.billing_control.funds_received_date'))
-                            ->native(false),
+                            ->native(false)
+                            ->disabled(),
                         FileUpload::make('invoice_files')
                             ->label(__('translate.billing_control.invoice_files'))
                             ->multiple()
                             ->downloadable()
                             ->directory('facturas/' .now()->format('Y/m/d'))
-                            ->maxFiles(5),
+                            ->maxFiles(5)
+                            ->disabled(),
                     ]),
             ]);
     }
@@ -160,12 +166,6 @@ class BillingControlResource extends Resource
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make()
                         ->color('warning'),
-                    Tables\Actions\DeleteAction::make()
-                ]),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -181,7 +181,6 @@ class BillingControlResource extends Resource
     {
         return [
             'index' => Pages\ListBillingControls::route('/'),
-            'create' => Pages\CreateBillingControl::route('/create'),
             'edit' => Pages\EditBillingControl::route('/{record}/edit'),
         ];
     }

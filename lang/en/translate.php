@@ -246,10 +246,12 @@ return [
         'options_invoice_status' => [
             'pending' => 'Pending invoice',
             'invoiced' => 'Invoiced',
-            'paid' => 'Paid',
+            'paid_to_EasyPro' => 'Paid to EasyPro',
+            'paid_to_user' => 'Paid to user',
         ],
         'payment_percentage' => 'Payment percentage',
         'billing_date' => 'Billing date',
+        'funds_received_date' => 'Funds received date',
         'invoice_files' => 'Invoice files',
         'created_at' => 'Created at',
         'updated_at' => 'Updated at',

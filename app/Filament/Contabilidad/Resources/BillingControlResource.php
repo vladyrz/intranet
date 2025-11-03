@@ -20,6 +20,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Date;
 use Parallax\FilamentComments\Tables\Actions\CommentsAction;
 
 class BillingControlResource extends Resource
@@ -79,11 +80,14 @@ class BillingControlResource extends Resource
                             ->required(),
                         DatePicker::make('billing_date')
                             ->label(__('translate.billing_control.billing_date'))
-                            ->required(),
+                            ->required()
+                            ->native(false),
+                        DatePicker::make('funds_received_date')
+                            ->label(__('translate.billing_control.funds_received_date'))
+                            ->native(false),
                         FileUpload::make('invoice_files')
                             ->label(__('translate.billing_control.invoice_files'))
                             ->multiple()
-                            ->columnSpanFull()
                             ->downloadable()
                             ->directory('facturas/' .now()->format('Y/m/d'))
                             ->maxFiles(5),
@@ -97,12 +101,10 @@ class BillingControlResource extends Resource
             ->columns([
                 TextColumn::make('offer.property_name')
                     ->label(__('translate.billing_control.offer_id'))
-                    ->searchable()
-                    ->alignCenter(),
+                    ->searchable(),
                 TextColumn::make('offer.personal_customer.full_name')
-                    ->label(__('translate.offer.personal_customer_id'))
-                    ->searchable()
-                    ->alignCenter(),
+                    ->label('Cliente')
+                    ->searchable(),
                 TextColumn::make('invoice_status')
                     ->label(__('translate.billing_control.invoice_status'))
                     ->alignCenter()
@@ -121,13 +123,17 @@ class BillingControlResource extends Resource
                     ->alignCenter(),
                 TextColumn::make('offer.user.name')
                     ->label(__('translate.offer.user_id'))
-                    ->searchable()
-                    ->alignCenter(),
+                    ->searchable(),
                 TextColumn::make('billing_date')
-                    ->label(__('translate.billing_control.billing_date'))
+                    ->label('Facturación')
                     ->date()
                     ->alignCenter()
                     ->toggleable(isToggledHiddenByDefault: false),
+                TextColumn::make('funds_received_date')
+                    ->label('Recepción de fondos')
+                    ->date()
+                    ->alignCenter()
+                    ->toggleable(),
                 TextColumn::make('created_at')
                     ->label(__('translate.billing_control.created_at'))
                     ->dateTime()
