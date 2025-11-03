@@ -20,6 +20,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
 use Parallax\FilamentComments\Tables\Actions\CommentsAction;
 
@@ -168,6 +169,12 @@ class BillingControlResource extends Resource
                         ->color('warning'),
                 ]),
             ]);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->where('user_id', Auth::user()->id);
     }
 
     public static function getRelations(): array
