@@ -115,7 +115,8 @@ class BillingControlResource extends Resource
                     ->color(fn (string $state): string => match ($state) {
                         'pending' => 'warning',
                         'invoiced' => 'info',
-                        'paid' => 'success',
+                        'paid_to_EasyPro' => 'success',
+                        'paid_to_user' => 'success',
                     }),
                 TextColumn::make('payment_percentage')
                     ->label(__('translate.billing_control.payment_percentage'))

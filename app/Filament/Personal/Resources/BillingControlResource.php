@@ -122,15 +122,13 @@ class BillingControlResource extends Resource
                     ->color(fn (string $state): string => match ($state) {
                         'pending' => 'warning',
                         'invoiced' => 'info',
-                        'paid' => 'success',
+                        'paid_to_EasyPro' => 'success',
+                        'paid_to_user' => 'success',
                     }),
                 TextColumn::make('payment_percentage')
                     ->label(__('translate.billing_control.payment_percentage'))
                     ->formatStateUsing(fn($state) => $state . '%')
                     ->alignCenter(),
-                TextColumn::make('offer.user.name')
-                    ->label(__('translate.offer.user_id'))
-                    ->searchable(),
                 TextColumn::make('billing_date')
                     ->label('Facturación')
                     ->date()
@@ -173,8 +171,15 @@ class BillingControlResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()
-            ->where('user_id', Auth::user()->id);
+        $query = parent::getEloquentQuery();
+
+        if (Auth::check()) {
+            $query->whereHas('offer', function ($q) {
+                $q->where('user_id', Auth::user()->id);
+            });
+        }
+
+        return $query;
     }
 
     public static function getRelations(): array

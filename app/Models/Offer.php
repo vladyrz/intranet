@@ -41,4 +41,8 @@ class Offer extends Model
     public function personal_customer(){
         return $this->belongsTo(PersonalCustomer::class);
     }
+
+    public function billing_control(){
+        return $this->hasMany(BillingControl::class);
+    }
 }
