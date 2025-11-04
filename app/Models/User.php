@@ -124,4 +124,8 @@ class User extends Authenticatable implements HasAvatar
     public function thirdPartyProperties(){
         return $this->hasMany(ThirdPartyProperty::class);
     }
+
+    public function collab(){
+        return $this->hasMany(CollaborationRequest::class);
+    }
 }
