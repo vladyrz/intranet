@@ -63,7 +63,7 @@ class ThirdPartyPropertyResource extends Resource
                             'available' => 'Disponible',
                             'unavailable' => 'No disponible',
                             'rejected' => 'Rechazada',
-                        ])->default('pending')->required()->columnSpan(3),
+                        ])->default('pending')->required()->columnSpan(3)->disabled(),
 
                         TextInput::make('finca_number')->label('Número de finca')->unique(ignoreRecord: true)->required()->maxLength(150)->columnSpan(3),
 
@@ -108,18 +108,63 @@ class ThirdPartyPropertyResource extends Resource
                             'venta' => 'Venta',
                         ])->required()->reactive()->columnSpan(3),
 
-                        TextInput::make('monthly_amount')->label('Monto mensual')->numeric()->prefix('₡')->visible(fn(Get $get) => $get('service_type') === 'alquiler')->required(fn(Get $get) => $get('service_type') === 'alquiler')->dehydrated(fn(Get $get) => $get('service_type') === 'alquiler')->afterStateUpdated(
+                        Select::make('currency_code')->label('Moneda')->options([
+                            'CRC' => 'CRC',
+                            'USD' => 'USD',
+                        ])->required()->reactive()->columnSpan(3),
+
+                        TextInput::make('monthly_amount')->label('Monto mensual (CRC)')->numeric()->prefix('₡')->visible(function (Get $get) {
+                            return $get('service_type') === 'alquiler' && $get('currency_code') === 'CRC';
+                        })->required(function (Get $get) {
+                            return $get('service_type') === 'alquiler' && $get('currency_code') === 'CRC';
+                        })->dehydrated(function (Get $get) {
+                            return $get('service_type') === 'alquiler' && $get('currency_code') === 'CRC';
+                        })->afterStateUpdated(
                             function ($state, Set $set, Get $get) {
-                                if ($get('service_type') === 'alquiler') {
+                                if ($get('service_type') === 'alquiler' && $get('currency_code') === 'CRC') {
                                     $set('sale_amount', null);
                                 }
                             }
                         )->columnSpan(3),
 
-                        TextInput::make('sale_amount')->label('Monto de venta')->numeric()->prefix('₡')->visible(fn(Get $get) => $get('service_type') === 'venta')->required(fn(Get $get) => $get('service_type') === 'venta')->dehydrated(fn(Get $get) => $get('service_type') === 'venta')->afterStateUpdated(
+                        TextInput::make('monthly_amount_usd')->label('Monto mensual (USD)')->numeric()->prefix('$')->visible(function (Get $get) {
+                            return $get('service_type') === 'alquiler' && $get('currency_code') === 'USD';
+                        })->required(function (Get $get) {
+                            return $get('service_type') === 'alquiler' && $get('currency_code') === 'USD';
+                        })->dehydrated(function (Get $get) {
+                            return $get('service_type') === 'alquiler' && $get('currency_code') === 'USD';
+                        })->afterStateUpdated(
                             function ($state, Set $set, Get $get) {
-                                if ($get('service_type') === 'venta') {
+                                if ($get('service_type') === 'alquiler' && $get('currency_code') === 'USD') {
+                                    $set('sale_amount_usd', null);
+                                }
+                            }
+                        )->columnSpan(3),
+
+                        TextInput::make('sale_amount')->label('Monto de venta (CRC)')->numeric()->prefix('₡')->visible(function (Get $get) {
+                            return $get('service_type') === 'venta' && $get('currency_code') === 'CRC';
+                        })->required(function (Get $get) {
+                            return $get('service_type') === 'venta' && $get('currency_code') === 'CRC';
+                        })->dehydrated(function (Get $get) {
+                            return $get('service_type') === 'venta' && $get('currency_code') === 'CRC';
+                        })->afterStateUpdated(
+                            function ($state, Set $set, Get $get) {
+                                if ($get('service_type') === 'venta' && $get('currency_code') === 'CRC') {
                                     $set('monthly_amount', null);
+                                }
+                            }
+                        )->columnSpan(3),
+
+                        TextInput::make('sale_amount_usd')->label('Monto de venta (USD)')->numeric()->prefix('$')->visible(function (Get $get) {
+                            return $get('service_type') === 'venta' && $get('currency_code') === 'USD';
+                        })->required(function (Get $get) {
+                            return $get('service_type') === 'venta' && $get('currency_code') === 'USD';
+                        })->dehydrated(function (Get $get) {
+                            return $get('service_type') === 'venta' && $get('currency_code') === 'USD';
+                        })->afterStateUpdated(
+                            function ($state, Set $set, Get $get) {
+                                if ($get('service_type') === 'venta' && $get('currency_code') === 'USD') {
+                                    $set('monthly_amount_usd', null);
                                 }
                             }
                         )->columnSpan(3),
@@ -190,8 +235,19 @@ class ThirdPartyPropertyResource extends Resource
                     'alquiler' => 'success',
                     'venta' => 'info',
                 })->alignCenter(),
-                TextColumn::make('monthly_amount')->label('Mensual')->money('CRC', true)->toggleable(),
-                TextColumn::make('sale_amount')->label('Venta')->money('CRC', true)->toggleable(),
+                TextColumn::make('currency_code')->label('Moneda')->formatStateUsing(function ($state) {
+                    return match ($state) {
+                        'CRC' => 'CRC',
+                        'USD' => 'USD',
+                    };
+                })->badge()->color(fn(string $state): string => match ($state) {
+                    'CRC' => 'warning',
+                    'USD' => 'danger',
+                })->alignCenter(),
+                TextColumn::make('monthly_amount')->label('Mensual ₡')->money('CRC', true)->toggleable(),
+                TextColumn::make('monthly_amount_usd')->label('Mensual $')->money('USD', true)->toggleable(),
+                TextColumn::make('sale_amount')->label('Venta ₡')->money('CRC', true)->toggleable(),
+                TextColumn::make('sale_amount_usd')->label('Venta $')->money('USD', true)->toggleable(),
                 TextColumn::make('finca_number')->label('Finca')->searchable()->toggleable(),
                 TextColumn::make('city.name')->label('Cantón')->searchable()->toggleable(),
                 TextColumn::make('state.name')->label('Provincia')->searchable()->toggleable(isToggledHiddenByDefault: true),

@@ -23,8 +23,11 @@ class ThirdPartyProperty extends Model
         'address',
         'received_at',
         'service_type',
+        'currency_code',
         'monthly_amount',
+        'monthly_amount_usd',
         'sale_amount',
+        'sale_amount_usd',
         'details',
 
         // Responsables

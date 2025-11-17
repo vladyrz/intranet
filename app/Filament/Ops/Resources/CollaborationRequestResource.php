@@ -37,7 +37,7 @@ class CollaborationRequestResource extends Resource
         return $form
             ->schema([
                 Section::make('Información del cliente')
-                    ->columns(3)
+                    ->columns(12)
                     ->schema([
                         Select::make('user_id')->label('Asesor')->options(
                             fn() =>
@@ -47,7 +47,7 @@ class CollaborationRequestResource extends Resource
                                 ->pluck('name', 'id')
                         )->searchable()->preload()->required()->reactive()->afterStateUpdated(
                             fn(Set $set) => $set('personal_customer_id', null)
-                        ),
+                        )->columnSpan(3),
 
                         Select::make('personal_customer_id')->label('Cliente')->options(
                             fn(Get $get) =>
@@ -56,13 +56,24 @@ class CollaborationRequestResource extends Resource
                                 ->orderBy('id', 'desc')
                                 ->limit(500)
                                 ->pluck('full_name', 'id')
-                        )->searchable()->preload()->required(),
+                        )->searchable()->preload()->required()->columnSpan(3),
 
-                        TextInput::make('client_budget')->label('Presupuesto del cliente')->numeric()->suffix('₡')->minValue(0)->default(0),
+                        Select::make('currency_code')->label('Moneda')->options([
+                            'USD' => 'USD',
+                            'CRC' => 'CRC',
+                        ])->required()->reactive()->columnSpan(3),
 
-                        Textarea::make('areas_of_interest')->label('Zona o zonas de interés')->rows(3),
+                        TextInput::make('client_budget')->label('Presupuesto del cliente')->numeric()->suffix('₡')->minValue(0)->default(0)->visible(
+                            fn(Get $get) => $get('currency_code') == 'CRC'
+                        )->columnSpan(3),
 
-                        Textarea::make('search_details')->label('Detalles de búsqueda (tipo de propiedad, tamaño, condiciones, etc.)')->rows(3)->columnSpan(2),
+                        TextInput::make('client_budget_usd')->label('Presupuesto del cliente')->numeric()->suffix('$')->minValue(0)->default(0)->visible(
+                            fn(Get $get) => $get('currency_code') == 'USD'
+                        )->columnSpan(3),
+
+                        Textarea::make('areas_of_interest')->label('Zona o zonas de interés')->columnSpan(4)->rows(3),
+
+                        Textarea::make('search_details')->label('Detalles de búsqueda (tipo de propiedad, tamaño, condiciones, etc.)')->rows(3)->columnSpan(8),
                     ]),
             ]);
     }
@@ -74,7 +85,9 @@ class CollaborationRequestResource extends Resource
                 TextColumn::make('id')->sortable()->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('user.name')->label('Asesor')->searchable()->toggleable(),
                 TextColumn::make('personal_customer.full_name')->label('Cliente')->searchable()->toggleable(),
-                TextColumn::make('client_budget')->label('Presupuesto')->money('CRC', true)->toggleable(),
+                TextColumn::make('currency_code')->label('Moneda')->alignCenter()->toggleable(),
+                TextColumn::make('client_budget')->label('Presupuesto ₡')->money('CRC', true)->toggleable(),
+                TextColumn::make('client_budget_usd')->label('Presupuesto $')->money('USD', true)->toggleable(),
                 TextColumn::make('areas_of_interest')->label('Zonas de interés')->toggleable(),
                 TextColumn::make('search_details')->label('Detalles de búsqueda')->toggleable(),
                 TextColumn::make('created_at')->label('Creado')->dateTime()->since()->toggleable(),

@@ -13,7 +13,9 @@ class CollaborationRequest extends Model
     protected $fillable = [
         'user_id',
         'personal_customer_id',
+        'currency_code',
         'client_budget',
+        'client_budget_usd',
         'areas_of_interest',
         'search_details',
     ];
