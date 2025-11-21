@@ -129,6 +129,11 @@ class EmployeeResource extends Resource
                         ->directory('credids/' .now()->format('Y/m/d'))
                         ->downloadable()
                         ->columnSpan(2),
+                    Forms\Components\FileUpload::make('contract')
+                        ->label('Contrato')
+                        ->acceptedFileTypes(['application/pdf'])
+                        ->directory('attachments/contract/' .now()->format('Y/m/d'))
+                        ->downloadable(),
                 ]),
 
                 Section::make(__('resources.employee.sectionAddress'))

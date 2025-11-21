@@ -126,8 +126,12 @@ class EmployeeResource extends Resource
                     Forms\Components\FileUpload::make('credid')
                         ->acceptedFileTypes(['application/pdf'])
                         ->directory('attachments/' .now()->format('Y/m/d'))
-                        ->downloadable()
-                        ->columnSpan(2),
+                        ->downloadable(),
+                    Forms\Components\FileUpload::make('contract')
+                        ->label('Contrato')
+                        ->acceptedFileTypes(['application/pdf'])
+                        ->directory('attachments/contract/' .now()->format('Y/m/d'))
+                        ->downloadable(),
                 ]),
 
                 Section::make(__('resources.employee.sectionAddress'))
