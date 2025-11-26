@@ -3,28 +3,37 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Parallax\FilamentComments\Models\Traits\HasFilamentComments;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 
 class AdminReminder extends Model
 {
-    use HasFactory, HasFilamentComments;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'user_id',
         'reminder_type',
-        'follow_up_date',
         'frequency',
         'task_details',
-        'last_sent_at',
+        'is_active',
+        'timezone',
+        'starts_at',
+        'send_at',
         'next_due_at',
+        'last_sent_at',
+        'status',
+        'meta',
     ];
 
     protected $casts = [
-        'follow_up_date' => 'date',
-        'last_sent_at'   => 'datetime',
-        'next_due_at'    => 'datetime',
+        'is_active'     => 'boolean',
+        'starts_at'     => 'datetime',
+        'next_due_at'   => 'datetime',
+        'last_sent_at'  => 'datetime',
+        'meta'          => AsArrayObject::class,
     ];
 
     public function user()
@@ -32,97 +41,121 @@ class AdminReminder extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function computeNextDueAt(?Carbon $from = null): Carbon
+    public function isDue(?CarbonImmutable $now = null): bool
     {
-        $from ??= now();
-        $base = $this->follow_up_date instanceof Carbon
-            ? $this->follow_up_date->copy()->setTimeFrom($from)
-            : Carbon::parse($this->follow_up_date)->setTimeFrom($from);
+        if (!$this->is_active || !$this->next_due_at) return false;
 
-        return match ($this->frequency) {
-            'weekly'        => $this->nextMondayOnOrAfter($from),
-            'biweekly'      => $this->nextBiweeklyMonday($from),
-            'monthly'       => $this->nextByMonthStep($from, 1, $base->day),
-            'quarterly'     => $this->nextByMonthStep($from, 3, $base->day),
-            'semiannual'    => $this->nextByMonthStep($from, 6, $base->day),
-            'annual'        => $this->nextByMonthStep($from, 12, $base->day),
-            default         => $from->copy()->addDay(),
+        $tz = $this->timezone ?: 'UTC';
+        $now = $now?->setTimezone($tz) ?? now($tz)->toImmutable();
+
+        if ($this->last_sent_at) {
+            $last = CarbonImmutable::parse($this->last_sent_at)->tz($tz);
+            if ($last->equalTo($this->next_due_at)) {
+                return false;
+            }
+        }
+
+        return CarbonImmutable::parse($this->next_due_at)->tz($tz)->lessThanOrEqualTo($now);
+    }
+
+    public function computeNextDueAt(?CarbonImmutable $ref = null): ?CarbonImmutable
+    {
+        $tz = $this->timezone ?: 'UTC';
+        $ref = $ref?->setTimezone($tz) ?? now($tz)->toImmutable();
+
+        $base = $this->starts_at ? CarbonImmutable::parse($this->starts_at)->tz($tz) : $ref;
+
+        if ($this->send_at) {
+            [$h, $m, $s] = array_map('intval', explode(':', $this->send_at . ':00:00'));
+            $base = $base->setTime($h, $m, 0);
+
+            if ($base->lessThanOrEqualTo($ref)) {
+                $base = $base->addMinute();
+            }
+        }
+
+        $meta = (array)($this->meta ?? []);
+
+        $next = match ($this->frequency) {
+            'daily'     => $this->rollUntilFuture($base, $ref, 'day'),
+            'weekly'    => $this->computeWeekly($base, $ref, $meta),
+            'monthly'   => $this->computeMonthly($base, $ref, $meta),
+            'quarterly' => $this->computeQuarterly($base, $ref, $meta),
+            'yearly'    => $this->computeYearly($base, $ref, $meta),
+            default     => null,
         };
+
+        return $next?->tz($tz);
     }
 
-    protected function nextMondayOnOrAfter(Carbon $ref): Carbon
+    protected function rollUntilFuture(CarbonImmutable $base, CarbonImmutable $ref, string $unit): CarbonImmutable
     {
-        return $ref->isMonday() ? $ref->copy() : $ref->copy()->next('monday');
-    }
-
-    /** Biweekly: 1st and 3rd monday of the month */
-    protected function nextBiweeklyMonday(Carbon $ref): Carbon
-    {
-        $candidate = $this->nthMondaysOfMonth($ref->copy()->startOfMonth());
-        foreach ($candidate as $day) {
-            if ($day->isSameDay($ref) || $day->greaterThan($ref)) {
-                return $day->setTimeFrom($ref);
-            }
+        $n = $base;
+        while ($n->lessThanOrEqualTo($ref)) {
+            $n = $n->add(1, $unit);
         }
-        $nextMonth = $ref->copy()->addMonthNoOverflow()->startOfMonth();
-        $candidate = $this->nthMondaysOfMonth($nextMonth);
-        return $candidate[0]->setTimeFrom($ref);
+
+        return $n;
     }
 
-    protected function nthMondaysOfMonth(Carbon $monthStart): array
+    protected function computeWeekly(CarbonImmutable $base, CarbonImmutable $ref, array $meta): CarbonImmutable
     {
-        $firstMonday = $monthStart->copy()->nextOrSame('monday');
-        $thirdMonday = $firstMonday->copy()->addDays(2);
-        return [$firstMonday, $thirdMonday];
-    }
+        // meta['day_of_week'] 0=Dom,1=Lun,...6=Sáb. Default: día de base.
+        $dow = (int)($meta['day_of_week'] ?? $base->dayOfWeek);
 
-    protected function nextByMonthStep(Carbon $ref, int $stepMonths, int $targetDay): Carbon
-    {
-        $candidate = $this->anchorMonthDayOnOrAfter($ref->copy(), $stepMonths, $targetDay);
-        if ($candidate->lessThan($ref)) {
-            $candidate = $this->anchorMonthDayOnOrAfter(
-                $ref->copy()->addMonthsNoOverflow($stepMonths), $stepMonths, $targetDay
-            );
+        // Siguiente o el mismo día de la semana (0..6) de forma compatible
+        $currentDow = (int) $base->dayOfWeek;            // 0..6
+        $delta      = ($dow - $currentDow + 7) % 7;      // 0..6
+        $n          = $base->addDays($delta);            // "nextOrSame"
+
+        // Si ya pasó respecto a la referencia, salta una semana
+        if ($n->lessThanOrEqualTo($ref)) {
+            $n = $n->addWeek();
         }
-        return $candidate->setTimeFrom($ref);
+
+        return $n;
     }
 
-    protected function anchorMonthDayOnOrAfter(Carbon $ref, int $stepMonths, int $targetDay): Carbon
+
+    protected function computeMonthly(CarbonImmutable $base, CarbonImmutable $ref, array $meta): CarbonImmutable
     {
-        $monthEnd = $ref->copy()->endOfMonth();
-        $day = min($targetDay, (int) $monthEnd->day);
-        $candidate = $ref->copy()->day($day);
-        if ($candidate->lessThan($ref)) {
-            $ref = $ref->copy()->addMonthsNoOverflow($stepMonths)->startOfMonth();
-            $monthEnd = $ref->copy()->endOfMonth();
-            $day = min($targetDay, (int) $monthEnd->day);
-            $candidate = $ref->copy()->day($day);
+        $dom = $meta['day_of_month'] ?? $base->day;
+        $n   = $base->setDay(min($dom, $base->daysInMonth));
+        if ($n->lessThanOrEqualTo($ref)) {
+            $n = $base->addMonth()->setDay(min($dom, $base->addMonth()->daysInMonth));
         }
-        return $candidate;
+
+        return $n;
     }
 
-    public function isDueNow(?Carbon $now = null): bool
+    protected function computeQuarterly(CarbonImmutable $base, CarbonImmutable $ref, array $meta): CarbonImmutable
     {
-        $now ??= now();
-        if (!$this->next_due_at) return false;
+        $dom = $meta['day_of_month'] ?? $base->day;
+        $n   = $base->setDay(min($dom, $base->daysInMonth));
+        if ($n->lessThanOrEqualTo($ref)) {
+            $base = $base->addMonths(3);
+            $n    = $base->setDay(min($dom, $base->daysInMonth));
+        }
 
-        // “vence hoy” y aún no se ha enviado para este corte
-        return $this->next_due_at->isSameDay($now)
-            && ($this->last_sent_at?->lt($this->next_due_at) || !$this->last_sent_at);
+        return $n;
     }
 
-    public function bumpToNextDue(): void
+    protected function computeYearly(CarbonImmutable $base, CarbonImmutable $ref, array $meta): CarbonImmutable
     {
-        $this->next_due_at = $this->computeNextDueAt(now()->addMinute());
-        $this->saveQuietly();
+        $month = $meta['month'] ?? $base->month;
+        $dom   = $meta['day_of_month'] ?? $base->day;
+        $n     = $base->setMonth($month)->setDay(min($dom, $base->setMonth($month)->daysInMonth));
+        if ($n->lessThanOrEqualTo($ref)) {
+            $b = $base->addYear()->setMonth($month);
+            $n = $b->setDay(min($dom, $b->daysInMonth));
+        }
+
+        return $n;
     }
 
-    protected static function booted(): void
+    public function advanceNextDue(): void
     {
-        static::saving(function (AdminReminder $model) {
-            if (!$model->next_due_at) {
-                $model->next_due_at = $model->computeNextDueAt();
-            }
-        });
+        $next = $this->computeNextDueAt();
+        $this->forceFill(['next_due_at' => $next])->save();
     }
 }

@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
         // Dispatch your job daily at 8 AM
         $schedule->job(new SendBirthdayEmailJob())->dailyAt('08:00');
         $schedule->command('campaign:finish')->dailyAt('00:00');
-        $schedule->command('reminders:send')->dailyAt('07:00');
+        $schedule->command('reminders:send')->everyMinute()->withoutOverlapping();
     }
 
     /**

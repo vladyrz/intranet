@@ -1,47 +1,51 @@
 <?php
+
 namespace App\Console\Commands;
 
-use App\Mail\AdminReminderDueMail;
-use App\Models\AdminReminder;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Log;
+use App\Models\AdminReminder;
+use App\Notifications\AdminReminderDue;
+use Carbon\CarbonImmutable;
+use Illuminate\Support\Facades\Notification;
 
 class SendAdminReminders extends Command
 {
     protected $signature = 'reminders:send';
-    protected $description = 'Envía correos de recordatorios según next_due_at';
+    protected $description = 'Envía recordatorios admnistrativos vencidos según su frecuencia.';
 
     public function handle(): int
     {
-        $now = now();
-        $count = 0;
+        $nowUtc = now()->toImmutable();
 
-        AdminReminder::query()
+        $candidates = AdminReminder::query()
+            ->where('is_active', true)
             ->whereNotNull('next_due_at')
-            ->whereDate('next_due_at', $now->toDateString())
-            ->chunkById(200, function ($reminders) use (&$count, $now) {
-                foreach ($reminders as $reminder) {
-                    if (!$reminder->isDueNow($now)) continue;
-                    $user = $reminder->user;
-                    if (!$user || empty($user->email)) continue;
+            ->where('next_due_at', '<=', $nowUtc)
+            ->with('user')
+            ->get();
 
-                    try {
-                        Mail::to($user->email)->send(new AdminReminderDueMail($reminder));
-                        $reminder->last_sent_at = $now;
-                        $reminder->saveQuietly();
-                        $reminder->bumpToNextDue();
-                        $count++;
-                    } catch (\Throwable $e) {
-                        Log::error('Reminder mail failed', [
-                            'reminder_id' => $reminder->id,
-                            'error' => $e->getMessage(),
-                        ]);
-                    }
-                }
-            });
+        $sent = 0;
 
-        $this->info("Recordatorios enviados: {$count}");
+        foreach ($candidates as $reminder) {
+            if (!$reminder->user) continue;
+
+            if (!$reminder->isDue(CarbonImmutable::now($reminder->timezone))) {
+                continue;
+            }
+
+            Notification::send($reminder->user, new AdminReminderDue($reminder));
+
+            $reminder->forceFill([
+                'last_sent_at' => now($reminder->timezone),
+            ])->save();
+
+            $reminder->advanceNextDue();
+
+            $sent++;
+        }
+
+        $this->info("Reminders enviados: {$sent}");
+
         return Command::SUCCESS;
     }
 }
