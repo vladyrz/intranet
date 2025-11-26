@@ -130,6 +130,7 @@ class CampaignResource extends Resource
                         'finished' => 'info',
                         'to_schedule' => 'gray',
                         'scheduled' => 'info',
+                        'rejected' => 'danger',
                     })
                     ->icon(fn (string $state): string => match ($state) {
                         'pending' => 'heroicon-o-clock',
@@ -138,6 +139,7 @@ class CampaignResource extends Resource
                         'finished' => 'heroicon-o-check-circle',
                         'to_schedule' => 'heroicon-o-calendar',
                         'scheduled' => 'heroicon-o-calendar-date-range',
+                        'rejected' => 'heroicon-o-minus-circle',
                     }),
                 TextColumn::make('user.name')
                     ->label(__('translate.campaign.user_id'))
