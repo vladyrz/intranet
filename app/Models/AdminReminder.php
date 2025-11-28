@@ -29,11 +29,11 @@ class AdminReminder extends Model
     ];
 
     protected $casts = [
-        'is_active'     => 'boolean',
-        'starts_at'     => 'datetime',
-        'next_due_at'   => 'datetime',
-        'last_sent_at'  => 'datetime',
-        'meta'          => AsArrayObject::class,
+        'is_active' => 'boolean',
+        'starts_at' => 'datetime',
+        'next_due_at' => 'datetime',
+        'last_sent_at' => 'datetime',
+        'meta' => AsArrayObject::class,
     ];
 
     public function user()
@@ -43,7 +43,8 @@ class AdminReminder extends Model
 
     public function isDue(?CarbonImmutable $now = null): bool
     {
-        if (!$this->is_active || !$this->next_due_at) return false;
+        if (!$this->is_active || !$this->next_due_at)
+            return false;
 
         $tz = $this->timezone ?: 'UTC';
         $now = $now?->setTimezone($tz) ?? now($tz)->toImmutable();
@@ -68,21 +69,17 @@ class AdminReminder extends Model
         if ($this->send_at) {
             [$h, $m, $s] = array_map('intval', explode(':', $this->send_at . ':00:00'));
             $base = $base->setTime($h, $m, 0);
-
-            if ($base->lessThanOrEqualTo($ref)) {
-                $base = $base->addMinute();
-            }
         }
 
-        $meta = (array)($this->meta ?? []);
+        $meta = (array) ($this->meta ?? []);
 
         $next = match ($this->frequency) {
-            'daily'     => $this->rollUntilFuture($base, $ref, 'day'),
-            'weekly'    => $this->computeWeekly($base, $ref, $meta),
-            'monthly'   => $this->computeMonthly($base, $ref, $meta),
+            'daily' => $this->rollUntilFuture($base, $ref, 'day'),
+            'weekly' => $this->computeWeekly($base, $ref, $meta),
+            'monthly' => $this->computeMonthly($base, $ref, $meta),
             'quarterly' => $this->computeQuarterly($base, $ref, $meta),
-            'yearly'    => $this->computeYearly($base, $ref, $meta),
-            default     => null,
+            'yearly' => $this->computeYearly($base, $ref, $meta),
+            default => null,
         };
 
         return $next?->tz($tz);
@@ -101,15 +98,15 @@ class AdminReminder extends Model
     protected function computeWeekly(CarbonImmutable $base, CarbonImmutable $ref, array $meta): CarbonImmutable
     {
         // meta['day_of_week'] 0=Dom,1=Lun,...6=Sáb. Default: día de base.
-        $dow = (int)($meta['day_of_week'] ?? $base->dayOfWeek);
+        $dow = (int) ($meta['day_of_week'] ?? $base->dayOfWeek);
 
         // Siguiente o el mismo día de la semana (0..6) de forma compatible
         $currentDow = (int) $base->dayOfWeek;            // 0..6
-        $delta      = ($dow - $currentDow + 7) % 7;      // 0..6
-        $n          = $base->addDays($delta);            // "nextOrSame"
+        $delta = ($dow - $currentDow + 7) % 7;      // 0..6
+        $n = $base->addDays($delta);            // "nextOrSame"
 
-        // Si ya pasó respecto a la referencia, salta una semana
-        if ($n->lessThanOrEqualTo($ref)) {
+        // Si ya pasó respecto a la referencia, salta semanas hasta que sea futuro
+        while ($n->lessThanOrEqualTo($ref)) {
             $n = $n->addWeek();
         }
 
@@ -120,9 +117,10 @@ class AdminReminder extends Model
     protected function computeMonthly(CarbonImmutable $base, CarbonImmutable $ref, array $meta): CarbonImmutable
     {
         $dom = $meta['day_of_month'] ?? $base->day;
-        $n   = $base->setDay(min($dom, $base->daysInMonth));
-        if ($n->lessThanOrEqualTo($ref)) {
+        $n = $base->setDay(min($dom, $base->daysInMonth));
+        while ($n->lessThanOrEqualTo($ref)) {
             $n = $base->addMonth()->setDay(min($dom, $base->addMonth()->daysInMonth));
+            $base = $base->addMonth(); // Important: update base to keep advancing months correctly
         }
 
         return $n;
@@ -131,10 +129,10 @@ class AdminReminder extends Model
     protected function computeQuarterly(CarbonImmutable $base, CarbonImmutable $ref, array $meta): CarbonImmutable
     {
         $dom = $meta['day_of_month'] ?? $base->day;
-        $n   = $base->setDay(min($dom, $base->daysInMonth));
-        if ($n->lessThanOrEqualTo($ref)) {
+        $n = $base->setDay(min($dom, $base->daysInMonth));
+        while ($n->lessThanOrEqualTo($ref)) {
             $base = $base->addMonths(3);
-            $n    = $base->setDay(min($dom, $base->daysInMonth));
+            $n = $base->setDay(min($dom, $base->daysInMonth));
         }
 
         return $n;
@@ -143,11 +141,12 @@ class AdminReminder extends Model
     protected function computeYearly(CarbonImmutable $base, CarbonImmutable $ref, array $meta): CarbonImmutable
     {
         $month = $meta['month'] ?? $base->month;
-        $dom   = $meta['day_of_month'] ?? $base->day;
-        $n     = $base->setMonth($month)->setDay(min($dom, $base->setMonth($month)->daysInMonth));
-        if ($n->lessThanOrEqualTo($ref)) {
+        $dom = $meta['day_of_month'] ?? $base->day;
+        $n = $base->setMonth($month)->setDay(min($dom, $base->setMonth($month)->daysInMonth));
+        while ($n->lessThanOrEqualTo($ref)) {
             $b = $base->addYear()->setMonth($month);
             $n = $b->setDay(min($dom, $b->daysInMonth));
+            $base = $base->addYear(); // Update base
         }
 
         return $n;
