@@ -71,6 +71,12 @@ class AdminReminder extends Model
             $base = $base->setTime($h, $m, 0);
         }
 
+        // Si nunca se ha enviado, permitimos que la próxima fecha sea en el pasado (catch-up)
+        // para que se envíe inmediatamente.
+        if (!$this->last_sent_at) {
+            $ref = $base->subSecond();
+        }
+
         $meta = (array) ($this->meta ?? []);
 
         $next = match ($this->frequency) {
