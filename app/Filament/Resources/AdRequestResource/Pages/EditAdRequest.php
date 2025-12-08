@@ -22,7 +22,7 @@ class EditAdRequest extends EditRecord
             Actions\DeleteAction::make(),
 
             Action::make('payWithStripe')
-                ->label('Pagar con Stripe')
+                ->label('Pagar con TC/TD')
                 ->icon('heroicon-m-credit-card')
                 ->color('success')
                 ->url(fn(AdRequest $record) => route('ad-requests.pay', $record))

@@ -261,7 +261,7 @@ class AdRequestResource extends Resource
                     Tables\Actions\EditAction::make()
                         ->color('warning'),
                     Tables\Actions\Action::make('payWithStripe')
-                        ->label('Pagar con Stripe')
+                        ->label('Pagar con TC/TD')
                         ->icon('heroicon-o-credit-card')
                         ->color('success')
                         ->url(fn(AdRequest $record) => route('ad-requests.pay', $record))
