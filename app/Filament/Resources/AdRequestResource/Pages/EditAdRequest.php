@@ -5,8 +5,10 @@ namespace App\Filament\Resources\AdRequestResource\Pages;
 use App\Filament\Resources\AdRequestResource;
 use App\Helpers\FilamentUrlHelper;
 use App\Mail\AdStatusMail;
+use App\Models\AdRequest;
 use App\Models\User;
 use Filament\Actions;
+use Filament\Actions\Action;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Mail;
 
@@ -18,6 +20,14 @@ class EditAdRequest extends EditRecord
     {
         return [
             Actions\DeleteAction::make(),
+
+            Action::make('payWithStripe')
+                ->label('Pagar con Stripe')
+                ->icon('heroicon-m-credit-card')
+                ->color('success')
+                ->url(fn(AdRequest $record) => route('ad-requests.pay', $record))
+                ->openUrlInNewTab()
+                ->visible(fn(AdRequest $record) => $record->investment_amount > 0 && $record->stripe_payment_status !== 'paid'),
         ];
     }
 

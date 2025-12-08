@@ -26,10 +26,14 @@ class AdRequest extends Model
         'views',
         'reach',
         'link_clicks',
+        'stripe_session_id',
+        'stripe_payment_status',
+        'paid_at',
     ];
 
     protected $casts = [
         'payment_receipt' => 'array',
+        'paid_at' => 'datetime',
     ];
 
     public function user()

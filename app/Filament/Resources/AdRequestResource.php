@@ -65,7 +65,7 @@ class AdRequestResource extends Resource
                             ->relationship(
                                 name: 'user',
                                 titleAttribute: 'name',
-                                modifyQueryUsing: fn (Builder $query) => $query->where('state', true),
+                                modifyQueryUsing: fn(Builder $query) => $query->where('state', true),
                             )
                             ->preload()
                             ->searchable()
@@ -143,7 +143,7 @@ class AdRequestResource extends Resource
                     ->alignCenter()
                     ->formatStateUsing(fn($state) => __('translate.ad_request.options_platform.' . $state))
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'facebook' => 'info',
                         'instagram' => 'danger',
                         'tiktok' => 'warning',
@@ -151,7 +151,7 @@ class AdRequestResource extends Resource
                     }),
                 TextColumn::make('ad_url')
                     ->label(__('translate.ad_request.ad_url'))
-                    ->url(fn ($record) => $record->ad_url)
+                    ->url(fn($record) => $record->ad_url)
                     ->openUrlInNewTab()
                     ->limit(50)
                     ->searchable()
@@ -178,19 +178,38 @@ class AdRequestResource extends Resource
                 TextColumn::make('investment_amount')
                     ->label(__('translate.ad_request.investment_amount'))
                     ->alignRight()
+                    ->money('CRC')
                     ->toggleable(isToggledHiddenByDefault: false),
+                TextColumn::make('stripe_payment_status')
+                    ->label('Estado de Pago')
+                    ->badge()
+                    ->formatStateUsing(function ($state) {
+                        return match ($state) {
+                            'paid' => 'Pagado',
+                            'pending' => 'Pendiente',
+                            'failed' => 'Fallido',
+                            default => 'Desconocido',
+                        };
+                    })
+                    ->color(fn(string $state): string => match ($state) {
+                        'paid' => 'success',
+                        'pending' => 'warning',
+                        'failed' => 'danger',
+                        default => 'gray',
+                    })
+                    ->alignCenter(),
                 TextColumn::make('status')
                     ->label(__('translate.ad_request.status'))
                     ->alignCenter()
                     ->formatStateUsing(fn($state) => __('translate.ad_request.options_status.' . $state))
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'pending' => 'warning',
                         'scheduled' => 'info',
                         'stopped' => 'danger',
                         'finished' => 'success',
                     })
-                    ->icon(fn (string $state): string => match ($state) {
+                    ->icon(fn(string $state): string => match ($state) {
                         'pending' => 'heroicon-o-clock',
                         'scheduled' => 'heroicon-o-calendar-date-range',
                         'stopped' => 'heroicon-o-minus-circle',
@@ -241,6 +260,13 @@ class AdRequestResource extends Resource
                         ->color('info'),
                     Tables\Actions\EditAction::make()
                         ->color('warning'),
+                    Tables\Actions\Action::make('payWithStripe')
+                        ->label('Pagar con Stripe')
+                        ->icon('heroicon-o-credit-card')
+                        ->color('success')
+                        ->url(fn(AdRequest $record) => route('ad-requests.pay', $record))
+                        ->openUrlInNewTab()
+                        ->visible(fn(AdRequest $record) => $record->investment_amount > 0 && $record->stripe_payment_status !== 'paid'),
                     Tables\Actions\DeleteAction::make(),
                 ]),
             ])
