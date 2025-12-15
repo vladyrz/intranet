@@ -272,13 +272,6 @@ return [
         'tab_rejected' => 'Rejected',
     ],
 
-    'admin_reminder' => [
-        'label' => 'Administrative Reminder',
-        'plural' => 'Administrative Reminders',
-        'navigation' => 'Administrative Reminders',
-        'reminder_section' => 'Reminder Info',
-    ],
-
     'ad_request' => [
         'label' => 'Advertising Request',
         'plural' => 'Advertising Requests',

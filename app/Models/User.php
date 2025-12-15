@@ -54,78 +54,91 @@ class User extends Authenticatable implements HasAvatar
 
     public function getFilamentAvatarUrl(): ?string
     {
-        return asset('storage/'.$this->avatar_url);
+        return asset('storage/' . $this->avatar_url);
     }
 
-    public function employee(){
+    public function employee()
+    {
         return $this->hasOne(Employee::class);
     }
 
-    public function calendars(){
+    public function calendars()
+    {
         return $this->belongsToMany(Calendar::class);
     }
 
-    public function departaments(){
+    public function departaments()
+    {
         return $this->belongsToMany(Departament::class);
     }
 
-    public function leaves(){
+    public function leaves()
+    {
         return $this->hasMany(LeaveRequest::class);
     }
 
-    public function customers(){
+    public function customers()
+    {
         return $this->hasMany(Customer::class);
     }
 
-    public function customerreports(){
+    public function customerreports()
+    {
         return $this->hasMany(CustomerReport::class);
     }
 
-    public function operations(){
+    public function operations()
+    {
         return $this->hasMany(Operation::class);
     }
 
-    public function properties(){
+    public function properties()
+    {
         return $this->hasMany(PropertyAssignment::class);
     }
 
-    public function personalcustomers(){
+    public function personalcustomers()
+    {
         return $this->hasMany(PersonalCustomer::class);
     }
 
-    public function offers(){
+    public function offers()
+    {
         return $this->hasMany(Offer::class);
     }
 
-    public function accesRequests(){
+    public function accesRequests()
+    {
         return $this->hasMany(AccesRequest::class);
     }
 
-    public function campaigns(){
+    public function campaigns()
+    {
         return $this->hasMany(Campaign::class);
     }
 
-    public function creditStudyRequests(){
+    public function creditStudyRequests()
+    {
         return $this->hasMany(CreditStudyRequest::class);
     }
 
-    public function adminReminders(){
-        return $this->hasMany(AdminReminder::class);
-    }
-
-    public function adRequests(){
+    public function adRequests()
+    {
         return $this->hasMany(AdRequest::class);
     }
 
-    public function projects(){
+    public function projects()
+    {
         return $this->hasMany(Project::class);
     }
 
-    public function thirdPartyProperties(){
+    public function thirdPartyProperties()
+    {
         return $this->hasMany(ThirdPartyProperty::class);
     }
 
-    public function collab(){
+    public function collab()
+    {
         return $this->hasMany(CollaborationRequest::class);
     }
 }

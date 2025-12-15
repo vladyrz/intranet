@@ -273,13 +273,6 @@ return [
         'tab_rejected' => 'Rechazadas',
     ],
 
-    'admin_reminder' => [
-        'label' => 'Recordatorio administrativo',
-        'plural' => 'Recordatorios administrativos',
-        'navigation' => 'Recordatorios administrativos',
-        'reminder_section' => 'Información del recordatorio',
-    ],
-
     'ad_request' => [
         'label' => 'Solicitud de pauta',
         'plural' => 'Solicitudes de pauta',

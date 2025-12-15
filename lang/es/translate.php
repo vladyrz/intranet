@@ -505,28 +505,6 @@ return [
         'updated_at' => 'Actualizado el',
     ],
 
-    'admin_reminder' => [
-        'user_id' => 'Responsable',
-        'reminder_type' => 'Tipo de recordatorio',
-        'options_reminder_type' => [
-            'administrative' => 'Administrativo',
-            'financial' => 'Financiero',
-        ],
-        'follow_up_date' => 'Fecha de seguimiento',
-        'frequency' => 'Frecuencia',
-        'options_frequency' => [
-            'weekly' => 'Semanal',
-            'biweekly' => 'Quincenal',
-            'monthly' => 'Mensual',
-            'quarterly' => 'Trimestral',
-            'semiannual' => 'Semestral',
-            'annual' => 'Anual',
-        ],
-        'task_details' => 'Detalles de la tarea',
-        'created_at' => 'Enviado el',
-        'updated_at' => 'Actualizado el',
-    ],
-
     'ad_request' => [
         'user_id' => 'Asesor',
         'platform' => 'Plataforma',
