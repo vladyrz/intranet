@@ -141,4 +141,9 @@ class User extends Authenticatable implements HasAvatar
     {
         return $this->hasMany(CollaborationRequest::class);
     }
+
+    public function financialControls()
+    {
+        return $this->hasMany(FinancialControl::class);
+    }
 }
