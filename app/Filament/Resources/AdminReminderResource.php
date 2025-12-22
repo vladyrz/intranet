@@ -2,29 +2,14 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\ReminderFrequency;
+use App\Enums\ReminderType;
 use App\Filament\Resources\AdminReminderResource\Pages;
 use App\Models\AdminReminder;
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\KeyValue;
-use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\TimePicker;
-use Filament\Forms\Components\Toggle;
+use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Actions\ActionGroup;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\Filter;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Filters\TernaryFilter;
-use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -33,64 +18,70 @@ class AdminReminderResource extends Resource
 {
     protected static ?string $model = AdminReminder::class;
 
-    protected static ?string $label = 'recordatorio';
-
-    protected static ?string $pluralLabel = 'Recordatorios';
-
-    protected static ?string $navigationGroup = 'Gestión administrativa';
-
     protected static ?string $navigationIcon = 'heroicon-o-clock';
+
+    protected static ?string $navigationGroup = 'Administration';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Section::make('Asignación')->schema([
-                    Select::make('user_id')->label('Agente')->relationship(name: 'user', titleAttribute: 'name')->searchable()->preload()->required(),
-                    TextInput::make('reminder_type')->label('Tipo de recordatorio')->maxLength(100)->required(),
-                    Select::make('frequency')->label('Frecuencia')->options([
-                        'daily' => 'Diaria',
-                        'weekly' => 'Semanal',
-                        'monthly' => 'Mensual',
-                        'quarterly' => 'Trimestral',
-                        'yearly' => 'Anual',
-                    ])->required()->reactive()->afterStateUpdated(function ($state, Set $set) {
-                        $defaults = match ($state) {
-                            'weekly'    => ['day_of_week' => 1],
-                            'monthly'   => ['day_of_month' => 28],
-                            'quarterly' => ['day_of_month' => 15],
-                            'yearly'    => ['month' => 1, 'day_of_month' => 10],
-                            default     => [],
-                        };
-                        $set('meta', $defaults);
-                    }),
-                ])->columns(3),
+                Forms\Components\Section::make('Reminder Configuration')
+                    ->schema([
+                        Forms\Components\Select::make('user_id')
+                            ->relationship('user', 'name')
+                            ->searchable()
+                            ->required()
+                            ->label('Recipient User'),
 
-                Section::make('Programación')->schema([
-                    Toggle::make('is_active')->label('Activo')->default(true),
-                    TextInput::make('timezone')->label('Zona horaria')->default('America/Costa_Rica')->helperText('Zona horaria para calcular "hoy" y la hora de envío.'),
-                    DateTimePicker::make('starts_at')->label('Comienza desde')->seconds(false),
-                    TimePicker::make('send_at')->label('Hora preferida de envío')->seconds(false),
+                        Forms\Components\Select::make('frequency')
+                            ->options(ReminderFrequency::class)
+                            ->required()
+                            ->enum(ReminderFrequency::class),
 
-                    KeyValue::make('meta')->label('Parámetros de frecuencia')->addActionLabel('Agregar')->reorderActionLabel('Reordenar')->keyPlaceholder('p. ej. day_of_week')->valuePlaceholder('p. ej. 1')->reorderable()->helperText(fn(Get $get) => match ($get('frequency')) {
-                        'weekly'    => 'Usa day_of_week (0=Dom,1=Lun,...6=Sáb)',
-                        'monthly'   => 'Usa day_of_month (1..31)',
-                        'quarterly' => 'Usa day_of_month (1..31)',
-                        'yearly'    => 'Usa month (1..12) y day_of_month (1..31)',
-                        default     => 'Sin parámetros requeridos',
-                    })->columnSpanFull(),
-                ])->columns(2),
+                        Forms\Components\Select::make('type')
+                            ->options(ReminderType::class)
+                            ->required()
+                            ->enum(ReminderType::class),
 
-                Section::make('Contenido')->schema([
-                    Textarea::make('task_details')->label('Detalles de la tarea')->rows(6)->required(),
-                ]),
+                        Forms\Components\Textarea::make('content')
+                            ->required()
+                            ->columnSpanFull()
+                            ->rows(3),
+                    ])->columns(2),
 
-                Section::make('Siguiente ejecución')->schema([
-                    Placeholder::make('next_due_preview')->label('Próximo vencimiento (preview)')->content(
-                        fn(?AdminReminder $record) =>
-                        $record?->next_due_at?->tz($record->timezone ?? 'UTC')->format('Y-m-d H:i') ?? '-'
-                    ),
-                ])->hidden(fn($get) => !$get('id')),
+                Forms\Components\Section::make('Scheduling')
+                    ->schema([
+                        Forms\Components\DatePicker::make('starts_at')
+                            ->required()
+                            ->default(now()->addDay()->startOfDay()->addHours(8))
+                            ->label('Starts At (First Run)'),
+
+                        Forms\Components\DatePicker::make('ends_at')
+                            ->label('Ends At (Optional)'),
+
+                        Forms\Components\Toggle::make('is_active')
+                            ->default(true)
+                            ->label('Active'),
+                    ])->columns(2),
+
+                Forms\Components\Section::make('Status & History')
+                    ->schema([
+                        Forms\Components\Placeholder::make('next_run_at')
+                            ->content(fn(?AdminReminder $record) => $record?->next_run_at?->format('Y-m-d H:i:s') ?? 'Pending calculation'),
+
+                        Forms\Components\Placeholder::make('last_sent_at')
+                            ->content(fn(?AdminReminder $record) => $record?->last_sent_at?->format('Y-m-d H:i:s') ?? 'Never'),
+
+                        Forms\Components\Placeholder::make('failure_count')
+                            ->content(fn(?AdminReminder $record) => $record?->failure_count ?? 0),
+
+                        Forms\Components\Placeholder::make('last_error_message')
+                            ->content(fn(?AdminReminder $record) => $record?->last_error_message ?? 'None')
+                            ->visible(fn(?AdminReminder $record) => !empty($record?->last_error_message)),
+                    ])->columns(2)
+                    ->collapsible()
+                    ->collapsed(),
             ]);
     }
 
@@ -98,70 +89,63 @@ class AdminReminderResource extends Resource
     {
         return $table
             ->columns([
-                IconColumn::make('is_active')->boolean()->label('Act.'),
-                TextColumn::make('user.name')->label('Agente')->searchable(),
-                TextColumn::make('reminder_type')->label('Tipo de recordatorio')->searchable(),
-                TextColumn::make('frequency')->label('Frecuencia')->badge()->formatStateUsing(fn($state) => match ($state) {
-                    'daily' => 'Diaria',
-                    'weekly' => 'Semanal',
-                    'monthly' => 'Mensual',
-                    'quarterly' => 'Trimestral',
-                    'yearly' => 'Anual',
-                })->color(fn(string $state): string => match ($state) {
-                    'daily' => 'success',
-                    'weekly' => 'info',
-                    'monthly' => 'warning',
-                    'quarterly' => 'danger',
-                    'yearly' => 'gray',
-                }),
-                TextColumn::make('next_due_at')->dateTime()->label('Próximo')->alignCenter(),
-                TextColumn::make('last_sent_at')->dateTime()->label('Último envío')->alignCenter()->toggleable(isToggledHiddenByDefault: false),
-                TextColumn::make('timezone')->label('Zona horaria')->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('created_at')->label('Creado')->dateTime()->sortable()->alignCenter()->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')->label('Actualizado')->since()->alignCenter(),
+                Tables\Columns\TextColumn::make('user.name')
+                    ->searchable()
+                    ->sortable()
+                    ->label('User'),
+
+                Tables\Columns\TextColumn::make('type')
+                    ->badge()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('frequency')
+                    ->sortable(),
+
+                Tables\Columns\IconColumn::make('is_active')
+                    ->boolean()
+                    ->label('Active'),
+
+                Tables\Columns\TextColumn::make('next_run_at')
+                    ->dateTime()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('last_sent_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                Tables\Columns\TextColumn::make('failure_count')
+                    ->numeric()
+                    ->sortable()
+                    ->color(fn(int $state) => $state > 0 ? 'danger' : 'success'),
             ])
-            ->defaultSort('created_at', 'desc')
             ->filters([
-                TrashedFilter::make()->label('Borrados'),
-                TernaryFilter::make('is_active')->label('Activos'),
-                SelectFilter::make('frequency')->label('Frecuencia')->options([
-                    'daily' => 'Diaria',
-                    'weekly' => 'Semanal',
-                    'monthly' => 'Mensual',
-                    'quarterly' => 'Trimestral',
-                    'yearly' => 'Anual',
-                ]),
-                Filter::make('due_today')->label('Vencimientos de hoy')->query(function ($query) {
-                    return $query->whereNotNull('next_due_at')->where('next_due_at', '<=', now()->endOfDay());
-                }),
+                Tables\Filters\SelectFilter::make('frequency')
+                    ->options(ReminderFrequency::class),
+
+                Tables\Filters\SelectFilter::make('type')
+                    ->options(ReminderType::class),
+
+                Tables\Filters\Filter::make('active')
+                    ->query(fn(Builder $query) => $query->where('is_active', true)),
             ])
             ->actions([
-                ActionGroup::make([
-                    Tables\Actions\EditAction::make()->color('warning'),
-                    Tables\Actions\Action::make('forceSend')->label('Enviar ahora')->requiresConfirmation()->action(function (AdminReminder $record) {
-                        $record->user?->notify(new \App\Notifications\AdminReminderDue($record));
-                        $record->forceFill(['last_sent_at' => now($record->timezone)])->save();
-                        $record->advanceNextDue();
-                    })->icon('heroicon-o-paper-airplane')->color('success'),
-                    Tables\Actions\DeleteAction::make(),
-                    Tables\Actions\RestoreAction::make(),
-                    Tables\Actions\ForceDeleteAction::make(),
-                ]),
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('next_run_at', 'asc');
     }
 
-    public static function getEloquentQuery(): Builder
+    public static function getRelations(): array
     {
-        return parent::getEloquentQuery()->withoutGlobalScopes([
-            SoftDeletingScope::class,
-        ]);
+        return [
+            //
+        ];
     }
 
     public static function getPages(): array

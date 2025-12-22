@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\Enums\ReminderStatus;
-use App\Models\AdminReminderPlus;
+use App\Models\AdminReminder;
 use App\Models\AdminReminderRun;
 use App\Notifications\AdminReminderNotification;
 use Illuminate\Bus\Queueable;
@@ -17,7 +17,7 @@ class SendAdminReminderJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(public AdminReminderPlus $reminder)
+    public function __construct(public AdminReminder $reminder)
     {
     }
 

@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Jobs\SendAdminReminderJob;
-use App\Models\AdminReminderPlus;
+use App\Models\AdminReminder;
 use Illuminate\Console\Command;
 
 class AdminRemindersDispatchCommand extends Command
@@ -34,7 +34,7 @@ class AdminRemindersDispatchCommand extends Command
 
         $this->info("Checking for reminders due before: " . $now->toDateTimeString());
 
-        $reminders = AdminReminderPlus::query()
+        $reminders = AdminReminder::query()
             ->where('is_active', true)
             ->where(function ($query) use ($now) {
                 $query->where('next_run_at', '<=', $now)

@@ -2,165 +2,108 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use Carbon\CarbonImmutable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Enums\ReminderFrequency;
+use App\Enums\ReminderType;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Casts\AsArrayObject;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class AdminReminder extends Model
 {
-    use HasFactory, SoftDeletes;
-
     protected $fillable = [
         'user_id',
-        'reminder_type',
         'frequency',
-        'task_details',
+        'type',
+        'content',
         'is_active',
-        'timezone',
         'starts_at',
-        'send_at',
-        'next_due_at',
+        'ends_at',
         'last_sent_at',
-        'status',
-        'meta',
+        'next_run_at',
+        'failure_count',
+        'last_error_message',
+        'last_error_trace',
+        'last_failed_at',
     ];
 
     protected $casts = [
+        'frequency' => ReminderFrequency::class,
+        'type' => ReminderType::class,
         'is_active' => 'boolean',
         'starts_at' => 'datetime',
-        'next_due_at' => 'datetime',
+        'ends_at' => 'datetime',
         'last_sent_at' => 'datetime',
-        'meta' => AsArrayObject::class,
+        'next_run_at' => 'datetime',
+        'last_failed_at' => 'datetime',
     ];
 
-    public function user()
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saving(function (AdminReminder $reminder) {
+            if (!$reminder->next_run_at && $reminder->starts_at) {
+                $reminder->next_run_at = $reminder->calculateNextRunAt();
+            }
+        });
+    }
+
+    public function calculateNextRunAt(): ?\Carbon\CarbonImmutable
+    {
+        $timezone = 'America/Costa_Rica';
+        $now = now($timezone);
+
+        // Base calculation on starts_at or last_sent_at
+        // If never sent, use starts_at. If sent, calculate next from last_sent_at.
+        // However, if starts_at is in future, wait until then.
+
+        $baseDate = $this->last_sent_at
+            ? $this->last_sent_at->setTimezone($timezone)
+            : $this->starts_at->setTimezone($timezone);
+
+        // If we haven't sent it yet, but starts_at is in the past, scheduling should probably happen "now" or "tomorrow 8am" depending on logic.
+        // Requirement: "Siempre a las 8:00 AM CR".
+
+        $targetTime = \Carbon\CarbonImmutable::parse($baseDate)->setTime(8, 0, 0);
+
+        // If it's the first run (no last_sent_at), we respect starts_at date but force 8am.
+        if (!$this->last_sent_at) {
+            // Ensure we don't schedule in the past if starts_at is today 7am and now is 9am.
+            if ($targetTime->isPast() && $this->starts_at->isPast()) {
+                // If starts_at was "yesterday", and we create it today, should we run "tomorrow"?
+                // Let's assume we run "next valid slot".
+                // But for simplified logic: Just use starts_at date at 8am.
+                // If that point is past, add frequency.
+                // Actually better:
+                // Check if starts_at is today/future.
+                if ($targetTime->isFuture()) {
+                    return $targetTime;
+                }
+                // If targetTime is past, we need to advance it using frequency until future.
+            } else {
+                // Future starts_at
+                return $targetTime;
+            }
+        }
+
+        // Logic for "Next" occurencce
+        return match ($this->frequency) {
+            ReminderFrequency::Daily => $targetTime->addDay(),
+            ReminderFrequency::Weekly => $targetTime->addWeek(),
+            ReminderFrequency::Monthly => $targetTime->addMonthNoOverflow(),
+            ReminderFrequency::Quarterly => $targetTime->addMonthsNoOverflow(3),
+            ReminderFrequency::Yearly => $targetTime->addYearNoOverflow(),
+        };
+    }
+
+
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function isDue(?CarbonImmutable $now = null): bool
+    public function runs(): HasMany
     {
-        if (!$this->is_active || !$this->next_due_at)
-            return false;
-
-        $tz = $this->timezone ?: 'UTC';
-        $now = $now?->setTimezone($tz) ?? now($tz)->toImmutable();
-
-        if ($this->last_sent_at) {
-            $last = CarbonImmutable::parse($this->last_sent_at)->tz($tz);
-            if ($last->equalTo($this->next_due_at)) {
-                return false;
-            }
-        }
-
-        return CarbonImmutable::parse($this->next_due_at)->tz($tz)->lessThanOrEqualTo($now);
-    }
-
-    public function computeNextDueAt(?CarbonImmutable $ref = null): ?CarbonImmutable
-    {
-        $tz = $this->timezone ?: 'UTC';
-        $ref = $ref?->setTimezone($tz) ?? now($tz)->toImmutable();
-
-        $base = $this->starts_at ? CarbonImmutable::parse($this->starts_at)->tz($tz) : $ref;
-
-        if ($this->send_at) {
-            [$h, $m, $s] = array_map('intval', explode(':', $this->send_at . ':00:00'));
-            $base = $base->setTime($h, $m, 0);
-        }
-
-        // Si nunca se ha enviado, permitimos que la próxima fecha sea en el pasado (catch-up)
-        // para que se envíe inmediatamente.
-        if (!$this->last_sent_at) {
-            $ref = $base->subSecond();
-        }
-
-        $meta = (array) ($this->meta ?? []);
-
-        $next = match ($this->frequency) {
-            'daily' => $this->rollUntilFuture($base, $ref, 'day'),
-            'weekly' => $this->computeWeekly($base, $ref, $meta),
-            'monthly' => $this->computeMonthly($base, $ref, $meta),
-            'quarterly' => $this->computeQuarterly($base, $ref, $meta),
-            'yearly' => $this->computeYearly($base, $ref, $meta),
-            default => null,
-        };
-
-        return $next?->tz($tz);
-    }
-
-    protected function rollUntilFuture(CarbonImmutable $base, CarbonImmutable $ref, string $unit): CarbonImmutable
-    {
-        $n = $base;
-        while ($n->lessThanOrEqualTo($ref)) {
-            $n = $n->add(1, $unit);
-        }
-
-        return $n;
-    }
-
-    protected function computeWeekly(CarbonImmutable $base, CarbonImmutable $ref, array $meta): CarbonImmutable
-    {
-        // meta['day_of_week'] 0=Dom,1=Lun,...6=Sáb. Default: día de base.
-        $dow = (int) ($meta['day_of_week'] ?? $base->dayOfWeek);
-
-        // Siguiente o el mismo día de la semana (0..6) de forma compatible
-        $currentDow = (int) $base->dayOfWeek;            // 0..6
-        $delta = ($dow - $currentDow + 7) % 7;      // 0..6
-        $n = $base->addDays($delta);            // "nextOrSame"
-
-        // Si ya pasó respecto a la referencia, salta semanas hasta que sea futuro
-        while ($n->lessThanOrEqualTo($ref)) {
-            $n = $n->addWeek();
-        }
-
-        return $n;
-    }
-
-
-    protected function computeMonthly(CarbonImmutable $base, CarbonImmutable $ref, array $meta): CarbonImmutable
-    {
-        $dom = $meta['day_of_month'] ?? $base->day;
-        $n = $base->setDay(min($dom, $base->daysInMonth));
-        while ($n->lessThanOrEqualTo($ref)) {
-            $n = $base->addMonth()->setDay(min($dom, $base->addMonth()->daysInMonth));
-            $base = $base->addMonth(); // Important: update base to keep advancing months correctly
-        }
-
-        return $n;
-    }
-
-    protected function computeQuarterly(CarbonImmutable $base, CarbonImmutable $ref, array $meta): CarbonImmutable
-    {
-        $dom = $meta['day_of_month'] ?? $base->day;
-        $n = $base->setDay(min($dom, $base->daysInMonth));
-        while ($n->lessThanOrEqualTo($ref)) {
-            $base = $base->addMonths(3);
-            $n = $base->setDay(min($dom, $base->daysInMonth));
-        }
-
-        return $n;
-    }
-
-    protected function computeYearly(CarbonImmutable $base, CarbonImmutable $ref, array $meta): CarbonImmutable
-    {
-        $month = $meta['month'] ?? $base->month;
-        $dom = $meta['day_of_month'] ?? $base->day;
-        $n = $base->setMonth($month)->setDay(min($dom, $base->setMonth($month)->daysInMonth));
-        while ($n->lessThanOrEqualTo($ref)) {
-            $b = $base->addYear()->setMonth($month);
-            $n = $b->setDay(min($dom, $b->daysInMonth));
-            $base = $base->addYear(); // Update base
-        }
-
-        return $n;
-    }
-
-    public function advanceNextDue(): void
-    {
-        $next = $this->computeNextDueAt();
-        $this->forceFill(['next_due_at' => $next])->save();
+        return $this->hasMany(AdminReminderRun::class);
     }
 }

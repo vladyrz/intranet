@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class AdminReminderRun extends Model
 {
     protected $fillable = [
-        'admin_reminder_plus_id',
+        'admin_reminder_id',
         'run_at',
         'status',
         'error_message',
@@ -25,6 +25,6 @@ class AdminReminderRun extends Model
 
     public function reminder(): BelongsTo
     {
-        return $this->belongsTo(AdminReminderPlus::class, 'admin_reminder_plus_id');
+        return $this->belongsTo(AdminReminder::class, 'admin_reminder_id');
     }
 }

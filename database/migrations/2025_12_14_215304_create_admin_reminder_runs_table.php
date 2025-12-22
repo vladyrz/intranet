@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('admin_reminder_runs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('admin_reminder_plus_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('admin_reminder_id')->constrained()->cascadeOnDelete();
 
             $table->timestamp('run_at');
             $table->string('status'); // success, failed

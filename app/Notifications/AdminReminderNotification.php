@@ -2,7 +2,7 @@
 
 namespace App\Notifications;
 
-use App\Models\AdminReminderPlus;
+use App\Models\AdminReminder;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -12,7 +12,7 @@ class AdminReminderNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(public AdminReminderPlus $reminder)
+    public function __construct(public AdminReminder $reminder)
     {
     }
 
