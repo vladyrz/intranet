@@ -21,6 +21,11 @@ class Kernel extends ConsoleKernel
         $schedule->command('admin-reminders:dispatch')
             ->dailyAt('08:00')
             ->timezone('America/Costa_Rica');
+
+        // Expense Control Alerts (Same schedule)
+        $schedule->command('expense-control:dispatch')
+            ->dailyAt('08:00')
+            ->timezone('America/Costa_Rica');
     }
 
     /**
