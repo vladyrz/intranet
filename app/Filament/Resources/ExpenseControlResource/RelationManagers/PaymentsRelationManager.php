@@ -14,6 +14,7 @@ class PaymentsRelationManager extends RelationManager
 {
     protected static string $relationship = 'payments';
     protected static ?string $title = 'Pagos';
+    protected static ?string $modelLabel = 'pago';
 
     public function form(Form $form): Form
     {
@@ -22,23 +23,27 @@ class PaymentsRelationManager extends RelationManager
                 Forms\Components\Select::make('currency')
                     ->options(\App\Enums\ExpenseCurrency::class)
                     ->default(fn($livewire) => $livewire->getOwnerRecord()->currency)
-                    ->required(),
+                    ->required()
+                    ->label('Moneda'),
 
                 Forms\Components\TextInput::make('amount')
                     ->required()
                     ->numeric()
                     ->prefix(fn($livewire) => $livewire->getOwnerRecord()->currency->name)
-                    ->default(fn($livewire) => $livewire->getOwnerRecord()->amount),
+                    ->default(fn($livewire) => $livewire->getOwnerRecord()->amount)
+                    ->label('Monto'),
 
                 Forms\Components\Select::make('status')
                     ->options(\App\Enums\ExpensePaymentStatus::class)
                     ->default(\App\Enums\ExpensePaymentStatus::Paid)
-                    ->required(),
+                    ->required()
+                    ->label('Estado'),
 
                 Forms\Components\DateTimePicker::make('paid_at')
                     ->default(now())
                     ->required()
-                    ->native(false),
+                    ->native(false)
+                    ->label('Fecha de pago'),
 
                 Forms\Components\Hidden::make('user_id')
                     ->default(fn() => auth()->id())
