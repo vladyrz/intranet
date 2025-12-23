@@ -75,6 +75,7 @@ class ExpenseControlResource extends Resource
                             ->required()
                             ->enum(ExpenseCurrency::class)
                             ->default(ExpenseCurrency::CRC)
+                            ->reactive()
                             ->label('Moneda'),
 
                         Forms\Components\TextInput::make('amount')
@@ -130,6 +131,11 @@ class ExpenseControlResource extends Resource
                     ->sortable()
                     ->searchable()
                     ->label('País'),
+
+                Tables\Columns\TextColumn::make('description')
+                    ->label('Descripción')
+                    ->searchable()
+                    ->limit(50),
 
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
