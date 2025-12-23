@@ -77,6 +77,7 @@ class FinancialControlResource extends Resource
             ->columns([
                 TextColumn::make('id')->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('country.name')->label('País')->searchable()->toggleable(),
+                TextColumn::make('description')->label('Descripción')->searchable()->limit(50)->toggleable(),
                 TextColumn::make('user.name')->label('Propietario / Acreedor')->searchable(),
                 TextColumn::make('status')->label('Estado')->formatStateUsing(fn($state) => match ($state) {
                     'active' => 'Vigente',
