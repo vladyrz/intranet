@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Ops\Resources;
 
-use App\Filament\Resources\ExpenseControlResource\Pages;
+use App\Filament\Ops\Resources\ExpenseControlResource\Pages;
 use App\Filament\Resources\ExpenseControlResource\RelationManagers;
 use App\Enums\ExpenseArea;
 use App\Enums\ExpenseCostType;

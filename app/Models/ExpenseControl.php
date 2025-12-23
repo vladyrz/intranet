@@ -75,4 +75,9 @@ class ExpenseControl extends Model
     {
         return $query->where('status', ExpenseStatus::Active);
     }
+
+    public function payments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ExpensePayment::class);
+    }
 }

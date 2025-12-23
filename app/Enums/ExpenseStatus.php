@@ -14,9 +14,9 @@ enum ExpenseStatus: string implements HasLabel, HasColor
     public function getLabel(): ?string
     {
         return match ($this) {
-            self::Active => 'Active',
-            self::Cancelled => 'Cancelled',
-            self::Suspended => 'Suspended',
+            self::Active => 'Vigente',
+            self::Cancelled => 'Cancelado',
+            self::Suspended => 'Suspendido',
         };
     }
 

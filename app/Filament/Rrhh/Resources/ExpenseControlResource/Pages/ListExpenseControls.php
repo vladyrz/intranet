@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources\ExpenseControlResource\Pages;
+namespace App\Filament\Rrhh\Resources\ExpenseControlResource\Pages;
 
 use App\Enums\ExpenseCostType;
-use App\Filament\Resources\ExpenseControlResource;
+use App\Filament\Rrhh\Resources\ExpenseControlResource;
 use App\Models\ExpenseControl;
 use Filament\Actions;
 use Filament\Resources\Components\Tab;
@@ -13,13 +13,6 @@ use Filament\Support\Colors\Color;
 class ListExpenseControls extends ListRecords
 {
     protected static string $resource = ExpenseControlResource::class;
-
-    protected function getHeaderActions(): array
-    {
-        return [
-            Actions\CreateAction::make(),
-        ];
-    }
 
     public function getTabs(): array
     {

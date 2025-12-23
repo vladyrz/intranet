@@ -16,12 +16,12 @@ enum ExpenseCostType: string implements HasLabel
     public function getLabel(): ?string
     {
         return match ($this) {
-            self::OneTime => 'One Time',
-            self::Biweekly => 'Biweekly (Every 2 Weeks)',
-            self::Monthly => 'Monthly',
-            self::Quarterly => 'Quarterly',
-            self::Semiannual => 'Semiannual (Every 6 Months)',
-            self::Annual => 'Annual',
+            self::OneTime => 'Único',
+            self::Biweekly => 'Quincenal (Cada 2 semanas)',
+            self::Monthly => 'Mensual',
+            self::Quarterly => 'Trimestral',
+            self::Semiannual => 'Semestral (Cada 6 meses)',
+            self::Annual => 'Anual',
         };
     }
 }

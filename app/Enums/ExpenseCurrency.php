@@ -13,7 +13,7 @@ enum ExpenseCurrency: string implements HasLabel
     {
         return match ($this) {
             self::CRC => 'CRC (Colones)',
-            self::USD => 'USD (Dollars)',
+            self::USD => 'USD (Dólares)',
         };
     }
 }

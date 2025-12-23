@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources\ExpenseControlResource\Pages;
+namespace App\Filament\Ops\Resources\ExpenseControlResource\Pages;
 
 use App\Enums\ExpenseCostType;
-use App\Filament\Resources\ExpenseControlResource;
+use App\Filament\Ops\Resources\ExpenseControlResource;
 use App\Models\ExpenseControl;
 use Filament\Actions;
 use Filament\Resources\Components\Tab;

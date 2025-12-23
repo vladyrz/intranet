@@ -15,11 +15,11 @@ enum ExpenseArea: string implements HasLabel
     public function getLabel(): ?string
     {
         return match ($this) {
-            self::Technology => 'Technology',
-            self::HumanResources => 'Human Resources',
-            self::Sales => 'Sales',
+            self::Technology => 'Tecnología',
+            self::HumanResources => 'Recursos Humanos',
+            self::Sales => 'Ventas',
             self::Marketing => 'Marketing',
-            self::Operations => 'Operations',
+            self::Operations => 'Operaciones',
         };
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Sales\Resources;
 
-use App\Filament\Resources\ExpenseControlResource\Pages;
+use App\Filament\Sales\Resources\ExpenseControlResource\Pages;
 use App\Filament\Resources\ExpenseControlResource\RelationManagers;
 use App\Enums\ExpenseArea;
 use App\Enums\ExpenseCostType;
@@ -37,19 +37,22 @@ class ExpenseControlResource extends Resource
                         Forms\Components\Select::make('country_id')
                             ->relationship('country', 'name')
                             ->required()
-                            ->label('País'),
+                            ->label('País')
+                            ->disabled(),
 
                         Forms\Components\Select::make('area')
                             ->options(ExpenseArea::class)
                             ->required()
-                            ->enum(ExpenseArea::class),
+                            ->enum(ExpenseArea::class)
+                            ->disabled(),
 
                         Forms\Components\Select::make('status')
                             ->options(ExpenseStatus::class)
                             ->required()
                             ->default(ExpenseStatus::Active)
                             ->enum(ExpenseStatus::class)
-                            ->label('Estado'),
+                            ->label('Estado')
+                            ->disabled(),
                     ])->columns(3),
 
                 Forms\Components\Section::make('Detalles financieros')
@@ -59,7 +62,8 @@ class ExpenseControlResource extends Resource
                             ->options(ExpenseCostType::class)
                             ->required()
                             ->enum(ExpenseCostType::class)
-                            ->live(),
+                            ->live()
+                            ->disabled(),
 
                         Forms\Components\DatePicker::make('payment_date')
                             ->label(fn(Forms\Get $get) => match ($get('cost_type')) {
@@ -68,14 +72,15 @@ class ExpenseControlResource extends Resource
                             })
                             ->required()
                             ->default(now()->addDay()->startOfDay())
-                            ->native(false),
+                            ->disabled(),
 
                         Forms\Components\Select::make('currency')
                             ->options(ExpenseCurrency::class)
                             ->required()
                             ->enum(ExpenseCurrency::class)
                             ->default(ExpenseCurrency::CRC)
-                            ->label('Moneda'),
+                            ->label('Moneda')
+                            ->disabled(),
 
                         Forms\Components\TextInput::make('amount')
                             ->required()
@@ -84,7 +89,8 @@ class ExpenseControlResource extends Resource
                                 ExpenseCurrency::USD->value => '$',
                                 default => '₡',
                             })
-                            ->label('Monto'),
+                            ->label('Monto')
+                            ->disabled(),
                     ])->columns(2),
 
                 Forms\Components\Section::make('Descripción')
@@ -93,12 +99,14 @@ class ExpenseControlResource extends Resource
                             ->required()
                             ->maxLength(255)
                             ->columnSpanFull()
-                            ->label('Descripción'),
+                            ->label('Descripción')
+                            ->disabled(),
 
                         Forms\Components\Textarea::make('details')
                             ->columnSpanFull()
                             ->rows(3)
-                            ->label('Detalles'),
+                            ->label('Detalles')
+                            ->disabled(),
                     ]),
 
                 Forms\Components\Section::make('Estado del sistema')
@@ -169,12 +177,6 @@ class ExpenseControlResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
             ])
             ->defaultSort('next_run_at', 'asc');
     }
