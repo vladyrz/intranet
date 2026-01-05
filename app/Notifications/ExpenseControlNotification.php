@@ -24,14 +24,13 @@ class ExpenseControlNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Expense Alert: ' . $this->expense->cost_type->getLabel())
-            ->line('You have a new expense payment alert.')
+            ->subject('Alerta de Gasto: ' . $this->expense->cost_type->getLabel())
+            ->line('Tienes una nueva alerta de pago.')
             ->line('Area: ' . $this->expense->area->getLabel())
-            ->line('Amount: ' . $this->expense->currency->name . ' ' . $this->expense->amount)
-            ->line('Payment Date: ' . \Carbon\Carbon::parse($this->expense->payment_date)->format('d/m/Y'))
-            ->line('Description:')
-            ->line($this->expense->description)
-            ->line('Sent at: ' . now('America/Costa_Rica')->format('Y-m-d H:i:s T'));
+            ->line('Monto: ' . $this->expense->currency->name . ' ' . $this->expense->amount)
+            ->line('Fecha de Pago: ' . \Carbon\Carbon::parse($this->expense->payment_date)->format('d/m/Y'))
+            ->line('Descripción: ' . $this->expense->description)
+            ->line('Enviado a las: ' . now('America/Costa_Rica')->format('Y-m-d H:i:s T'));
     }
 
     public function toArray(object $notifiable): array
