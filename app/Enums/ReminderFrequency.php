@@ -15,11 +15,11 @@ enum ReminderFrequency: string implements HasLabel
     public function getLabel(): ?string
     {
         return match ($this) {
-            self::Daily => 'Daily',
-            self::Weekly => 'Weekly',
-            self::Monthly => 'Monthly',
-            self::Quarterly => 'Quarterly',
-            self::Yearly => 'Yearly',
+            self::Daily => 'Diariamente',
+            self::Weekly => 'Semanalmente',
+            self::Monthly => 'Mensualmente',
+            self::Quarterly => 'Trimestralmente',
+            self::Yearly => 'Anualmente',
         };
     }
 }

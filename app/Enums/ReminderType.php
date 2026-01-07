@@ -17,10 +17,10 @@ enum ReminderType: string implements HasLabel, HasColor
     {
         return match ($this) {
             self::General => 'General',
-            self::Billing => 'Billing',
-            self::FollowUp => 'Follow Up',
-            self::Ops => 'Operations',
-            self::System => 'System',
+            self::Billing => 'Facturación',
+            self::FollowUp => 'Seguimiento',
+            self::Ops => 'Operaciones',
+            self::System => 'Sistema',
         };
     }
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Ops\Resources;
 
 use App\Enums\ReminderFrequency;
 use App\Enums\ReminderType;
-use App\Filament\Resources\AdminReminderResource\Pages;
+use App\Filament\Ops\Resources\AdminReminderResource\Pages;
 use App\Models\AdminReminder;
 use Filament\Forms;
 use Filament\Forms\Form;

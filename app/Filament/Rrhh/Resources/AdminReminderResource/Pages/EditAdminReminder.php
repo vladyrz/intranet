@@ -1,0 +1,12 @@
+<?php
+
+namespace App\Filament\Rrhh\Resources\AdminReminderResource\Pages;
+
+use App\Filament\Rrhh\Resources\AdminReminderResource;
+use Filament\Actions;
+use Filament\Resources\Pages\EditRecord;
+
+class EditAdminReminder extends EditRecord
+{
+    protected static string $resource = AdminReminderResource::class;
+}

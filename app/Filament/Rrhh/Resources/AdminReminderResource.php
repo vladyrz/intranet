@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Rrhh\Resources;
 
 use App\Enums\ReminderFrequency;
 use App\Enums\ReminderType;
-use App\Filament\Resources\AdminReminderResource\Pages;
+use App\Filament\Rrhh\Resources\AdminReminderResource\Pages;
 use App\Models\AdminReminder;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -153,12 +153,6 @@ class AdminReminderResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
             ])
             ->defaultSort('next_run_at', 'asc');
     }

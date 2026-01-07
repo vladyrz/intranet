@@ -24,13 +24,13 @@ class AdminReminderNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Administrative Reminder: ' . $this->reminder->type->getLabel())
-            ->line('You have a new administrative reminder.')
-            ->line('Type: ' . $this->reminder->type->getLabel())
-            ->line('Frequency: ' . $this->reminder->frequency->getLabel())
-            ->line('Content:')
+            ->subject('Recordatorio Administrativo: ' . $this->reminder->type->getLabel())
+            ->line('Tienes un nuevo recordatorio administrativo.')
+            ->line('Tipo: ' . $this->reminder->type->getLabel())
+            ->line('Frecuencia: ' . $this->reminder->frequency->getLabel())
+            ->line('Contenido:')
             ->line($this->reminder->content)
-            ->line('Sent at: ' . now('America/Costa_Rica')->format('Y-m-d H:i:s T'));
+            ->line('Enviado a las: ' . now('America/Costa_Rica')->format('Y-m-d H:i:s T'));
     }
 
     public function toArray(object $notifiable): array
