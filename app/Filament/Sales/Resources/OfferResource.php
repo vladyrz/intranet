@@ -86,20 +86,21 @@ class OfferResource extends Resource
                             ->relationship(
                                 name: 'user',
                                 titleAttribute: 'name',
-                                modifyQueryUsing: fn (Builder $query) => $query->where('state', true),
+                                modifyQueryUsing: fn(Builder $query) => $query->where('state', true),
                             )
                             ->searchable()
                             ->preload()
                             ->required()
                             ->live()
-                            ->afterStateUpdated(function (Set $set){
+                            ->afterStateUpdated(function (Set $set) {
                                 $set('personal_customer_id', null);
                             }),
                         Select::make('personal_customer_id')
                             ->label(__('translate.offer.personal_customer_id'))
-                            ->options(fn (Get $get): Collection => PersonalCustomer::query()
-                                ->where('user_id', $get('user_id'))
-                                ->pluck('full_name', 'id')
+                            ->options(
+                                fn(Get $get): Collection => PersonalCustomer::query()
+                                    ->where('user_id', $get('user_id'))
+                                    ->pluck('full_name', 'id')
                             )
                             ->searchable()
                             ->preload()
@@ -126,13 +127,14 @@ class OfferResource extends Resource
                             ->label(__('translate.access_request.user_comments')),
                         Textarea::make('rejection_reason')
                             ->label(__('translate.offer.rejection_reason'))
-                            ->visible(fn (Get $get): bool => $get('offer_status') == 'rejected'),
+                            ->visible(fn(Get $get): bool => $get('offer_status') == 'rejected')
+                            ->required(fn(Get $get): bool => $get('offer_status') == 'rejected'),
                         FileUpload::make('offer_files')
                             ->label(__('translate.offer.offer_files'))
                             ->multiple()
                             ->columnSpanFull()
                             ->downloadable()
-                            ->directory('attachments/' .now()->format('Y/m/d'))
+                            ->directory('attachments/' . now()->format('Y/m/d'))
                             ->maxFiles(5),
                     ])
             ]);
@@ -196,7 +198,7 @@ class OfferResource extends Resource
                     ->label(__('translate.offer.offer_status'))
                     ->alignCenter()
                     ->badge()
-                    ->formatStateUsing(function ($state){
+                    ->formatStateUsing(function ($state) {
                         return match ($state) {
                             'pending' => __('translate.offer.options_offer_status.0'),
                             'received' => __('translate.offer.options_offer_status.1'),
@@ -206,7 +208,7 @@ class OfferResource extends Resource
                             'signed' => __('translate.offer.options_offer_status.5'),
                         };
                     })
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'pending' => 'warning',
                         'received' => 'info',
                         'sent' => 'success',
