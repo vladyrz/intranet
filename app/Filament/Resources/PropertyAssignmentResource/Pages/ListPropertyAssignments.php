@@ -4,16 +4,13 @@ namespace App\Filament\Resources\PropertyAssignmentResource\Pages;
 
 use App\Exports\PropertiesPerUserExport;
 use App\Filament\Resources\PropertyAssignmentResource;
-use App\Models\PropertyAssignment;
 use Carbon\Carbon;
 use Filament\Actions;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Get;
-use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
-use Filament\Support\Colors\Color;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ListPropertyAssignments extends ListRecords
@@ -32,11 +29,11 @@ class ListPropertyAssignments extends ListRecords
                 ->form([
                     Grid::make(3)->schema([
                         Select::make('month')
-                        ->label('Mes')
-                        ->options(collect(range(1, 12))->mapWithKeys(fn($m) => [$m => Carbon::create()->month($m)->locale('es')->translatedFormat('F')]))
-                        ->default(now()->month)
-                        ->required()
-                        ->reactive(),
+                            ->label('Mes')
+                            ->options(collect(range(1, 12))->mapWithKeys(fn($m) => [$m => Carbon::create()->month($m)->locale('es')->translatedFormat('F')]))
+                            ->default(now()->month)
+                            ->required()
+                            ->reactive(),
 
                         Select::make('year')
                             ->label('Año')
@@ -72,45 +69,5 @@ class ListPropertyAssignments extends ListRecords
                     );
                 })
         ];
-    }
-
-    public function getTabs(): array
-    {
-        return [
-            null => Tab::make(__('resources.property_assignment.tab_total_property_assignments'))
-                ->badge($this->orderByAssignmentStatus() ?? 0)
-                ->badgeColor(Color::Amber),
-            Tab::make(__('resources.property_assignment.tab_pending'))
-                ->badge($this->orderByAssignmentStatus('pending') ?? 0)
-                ->badgeColor(Color::Orange),
-            Tab::make(__('resources.property_assignment.tab_received'))
-                ->badge($this->orderByAssignmentStatus('received') ?? 0)
-                ->badgeColor(Color::Gray),
-            Tab::make(__('resources.property_assignment.tab_submitted'))
-                ->badge($this->orderByAssignmentStatus('submitted') ?? 0)
-                ->badgeColor(Color::Indigo),
-            Tab::make(__('resources.property_assignment.tab_approved'))
-                ->badge($this->orderByAssignmentStatus('approved') ?? 0)
-                ->badgeColor(Color::Green),
-            Tab::make(__('resources.property_assignment.tab_rejected'))
-                ->badge($this->orderByAssignmentStatus('rejected') ?? 0)
-                ->badgeColor(Color::Red),
-            Tab::make(__('resources.property_assignment.tab_published'))
-                ->badge($this->orderByAssignmentStatus('published') ?? 0)
-                ->badgeColor(Color::Teal),
-            Tab::make(__('resources.property_assignment.tab_assigned'))
-                ->badge($this->orderByAssignmentStatus('assigned') ?? 0)
-                ->badgeColor(Color::Purple),
-            Tab::make(__('resources.property_assignment.tab_finished'))
-                ->badge($this->orderByAssignmentStatus('finished') ?? 0)
-                ->badgeColor(Color::Lime),
-        ];
-    }
-
-    public function orderByAssignmentStatus(?string $status = null){
-        if(blank($status)){
-            return PropertyAssignment::count();
-        }
-        return PropertyAssignment::where('property_assignment_status', $status)->count();
     }
 }

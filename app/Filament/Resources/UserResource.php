@@ -61,46 +61,47 @@ class UserResource extends Resource
         return $form
             ->schema([
                 Section::make(__('resources.user.userSection'))
-                ->columns(2)
-                ->schema([
-                    // ...
-                    Forms\Components\TextInput::make('name')
-                        ->label(__('translate.user.name'))
-                        ->required()
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('email')
-                        ->label(__('translate.user.email'))
-                        ->email()
-                        ->required()
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('password')
-                        ->label(__('translate.user.password'))
-                        ->password()
-                        ->hiddenOn([
-                            'edit',
-                            'view'
-                        ])
-                        ->revealable()
-                        ->required()
-                        ->maxLength(255),
-                    Forms\Components\DateTimePicker::make('email_verified_at')
-                        ->label(__('translate.user.email_verified_at')),
-                    Forms\Components\Select::make('roles')
-                        ->relationship('roles', 'name')
-                        ->multiple()
-                        ->preload()
-                        ->searchable()
-                        ->required(),
-                    Forms\Components\Toggle::make('state')
-                        ->label(__('translate.user.state'))
-                        ->required(),
-                ]),
+                    ->columns(2)
+                    ->schema([
+                        // ...
+                        Forms\Components\TextInput::make('name')
+                            ->label(__('translate.user.name'))
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('email')
+                            ->label(__('translate.user.email'))
+                            ->email()
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('password')
+                            ->label(__('translate.user.password'))
+                            ->password()
+                            ->hiddenOn([
+                                'edit',
+                                'view'
+                            ])
+                            ->revealable()
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\DateTimePicker::make('email_verified_at')
+                            ->label(__('translate.user.email_verified_at')),
+                        Forms\Components\Select::make('roles')
+                            ->relationship('roles', 'name')
+                            ->multiple()
+                            ->preload()
+                            ->searchable()
+                            ->required(),
+                        Forms\Components\Toggle::make('state')
+                            ->label(__('translate.user.state'))
+                            ->required(),
+                    ]),
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn(Builder $query) => $query->with(['roles']))
             ->columns([
                 ImageColumn::make('avatar_url')
                     ->label(__('translate.user.avatar_url'))
@@ -122,7 +123,7 @@ class UserResource extends Resource
                     ->alignCenter(),
                 Tables\Columns\TextColumn::make('roles.name')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'super_admin' => 'info',
                         'panel_user' => 'warning',
                         'soporte' => 'success',

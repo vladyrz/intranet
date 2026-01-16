@@ -59,119 +59,121 @@ class EmployeeResource extends Resource
         return $form
             ->schema([
                 Section::make(__('resources.employee.sectionEmployee'))
-                ->columns(2)
-                ->schema([
-                    Select::make('user_id')
-                        ->relationship(name: 'user', titleAttribute:'name')
-                        ->searchable()
-                        ->preload(),
-                    Forms\Components\TextInput::make('name')
-                        ->label(__('translate.employee.name'))
-                        ->required()
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('email')
-                        ->label(__('translate.employee.email'))
-                        ->email()
-                        ->maxLength(255),
-                    Forms\Components\Select::make('job_position')
-                        ->label(__('translate.employee.job_position'))
-                        ->options([
-                            'administrative' => __('translate.employee.options_job_position.0'),
-                            'sales_manager' => __('translate.employee.options_job_position.1'),
-                            'sales_advisor' => __('translate.employee.options_job_position.2'),
-                        ]),
-                    Forms\Components\Select::make('progress_status')
-                        ->label(__('translate.employee.progress_status'))
-                        ->options([
-                            'pending' => __('translate.employee.options_progress_status.0'),
-                            'in_form' => __('translate.employee.options_progress_status.1'),
-                            'certified' => __('translate.employee.options_progress_status.2'),
-                            'retired' => __('translate.employee.options_progress_status.3'),
-                            'referred' => __('translate.employee.options_progress_status.4'),
-                        ])
-                        ->required(),
-                    Forms\Components\Toggle::make('contract_status')
-                        ->label(__('translate.employee.contract_status'))
-                        ->required(),
-                ]),
+                    ->columns(2)
+                    ->schema([
+                        Select::make('user_id')
+                            ->relationship(name: 'user', titleAttribute: 'name')
+                            ->searchable()
+                            ->preload(),
+                        Forms\Components\TextInput::make('name')
+                            ->label(__('translate.employee.name'))
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('email')
+                            ->label(__('translate.employee.email'))
+                            ->email()
+                            ->maxLength(255),
+                        Forms\Components\Select::make('job_position')
+                            ->label(__('translate.employee.job_position'))
+                            ->options([
+                                'administrative' => __('translate.employee.options_job_position.0'),
+                                'sales_manager' => __('translate.employee.options_job_position.1'),
+                                'sales_advisor' => __('translate.employee.options_job_position.2'),
+                            ]),
+                        Forms\Components\Select::make('progress_status')
+                            ->label(__('translate.employee.progress_status'))
+                            ->options([
+                                'pending' => __('translate.employee.options_progress_status.0'),
+                                'in_form' => __('translate.employee.options_progress_status.1'),
+                                'certified' => __('translate.employee.options_progress_status.2'),
+                                'retired' => __('translate.employee.options_progress_status.3'),
+                                'referred' => __('translate.employee.options_progress_status.4'),
+                            ])
+                            ->required(),
+                        Forms\Components\Toggle::make('contract_status')
+                            ->label(__('translate.employee.contract_status'))
+                            ->required(),
+                    ]),
 
                 Section::make(__('resources.employee.sectionPersonal'))
-                ->columns(3)
-                ->schema([
-                    Forms\Components\TextInput::make('personal_email')
-                        ->label(__('translate.employee.personal_email'))
-                        ->email()
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('national_id')
-                        ->label(__('translate.employee.national_id'))
-                        ->maxLength(15),
-                    Forms\Components\Select::make('marital_status')
-                        ->label(__('translate.employee.marital_status'))
-                        ->options([
-                            'single' => __('translate.employee.options_marital_status.0'),
-                            'married' => __('translate.employee.options_marital_status.1'),
-                            'divorced' => __('translate.employee.options_marital_status.2'),
-                            'widowed' => __('translate.employee.options_marital_status.3'),
-                            'free_union' => __('translate.employee.options_marital_status.4'),
-                        ]),
-                    Forms\Components\TextInput::make('profession')
-                        ->label(__('translate.employee.profession')),
-                    Forms\Components\TextInput::make('phone_number')
-                        ->label(__('translate.employee.phone_number'))
-                        ->maxLength(15),
-                    Forms\Components\TextInput::make('license_plate')
-                        ->label(__('translate.employee.license_plate')),
-                    Forms\Components\DatePicker::make('birthday')
-                        ->label(__('translate.employee.birthday')),
-                    Forms\Components\FileUpload::make('credid')
-                        ->acceptedFileTypes(['application/pdf'])
-                        ->directory('attachments/' .now()->format('Y/m/d'))
-                        ->downloadable(),
-                    Forms\Components\FileUpload::make('contract')
-                        ->label('Contrato')
-                        ->acceptedFileTypes(['application/pdf'])
-                        ->directory('attachments/contract/' .now()->format('Y/m/d'))
-                        ->downloadable(),
-                ]),
+                    ->columns(3)
+                    ->schema([
+                        Forms\Components\TextInput::make('personal_email')
+                            ->label(__('translate.employee.personal_email'))
+                            ->email()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('national_id')
+                            ->label(__('translate.employee.national_id'))
+                            ->maxLength(15),
+                        Forms\Components\Select::make('marital_status')
+                            ->label(__('translate.employee.marital_status'))
+                            ->options([
+                                'single' => __('translate.employee.options_marital_status.0'),
+                                'married' => __('translate.employee.options_marital_status.1'),
+                                'divorced' => __('translate.employee.options_marital_status.2'),
+                                'widowed' => __('translate.employee.options_marital_status.3'),
+                                'free_union' => __('translate.employee.options_marital_status.4'),
+                            ]),
+                        Forms\Components\TextInput::make('profession')
+                            ->label(__('translate.employee.profession')),
+                        Forms\Components\TextInput::make('phone_number')
+                            ->label(__('translate.employee.phone_number'))
+                            ->maxLength(15),
+                        Forms\Components\TextInput::make('license_plate')
+                            ->label(__('translate.employee.license_plate')),
+                        Forms\Components\DatePicker::make('birthday')
+                            ->label(__('translate.employee.birthday')),
+                        Forms\Components\FileUpload::make('credid')
+                            ->acceptedFileTypes(['application/pdf'])
+                            ->directory('attachments/' . now()->format('Y/m/d'))
+                            ->downloadable(),
+                        Forms\Components\FileUpload::make('contract')
+                            ->label('Contrato')
+                            ->acceptedFileTypes(['application/pdf'])
+                            ->directory('attachments/contract/' . now()->format('Y/m/d'))
+                            ->downloadable(),
+                    ]),
 
                 Section::make(__('resources.employee.sectionAddress'))
-                ->columns(3)
-                ->schema([
-                    // ...
-                    Forms\Components\Select::make('country_id')
-                        ->label(__('translate.employee.country'))
-                        ->relationship(name: 'country', titleAttribute:'name')
-                        ->searchable()
-                        ->preload()
-                        ->live()
-                        ->afterStateUpdated(function (Set $set){
-                            $set('state_id', null);
-                            $set('city_id', null);
-                        }),
-                    Forms\Components\Select::make('state_id')
-                        ->label(__('translate.employee.locationState'))
-                        ->options(fn (Get $get): Collection => State::query()
-                            ->where('country_id', $get('country_id'))
-                            ->pluck('name', 'id')
-                        )
-                        ->searchable()
-                        ->preload()
-                        ->live()
-                        ->afterStateUpdated(function (Set $set){
-                            $set('city_id', null);
-                        }),
-                    Forms\Components\Select::make('city_id')
-                        ->label(__('translate.employee.locationCity'))
-                        ->options(fn (Get $get): Collection => City::query()
-                            ->where('state_id', $get('state_id'))
-                            ->pluck('name', 'id')
-                        )
-                        ->searchable()
-                        ->preload(),
-                    Forms\Components\Textarea::make('address')
-                        ->label(__('translate.employee.address'))
-                        ->columnSpanFull(),
-                ])
+                    ->columns(3)
+                    ->schema([
+                        // ...
+                        Forms\Components\Select::make('country_id')
+                            ->label(__('translate.employee.country'))
+                            ->relationship(name: 'country', titleAttribute: 'name')
+                            ->searchable()
+                            ->preload()
+                            ->live()
+                            ->afterStateUpdated(function (Set $set) {
+                                $set('state_id', null);
+                                $set('city_id', null);
+                            }),
+                        Forms\Components\Select::make('state_id')
+                            ->label(__('translate.employee.locationState'))
+                            ->options(
+                                fn(Get $get): Collection => State::query()
+                                    ->where('country_id', $get('country_id'))
+                                    ->pluck('name', 'id')
+                            )
+                            ->searchable()
+                            ->preload()
+                            ->live()
+                            ->afterStateUpdated(function (Set $set) {
+                                $set('city_id', null);
+                            }),
+                        Forms\Components\Select::make('city_id')
+                            ->label(__('translate.employee.locationCity'))
+                            ->options(
+                                fn(Get $get): Collection => City::query()
+                                    ->where('state_id', $get('state_id'))
+                                    ->pluck('name', 'id')
+                            )
+                            ->searchable()
+                            ->preload(),
+                        Forms\Components\Textarea::make('address')
+                            ->label(__('translate.employee.address'))
+                            ->columnSpanFull(),
+                    ])
 
             ]);
     }
@@ -179,6 +181,7 @@ class EmployeeResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn(Builder $query) => $query->with(['user', 'country', 'locationState', 'locationCity']))
             ->columns([
                 TextColumn::make('user.name')
                     ->searchable(),
@@ -195,7 +198,7 @@ class EmployeeResource extends Resource
                 Tables\Columns\TextColumn::make('progress_status')
                     ->label(__('translate.employee.progress_status'))
                     ->badge()
-                    ->formatStateUsing(function ($state){
+                    ->formatStateUsing(function ($state) {
                         return match ($state) {
                             'pending' => __('translate.employee.options_progress_status.0'),
                             'in_form' => __('translate.employee.options_progress_status.1'),
@@ -204,7 +207,7 @@ class EmployeeResource extends Resource
                             'referred' => __('translate.employee.options_progress_status.4'),
                         };
                     })
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'pending' => 'warning',
                         'in_form' => 'info',
                         'certified' => 'success',
@@ -217,7 +220,7 @@ class EmployeeResource extends Resource
                     ->label(__('translate.employee.job_position'))
                     ->searchable()
                     ->alignCenter()
-                    ->formatStateUsing(function ($state){
+                    ->formatStateUsing(function ($state) {
                         return match ($state) {
                             'administrative' => __('translate.employee.options_job_position.0'),
                             'sales_manager' => __('translate.employee.options_job_position.1'),
@@ -268,7 +271,7 @@ class EmployeeResource extends Resource
                 Tables\Columns\TextColumn::make('marital_status')
                     ->label(__('translate.employee.marital_status'))
                     ->alignCenter()
-                    ->toggleable(isToggledHiddenByDefault:true),
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label(__('translate.employee.created_at'))
                     ->dateTime()

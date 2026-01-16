@@ -144,6 +144,7 @@ class OfferResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn(Builder $query) => $query->with(['organization', 'user', 'personal_customer']))
             ->columns([
                 TextColumn::make('property_name')
                     ->label(__('translate.offer.property_name'))
