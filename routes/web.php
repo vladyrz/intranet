@@ -26,3 +26,7 @@ Route::prefix('ad-requests')->name('ad-requests.')->group(function () {
     Route::get('payment/success/{ad_request_id}', [\App\Http\Controllers\StripePaymentController::class, 'success'])->name('payment.success');
     Route::get('payment/cancel/{ad_request_id}', [\App\Http\Controllers\StripePaymentController::class, 'cancel'])->name('payment.cancel');
 });
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/personal/easychat', [\App\Http\Controllers\EasyChatController::class, 'redirect'])->name('easychat');
+});
