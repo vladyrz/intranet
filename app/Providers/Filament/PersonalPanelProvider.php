@@ -7,6 +7,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\MenuItem;
+use Filament\Navigation\NavigationItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -49,6 +50,12 @@ class PersonalPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Personal/Pages'), for: 'App\\Filament\\Personal\\Pages')
             ->pages([
                 Pages\Dashboard::class,
+            ])
+            ->navigationItems([
+                NavigationItem::make('EVA')
+                    ->icon('heroicon-o-chat-bubble-bottom-center-text')
+                    ->url('https://easychat.g-easypro.com', true)
+                    ->sort(999),
             ])
             ->discoverWidgets(in: app_path('Filament/Personal/Widgets'), for: 'App\\Filament\\Personal\\Widgets')
             ->widgets([
