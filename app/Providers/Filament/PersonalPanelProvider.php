@@ -54,7 +54,7 @@ class PersonalPanelProvider extends PanelProvider
             ->navigationItems([
                 NavigationItem::make('EVA')
                     ->icon('heroicon-o-chat-bubble-bottom-center-text')
-                    ->url('https://easychat.g-easypro.com', true)
+                    ->url('/personal/easychat', true)
                     ->sort(999),
             ])
             ->discoverWidgets(in: app_path('Filament/Personal/Widgets'), for: 'App\\Filament\\Personal\\Widgets')
