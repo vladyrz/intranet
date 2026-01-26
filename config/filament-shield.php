@@ -7,11 +7,14 @@ return [
         'navigation_sort' => -1,
         'navigation_badge' => true,
         'navigation_group' => true,
+        'sub_navigation_position' => null,
         'is_globally_searchable' => false,
         'show_model_path' => true,
         'is_scoped_to_tenant' => true,
         'cluster' => null,
     ],
+
+    'tenant_model' => null,
 
     'auth_provider_model' => [
         'fqcn' => 'App\\Models\\User',
@@ -28,14 +31,6 @@ return [
         'enabled' => true,
         'name' => 'panel_user',
     ],
-
-    // 'panel_user' => [
-    //     'roles' => ['panel_user']
-    // ],
-
-    // 'soporte' => [
-    //     'roles' => ['soporte']
-    // ],
 
     'permission_prefixes' => [
         'resource' => [
