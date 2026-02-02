@@ -4,6 +4,7 @@ namespace App\Providers\Filament;
 
 use App\Filament\Pages\CustomPropertyPage;
 use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -66,10 +67,10 @@ class DashboardPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->plugins([
-                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
+                FilamentShieldPlugin::make(),
                 PanelRoles::make()
-                ->roleToAssign('super_admin')
-                ->restrictedRoles(['super_admin']),
+                    ->roleToAssign('super_admin')
+                    ->restrictedRoles(['super_admin']),
                 FilamentApexChartsPlugin::make(),
                 FilamentEditProfilePlugin::make()
                     ->setIcon('heroicon-o-user')
@@ -85,7 +86,7 @@ class DashboardPanelProvider extends PanelProvider
                     ->label('Panel personal')
                     ->url('/personal')
                     ->icon('heroicon-o-cog-6-tooth')
-                    ->visible(fn (): bool => auth()->user()?->hasAnyRole([
+                    ->visible(fn(): bool => auth()->user()?->hasAnyRole([
                         'super_admin',
                     ])),
                 // ...
@@ -96,7 +97,7 @@ class DashboardPanelProvider extends PanelProvider
 
         LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
             $switch
-                ->locales(['es','en']); // also accepts a closure
+                ->locales(['es', 'en']); // also accepts a closure
         });
 
     }
