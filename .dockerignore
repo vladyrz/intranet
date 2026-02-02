@@ -16,6 +16,7 @@ storage/framework/views
 public/storage
 .env
 .env.*
+intranet.env
 phpunit.xml
 Dockerfile
 .dockerignore
