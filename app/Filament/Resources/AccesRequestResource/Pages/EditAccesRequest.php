@@ -47,7 +47,6 @@ class EditAccesRequest extends EditRecord
             );
         }
 
-        // Send the email to administrative users
         $admins = User::role(['soporte', 'ventas', 'servicio_al_cliente', 'rrhh'])
             ->where('email', '!=', $solicitante->email)
             ->get();
