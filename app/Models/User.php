@@ -11,12 +11,45 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Laravel\Cashier\Billable;
 
 class User extends Authenticatable implements HasAvatar
 {
     use HasApiTokens, HasFactory, Notifiable;
+    use Billable;
     use HasRoles;
     use HasPanelShield;
+
+    protected static function booted()
+    {
+        $codeGenerator = function ($user) {
+            if ($user->country_id) {
+                $country = \App\Models\Country::find($user->country_id);
+                if ($country) {
+                    $iso = $country->iso2 ?? 'XX';
+                    // Use ID or fallback to 0000 if ID not set yet (should be set on created/updated)
+                    $user->code = 'EP-' . strtoupper($iso) . '-' . str_pad($user->id, 4, '0', STR_PAD_LEFT);
+                }
+            }
+        };
+
+        static::created(function ($user) use ($codeGenerator) {
+            $codeGenerator($user);
+            if ($user->isDirty('code')) {
+                $user->saveQuietly();
+            }
+        });
+
+        static::updated(function ($user) use ($codeGenerator) {
+            // Only regenerate if country_id changed or code is missing
+            if ($user->isDirty('country_id') || empty($user->code)) {
+                $codeGenerator($user);
+                if ($user->isDirty('code')) {
+                    $user->saveQuietly();
+                }
+            }
+        });
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -26,6 +59,8 @@ class User extends Authenticatable implements HasAvatar
     protected $fillable = [
         'name',
         'email',
+        'country_id',
+        'code',
         'state',
         'password',
         'email_verified_at',
@@ -145,5 +180,10 @@ class User extends Authenticatable implements HasAvatar
     public function financialControls()
     {
         return $this->hasMany(FinancialControl::class);
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
     }
 }

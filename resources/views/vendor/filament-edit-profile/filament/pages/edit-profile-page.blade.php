@@ -4,4 +4,6 @@
             @livewire($component)
         @endunless
     @endforeach
+
+    @livewire('subscription-status')
 </x-filament-panels::page>

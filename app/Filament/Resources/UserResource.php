@@ -94,6 +94,12 @@ class UserResource extends Resource
                         Forms\Components\Toggle::make('state')
                             ->label(__('translate.user.state'))
                             ->required(),
+                        Forms\Components\Select::make('country_id')
+                            ->label('País')
+                            ->relationship('country', 'name')
+                            ->searchable()
+                            ->preload(),
+
                     ]),
             ]);
     }
@@ -121,6 +127,12 @@ class UserResource extends Resource
                     ->label(__('translate.user.state'))
                     ->boolean()
                     ->alignCenter(),
+                Tables\Columns\TextColumn::make('country.name')
+                    ->label('País')
+                    ->sortable()
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
                 Tables\Columns\TextColumn::make('roles.name')
                     ->badge()
                     ->color(fn(string $state): string => match ($state) {
