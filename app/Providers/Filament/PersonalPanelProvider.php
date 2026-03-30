@@ -53,10 +53,10 @@ class PersonalPanelProvider extends PanelProvider
                 \App\Filament\Personal\Pages\Memberships::class,
             ])
             ->navigationItems([
-                NavigationItem::make('EVA')
-                    ->icon('heroicon-o-chat-bubble-bottom-center-text')
-                    ->url('/personal/easychat', true)
-                    ->sort(999),
+                // NavigationItem::make('EVA')
+                //     ->icon('heroicon-o-chat-bubble-bottom-center-text')
+                //     ->url('/personal/easychat', true)
+                //     ->sort(999),
             ])
             ->discoverWidgets(in: app_path('Filament/Personal/Widgets'), for: 'App\\Filament\\Personal\\Widgets')
             ->widgets([
