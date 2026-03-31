@@ -83,6 +83,10 @@ class OpsPanelProvider extends PanelProvider
                     ->visible(fn (): bool => auth()->user()?->hasAnyRole([
                         'gerente',
                     ])),
-            ]);
+            ])
+            ->renderHook(
+                'panels::body.end',
+                fn (): \Illuminate\Contracts\View\View => view('components.eva-widget'),
+            );
     }
 }
